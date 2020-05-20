@@ -1,0 +1,23 @@
+#workingDocContainer {
+    padding: 25px;
+}
+.WorkingDoc-buttonContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 25px;
+}
+.Contract-contractContainer {
+    height: 610px;
+    overflow-y: scroll;
+}
+
+@media only screen and (max-width: 1280px) {
+    #workingDocContainer,
+    .PageBottomDiv
+     {
+        width: 100vw;
+    }
+    .WorkingDoc-buttonContainer {
+        border-top: 2px solid #9c27b0;
+    }
+}

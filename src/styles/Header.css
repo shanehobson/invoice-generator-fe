@@ -1,0 +1,18 @@
+.Header-headerContainer {
+    background-color: #eaeaea;
+    /* min-height: 80px; */
+    margin-top: 1.3rem;
+    padding: 2rem;
+}
+.Header-gridContainer {
+    padding-top: 1.5rem;
+}
+
+@media only screen and (max-width: 1280px) {
+    .Header-headerContainer {
+        display: none;
+    }
+}
+
+
+

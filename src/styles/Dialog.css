@@ -1,0 +1,8 @@
+.Dialog-tabContentContainer {
+    padding: 15px;
+}
+.Dialog-tabContentHeader {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8px;
+}

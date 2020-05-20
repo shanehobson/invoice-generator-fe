@@ -1,0 +1,25 @@
+.Dashboard-container {
+    min-height: 80vh;
+    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.Dashboard-progressBarContainer {
+    width: 50%;
+    margin: 0 auto 25px auto;
+}
+
+.Dashboard-progressTextContainer {
+    display: flex;
+    justify-content: center;
+}
+
+
+@media only screen and (max-width: 450px) {
+    .Dashboard-container {
+        padding: 0;
+    }
+    .Dashboard-progressBarContainer {
+        margin-top: 20px;
+    }
+}
