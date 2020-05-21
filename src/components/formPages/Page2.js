@@ -82,7 +82,7 @@ class Page2 extends Component {
                 <FormControl error={error} component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">
                         <Typography>
-                        Are you performing web development services as an individual or as a registered business entity?
+                        Are you creating an invoice as an individual or as a registered business entity?
                         </Typography>
                     </FormLabel>
                     <FormGroup>

@@ -5,6 +5,7 @@ import initialState from './initialState';
 import pagesReducer from '../reducers/pages';
 import contractInfoReducer from '../reducers/contractInfo';
 import USstatesReducer from '../reducers/USstates';
+import FeeTypesReducer from '../reducers/FeeTypes';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -13,7 +14,8 @@ export default () => {
     combineReducers({
       pages: pagesReducer,
       contractInfo: contractInfoReducer,
-      USstates: USstatesReducer
+      USstates: USstatesReducer,
+      FeeTypes: FeeTypesReducer
     }),
     initialState,
     composeEnhancers(applyMiddleware(thunk))

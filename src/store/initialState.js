@@ -1,4 +1,5 @@
 const USstates = require('../JSONdata/USstates');
+const FeeTypes = require('../JSONdata/FeeTypes');
 
 let devType = '',
     customerType = '',
@@ -111,6 +112,9 @@ const initialState = {
     },
     USstates: {
         USstates
+    },
+    FeeTypes: {
+        FeeTypes
     }
 }
 

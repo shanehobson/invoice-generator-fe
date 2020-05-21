@@ -112,9 +112,10 @@ class WorkingDocument extends Component {
                             </Button> 
                         </div> 
                         :
-                        <div className='WorkingDoc-buttonContainer'>
-                            <Typography variant='display3' style={{color: 'red'}}>
-                                DRAFT
+                        <div className='WorkingDoc-buttonContainer' 
+                            style={{justifyContent: 'left', paddingLeft: '60px', paddingTop: '60px'}}>
+                            <Typography variant='display1' style={{color: 'red', display: 'flex'}}>
+                                Invoice
                             </Typography>
                         </div>
                 }

@@ -5,11 +5,13 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
 import { startSetDescription } from '../../actions/contractInfo';
 import DescriptionDialog from '../DescriptionDialog';
+import InvoiceItem from '../InvoiceItem';
 
 const styles = theme => ({
     root: {
@@ -25,16 +27,23 @@ const styles = theme => ({
     },
 });
 
+/* {
+        description: '',
+        unit: 0,
+        rate: 0,
+        feeType: '',
+        total: 0
+} */
+
 class Page5 extends Component {
     constructor(props) {
-        console.log('Entered 5 constructor');
         super(props);
-
         this.state = {
             open: false,
             error: '',
             description: this.props.description ? this.props.description : '',
-            descriptionDialogOpen: false
+            descriptionDialogOpen: false,
+            invoiceItems: []
         };
     };
 
@@ -54,10 +63,6 @@ class Page5 extends Component {
         this.setState({ description: e.target.value });
     };
 
-    handleLinkClicked = () => {
-        this.setState({ descriptionDialogOpen: true });
-    };
-
     handleDialogClose = () => {
         this.setState({
             descriptionDialogOpen: false
@@ -73,6 +78,22 @@ class Page5 extends Component {
         window.scrollTo(0, 0);
     };
 
+    addInvoiceItem = () => {
+        console.log('adding invoice item');
+        const items = this.state.invoiceItems.slice();
+        items.push({
+            description: '',
+            unit: 0,
+            rate: 0,
+            feeType: '',
+            total: 0
+        })
+        this.setState({
+            invoiceItems: items
+        })
+        console.log(this.state.invoiceItems);
+    }
+
     handleNextPageButtonClick = () => {
         if (this.state.description) {   
             const { description } = this.state;
@@ -87,28 +108,16 @@ class Page5 extends Component {
     };
 
     render() {
+
         const { classes } = this.props;
-        const { description, nextButtonDisabled } = this.state;
+        const { description, nextButtonDisabled, invoiceItems } = this.state;
 
         return (
             <Paper classes={{root: classes.root}} elevation={1}>
                 <div className='AltFormContainer'>       
                     <div className='FormHeaderContainer'>
                         <Typography variant='title'>
-                            Description of Services
-                        </Typography>
-                    </div>
-                    <div className='FormHeaderContainer'>
-                        <Typography variant='subheading'>
-                            Please provide a description of the services you will provide.
-                            This description will be the official Project Description for the contract.
-                            <br />
-                            <br />
-                            <span
-                                style={{ color: 'purple', cursor: 'pointer', fontWeight: 'bold' }}
-                                onClick={this.handleLinkClicked}
-                            >
-                            Click here </span> to see some example Project Descriptions if you are unsure what to include.
+                            What are you invoicing?
                         </Typography>
                     </div>
                     <div>
@@ -124,17 +133,37 @@ class Page5 extends Component {
                     </div>
                 </div>
                 <div className='TextFieldContainer'>
-                    <TextField 
+                    <TextField
+                        id="outlined-basic"
+                        variant="outlined"
                         autoFocus={true}
-                        multiline
-                        rows={15}
                         fullWidth
-                        placeholder="Enter your Project Description..."
+                        placeholder="Description"
                         onChange={this.handleDescriptionChange}
                         value={description}
                     >
                     </TextField>
+                    <TextField
+                        id="outlined-basic"
+                        variant="outlined"
+                        autoFocus={true}
+                        placeholder="Description"
+                        onChange={this.handleDescriptionChange}
+                        value={description}
+                    >
+                    </TextField>
+                    
                 </div>
+
+                <div>{invoiceItems.length}</div>
+
+                 {invoiceItems.map((item, i) => 
+                     <InvoiceItem key={i}></InvoiceItem>
+                 )}       
+
+                <AddCircleIcon onClick={this.addInvoiceItem} />
+                <p>Add line item</p>
+      
                 <div className='AltFormContainer'>
                     <div className='PageBottomDiv'>
                         <Button
@@ -177,7 +206,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    description: state.contractInfo.description
+    description: state.contractInfo.description,
+    FeeTypes: state.FeeTypes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Page5));

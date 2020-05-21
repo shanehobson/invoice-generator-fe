@@ -26,8 +26,11 @@ a {
 }
 
 .TextFieldContainer {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 40px;
+ 
+    padding: 20px 25px;
+    border: 1px solid grey;
+    border-radius: 3px;
 }
 
 .FormInputGroupContainer {

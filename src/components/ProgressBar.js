@@ -74,7 +74,7 @@ class ProgressBar extends React.Component {
         <br />
         <div className='Dashboard-progressTextContainer'>
             <Typography variant='body1' color='primary'>
-                Draft Progress: {Math.floor(completed / total * 100)}%
+                Invoice Progress: {Math.floor(completed / total * 100)}%
             </Typography>
         </div>
       </div>
