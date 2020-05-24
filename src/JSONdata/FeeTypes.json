@@ -1,5 +1,11 @@
 [
     "Flat fee",
     "Per hour",
-    "Per day"
+    "Per day",
+    "Per week",
+    "per month",
+    "per year",
+    "per word",
+    "per item",
+    "per unit"
 ]

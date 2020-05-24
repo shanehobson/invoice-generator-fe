@@ -42,6 +42,7 @@ class Page5 extends Component {
             open: false,
             error: '',
             description: this.props.description ? this.props.description : '',
+            // feeType: this.props.customerInfo.USstate ? this.props.customerInfo.USstate : '',
             descriptionDialogOpen: false,
             invoiceItems: []
         };
@@ -78,8 +79,11 @@ class Page5 extends Component {
         window.scrollTo(0, 0);
     };
 
+    handleFeeTypeChange = e => {
+        this.setState({ USstate: e.target.value });
+    };
+
     addInvoiceItem = () => {
-        console.log('adding invoice item');
         const items = this.state.invoiceItems.slice();
         items.push({
             description: '',
@@ -91,7 +95,14 @@ class Page5 extends Component {
         this.setState({
             invoiceItems: items
         })
-        console.log(this.state.invoiceItems);
+    }
+
+    removeInvoiceItem = (i) => {
+        const items = this.state.invoiceItems.slice();
+        if (items.length === 0) { return; }
+        this.setState({
+            invoiceItems: items.splice(i, 1)
+        })
     }
 
     handleNextPageButtonClick = () => {
@@ -147,7 +158,7 @@ class Page5 extends Component {
                         id="outlined-basic"
                         variant="outlined"
                         autoFocus={true}
-                        placeholder="Description"
+                        placeholder="0"
                         onChange={this.handleDescriptionChange}
                         value={description}
                     >
@@ -155,14 +166,16 @@ class Page5 extends Component {
                     
                 </div>
 
-                <div>{invoiceItems.length}</div>
+                <div className='TextFieldContainer'>
 
                  {invoiceItems.map((item, i) => 
-                     <InvoiceItem key={i}></InvoiceItem>
+                     <InvoiceItem key={i} item={item}></InvoiceItem>
                  )}       
 
                 <AddCircleIcon onClick={this.addInvoiceItem} />
                 <p>Add line item</p>
+
+                </div>
       
                 <div className='AltFormContainer'>
                     <div className='PageBottomDiv'>

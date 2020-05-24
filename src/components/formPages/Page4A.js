@@ -117,7 +117,7 @@ class Page4A extends Component {
                 </div>
                 <div className='FormHeaderContainer'>
                     <Typography variant='subheading'>
-                        Please enter the following information about your client/customer. This will be the client/customer's official name and address for the contract.
+                        Please enter the following information about your client/customer. This will be the client/customer's official name and address for the invoice.
                     </Typography>
                 </div>
                     {

@@ -118,7 +118,7 @@ class Page3A extends Component {
                 </div>
                 <div className='FormHeaderContainer'>
                     <Typography variant='subheading'>
-                        Please enter the following information about you, the Developer. This will be your official name and address for the contract.
+                        Please enter the following information about you, the Developer. This will be your official name and address for the invoice.
                     </Typography>
                 </div>
                     {

@@ -32,6 +32,8 @@ class InvoiceItem extends Component {
         };
     };
 
+    // componentDidMount()
+
     handleFeeTypeChange = e => {
         this.setState({ feeType: e.target.value });
     };
