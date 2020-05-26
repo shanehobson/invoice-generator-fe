@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Select from '@material-ui/core/Select';
@@ -42,9 +43,10 @@ class Page5 extends Component {
             open: false,
             error: '',
             description: this.props.description ? this.props.description : '',
-            // feeType: this.props.customerInfo.USstate ? this.props.customerInfo.USstate : '',
             descriptionDialogOpen: false,
-            invoiceItems: []
+            invoiceItems: [],
+            // feeType: this.props.feeType? this.props.feeType : '',
+            feeType: this.props.invoiceInfo.feeType ? this.props.invoiceInfo.feeType : ''
         };
     };
 
@@ -80,7 +82,7 @@ class Page5 extends Component {
     };
 
     handleFeeTypeChange = e => {
-        this.setState({ USstate: e.target.value });
+        this.setState({ feeType: e.target.value });
     };
 
     addInvoiceItem = () => {
@@ -112,16 +114,16 @@ class Page5 extends Component {
             this.props.startChangePage('6');
         } else {
             this.setState({
-                error: 'Please complete complete the form before proceeding.'
+                error: 'Please complete the form before proceeding.'
             })
         }
         window.scrollTo(0, 0);
     };
 
     render() {
+        const { classes, FeeTypes } = this.props;
+        const { description, nextButtonDisabled, feeType, invoiceItems } = this.state;
 
-        const { classes } = this.props;
-        const { description, nextButtonDisabled, invoiceItems } = this.state;
 
         return (
             <Paper classes={{root: classes.root}} elevation={1}>
@@ -164,9 +166,30 @@ class Page5 extends Component {
                     >
                     </TextField>
                     
+                <div>
+                <Select
+                    open={this.state.open}
+                    onChange={this.handleFeeTypeChange}
+                    onClose={this.handleClose}
+                    onOpen={this.handleOpen}
+                    value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
+                    onChange={this.handleChange}
+                    inputProps={{
+                        name: 'feeType',
+                        id: 'controlled-open-select',
+                    }}
+                >
+                    {
+                        FeeTypes.FeeTypes.map((feeType, i) => (
+                            <MenuItem key={i} value={feeType}>{feeType}</MenuItem>
+                        ))
+                    }
+                </Select>
+                </div>
+                    
                 </div>
 
-                <div className='TextFieldContainer'>
+                <div className='addInvoiceItemButton'>
 
                  {invoiceItems.map((item, i) => 
                      <InvoiceItem key={i} item={item}></InvoiceItem>
@@ -220,7 +243,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     description: state.contractInfo.description,
+    // feeType: state.contractInfo.invoiceInfo.feeType,
     FeeTypes: state.FeeTypes,
+    invoiceInfo: state.contractInfo.invoiceInfo
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Page5));

@@ -28,11 +28,15 @@ class InvoiceItem extends Component {
             unit: 0,
             rate: 0,
             feeType: '',
-            total: 0
+            total: 0,
+            // feeType: this.props.FeeTypes ? this.props.FeeTypes : '',
+            feeType: this.props.invoiceInfo.feeType ? this.props.invoiceInfo.feeType : ''
         };
     };
 
-    // componentDidMount()
+    componentDidMount() {
+        return this.props.feeType;
+    }
 
     handleFeeTypeChange = e => {
         this.setState({ feeType: e.target.value });
@@ -55,16 +59,16 @@ class InvoiceItem extends Component {
         const { feeType } = this.state;
 
         return (
-           <div>
-           <Select
+            <div>
+            <Select
                 open={this.state.open}
                 onChange={this.handleFeeTypeChange}
                 onClose={this.handleClose}
                 onOpen={this.handleOpen}
-                value={feeType ? FeeTypes.find(type => feeType === type) : ''}
+                value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
                 onChange={this.handleChange}
                 inputProps={{
-                    name: 'FeeType',
+                    name: 'feeType',
                     id: 'controlled-open-select',
                 }}
             >
@@ -74,7 +78,7 @@ class InvoiceItem extends Component {
                     ))
                 }
             </Select>
-           </div>
+            </div>
         );
     }
 };
@@ -89,6 +93,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     FeeTypes: state.FeeTypes,
+    invoiceInfo: state.contractInfo.invoiceInfo
+    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(InvoiceItem));

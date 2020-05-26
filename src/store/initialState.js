@@ -17,6 +17,13 @@ let devType = '',
         USstate: '',
         zip: ''
     },
+    invoiceInfo = {
+        description: '',
+        unit: 0,
+        rate: 0,
+        feeType: '',
+        total: 0
+    },
     description = '',
     specs = '',
     paymentTerms = '',
@@ -93,6 +100,13 @@ const initialState = {
             city: customerInfo.city,
             USstate: customerInfo.USstate,
             zip: customerInfo.zip
+        },
+        invoiceInfo: {
+            description: invoiceInfo.description,
+            unit: invoiceInfo.unit,
+            rate: invoiceInfo.rate,
+            feeType: invoiceInfo.feeType,
+            total: invoiceInfo.total
         },
         description,
         specs,
