@@ -46,68 +46,6 @@ export const startSetCustomerInfo = (customerInfo) => {
     }
 };
 
-export const setDescription = (description) => ({
-    type: 'SET_DESCRIPTION',
-    description
-});
-
-export const startSetDescription = (description) => {
-    return (dispatch) => {
-        localStorage.setItem('description', description);
-        return dispatch(setDescription(description));
-    }
-};
-
-export const setSpecs = (specs) => ({
-    type: 'SET_SPECS',
-    specs
-});
-
-export const startSetSpecs = (specs) => {
-    return (dispatch) => {
-        localStorage.setItem('specs', specs);
-        return dispatch(setSpecs(specs));
-    }
-};
-
-export const setPaymentTerms = (paymentTerms) => ({
-    type: 'SET_PAYMENT_TERMS',
-    paymentTerms
-});
-
-export const startSetPaymentTerms = (paymentTerms) => {
-    return (dispatch) => {
-        localStorage.setItem('paymentTerms', paymentTerms);
-        return dispatch(setPaymentTerms(paymentTerms));
-    }
-};
-
-export const setSigInfoDev = ({ sigName, sigTitle }) => ({
-    type: 'SET_SIG_INFO_DEV',
-    sigName,
-    sigTitle
-});
-
-export const startSetSigInfoDev = ({ sigName, sigTitle }) => {
-    return (dispatch) => {
-        localStorage.setItem('sigInfoDev', JSON.stringify({ sigName, sigTitle }));
-        return dispatch(setSigInfoDev({ sigName, sigTitle }));
-    }
-};
-
-export const setSigInfoCustomer = ({ sigName, sigTitle }) => ({
-    type: 'SET_SIG_INFO_CUSTOMER',
-        sigName,
-        sigTitle
-});
-
-export const startSetSigInfoCustomer = ({ sigName, sigTitle }) => {
-    return (dispatch) => {
-        localStorage.setItem('sigInfoCustomer', JSON.stringify({ sigName, sigTitle }));
-        return dispatch(setSigInfoCustomer({ sigName, sigTitle }));
-    }
-};
-
 export const setFormsAreComplete = (formsAreComplete) => ({
     type: 'SET_FORMS_ARE_COMPLETE',
         formsAreComplete
@@ -119,3 +57,8 @@ export const startSetFormsAreComplete = (formsAreComplete) => {
         return dispatch(setFormsAreComplete(formsAreComplete));
     }
 };
+
+export const setInvoiceItems = (invoiceItems) => ({
+    type: 'SET_INVOICE_ITEMS',
+    invoiceItems
+});

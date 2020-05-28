@@ -17,24 +17,16 @@ let devType = '',
         USstate: '',
         zip: ''
     },
-    invoiceInfo = {
-        description: '',
-        unit: 0,
-        rate: 0,
-        feeType: '',
-        total: 0
-    },
-    description = '',
-    specs = '',
-    paymentTerms = '',
-    sigInfoDev = {
-        sigName: '',
-        sigTitle: ''
-    },
-    sigInfoCustomer = {
-        sigName: '',
-        sigTitle: ''
-    },
+    invoiceItems = [
+        {
+            description: '',
+            unit: 0,
+            rate: 0,
+            feeType: 'Flat fee',
+            total: 0
+        }
+    ],
+
     currentPage = '1',
     formsAreComplete = false;
 
@@ -54,26 +46,6 @@ if (JSON.parse(localStorage.getItem('customerInfo') !== null)) {
     customerInfo = JSON.parse(localStorage.getItem('customerInfo'));
 }
 
-if (localStorage.getItem('description') !== null) {
-    description = localStorage.getItem('description');
-}
-
-if (localStorage.getItem('specs') !== null) {
-    specs = localStorage.getItem('specs');
-}
-
-if (localStorage.getItem('paymentTerms') !== null) {
-    paymentTerms = localStorage.getItem('paymentTerms');
-}
-
-if (localStorage.getItem('sigInfoDev') !== null) {
-    sigInfoDev = localStorage.getItem('sigInfoDev');
-}
-
-if (localStorage.getItem('sigInfoCustomer') !== null) {
-    sigInfoCustomer = localStorage.getItem('sigInfoCustomer');
-}
-
 if (localStorage.getItem('pageNumber') !== null) {
     currentPage = localStorage.getItem('pageNumber');
 }
@@ -84,7 +56,7 @@ if (localStorage.getItem('formsAreComplete') !== null) {
 
 
 const initialState = {
-    contractInfo: {
+    invoiceInfo: {
         devType,
         customerType,
         devInfo: {
@@ -101,24 +73,7 @@ const initialState = {
             USstate: customerInfo.USstate,
             zip: customerInfo.zip
         },
-        invoiceInfo: {
-            description: invoiceInfo.description,
-            unit: invoiceInfo.unit,
-            rate: invoiceInfo.rate,
-            feeType: invoiceInfo.feeType,
-            total: invoiceInfo.total
-        },
-        description,
-        specs,
-        paymentTerms,
-        sigInfoDev: {
-            sigName: sigInfoDev.sigName,
-            sigTitle: sigInfoDev.sigTitle
-        },
-        sigInfoCustomer: {
-            sigName: sigInfoCustomer.sigName,
-            sigTitle: sigInfoCustomer.sigTitle
-        },
+        invoiceItems,
         formsAreComplete: formsAreComplete
     },
     pages: {

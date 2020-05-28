@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
-import { startSetDescription } from '../../actions/contractInfo';
-import DescriptionDialog from '../DescriptionDialog';
 import InvoiceItem from '../InvoiceItem';
 
 const styles = theme => ({
@@ -28,27 +27,24 @@ const styles = theme => ({
     },
 });
 
-/* {
-        description: '',
-        unit: 0,
-        rate: 0,
-        feeType: '',
-        total: 0
-} */
-
 class Page5 extends Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false,
             error: '',
-            description: this.props.description ? this.props.description : '',
-            descriptionDialogOpen: false,
             invoiceItems: [],
-            // feeType: this.props.feeType? this.props.feeType : '',
-            feeType: this.props.invoiceInfo.feeType ? this.props.invoiceInfo.feeType : ''
+            FeeTypes: []
         };
     };
+
+
+    componentDidMount() { 
+        this.setState({ 
+            invoiceItems: this.props.invoiceItems,
+            FeeTypes: this.props.FeeTypes
+        })
+    }
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
@@ -62,14 +58,8 @@ class Page5 extends Component {
         this.setState({ open: true });
     };
 
-    handleDescriptionChange = e => {
-        this.setState({ description: e.target.value });
-    };
-
-    handleDialogClose = () => {
-        this.setState({
-            descriptionDialogOpen: false
-        });
+    handleRateChange = e => {
+        this.setState({ rate: e.target.value });
     };
 
     handlePreviousPageButtonClick = () => {
@@ -84,6 +74,20 @@ class Page5 extends Component {
     handleFeeTypeChange = e => {
         this.setState({ feeType: e.target.value });
     };
+
+    // addInvoiceItem = () => {
+    //     const items = this.state.invoiceItems.slice();
+    //     items.push({
+    //         description: '',
+    //         unit: 0,
+    //         rate: 0,
+    //         feeType: '',
+    //         total: 0
+    //     })
+    //     this.setState({
+    //         invoiceItems: items
+    //     })
+    // }
 
     addInvoiceItem = () => {
         const items = this.state.invoiceItems.slice();
@@ -108,21 +112,14 @@ class Page5 extends Component {
     }
 
     handleNextPageButtonClick = () => {
-        if (this.state.description) {   
-            const { description } = this.state;
-            this.props.startSetDescription(description);
-            this.props.startChangePage('6');
-        } else {
-            this.setState({
-                error: 'Please complete the form before proceeding.'
-            })
-        }
+        this.props.setInvoiceItems(this.state.invoiceItems);
+        this.props.startChangePage('9');
         window.scrollTo(0, 0);
     };
 
     render() {
         const { classes, FeeTypes } = this.props;
-        const { description, nextButtonDisabled, feeType, invoiceItems } = this.state;
+        const { nextButtonDisabled, feeType, invoiceItems} = this.state;
 
 
         return (
@@ -145,54 +142,11 @@ class Page5 extends Component {
                         }
                     </div>
                 </div>
-                <div className='TextFieldContainer'>
-                    <TextField
-                        id="outlined-basic"
-                        variant="outlined"
-                        autoFocus={true}
-                        fullWidth
-                        placeholder="Description"
-                        onChange={this.handleDescriptionChange}
-                        value={description}
-                    >
-                    </TextField>
-                    <TextField
-                        id="outlined-basic"
-                        variant="outlined"
-                        autoFocus={true}
-                        placeholder="0"
-                        onChange={this.handleDescriptionChange}
-                        value={description}
-                    >
-                    </TextField>
-                    
-                <div>
-                <Select
-                    open={this.state.open}
-                    onChange={this.handleFeeTypeChange}
-                    onClose={this.handleClose}
-                    onOpen={this.handleOpen}
-                    value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
-                    onChange={this.handleChange}
-                    inputProps={{
-                        name: 'feeType',
-                        id: 'controlled-open-select',
-                    }}
-                >
-                    {
-                        FeeTypes.FeeTypes.map((feeType, i) => (
-                            <MenuItem key={i} value={feeType}>{feeType}</MenuItem>
-                        ))
-                    }
-                </Select>
-                </div>
-                    
-                </div>
 
                 <div className='addInvoiceItemButton'>
 
                  {invoiceItems.map((item, i) => 
-                     <InvoiceItem key={i} item={item}></InvoiceItem>
+                     <InvoiceItem key={i} item={item} FeeTypes={this.state.FeeTypes}></InvoiceItem>
                  )}       
 
                 <AddCircleIcon onClick={this.addInvoiceItem} />
@@ -223,7 +177,6 @@ class Page5 extends Component {
                         </Button>  
                     </div>
                 </div>
-                <DescriptionDialog open={this.state.descriptionDialogOpen} onClose={this.handleDialogClose} />
             </Paper>
         );
     }
@@ -232,20 +185,16 @@ class Page5 extends Component {
 Page5.propTypes = {
     classes: PropTypes.object.isRequired,
     startChangePage: PropTypes.func.isRequired,
-    startSetDescription: PropTypes.func.isRequired,
-    description: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
     startChangePage: (pageNumber) => dispatch(startChangePage(pageNumber)),
-    startSetDescription: (description) => dispatch(startSetDescription(description))
+    setInvoiceItems: (invoiceItems) => dispatch(setInvoiceItems(invoiceItems))
 });
 
 const mapStateToProps = (state) => ({
-    description: state.contractInfo.description,
-    // feeType: state.contractInfo.invoiceInfo.feeType,
     FeeTypes: state.FeeTypes,
-    invoiceInfo: state.contractInfo.invoiceInfo
+    invoiceItems: state.invoiceInfo.invoiceItems
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Page5));

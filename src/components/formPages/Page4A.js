@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
-import { startSetCustomerInfo } from '../../actions/contractInfo';
+import { startSetCustomerInfo } from '../../actions/invoiceInfo';
 
 const styles = theme => ({
     root: {
@@ -230,7 +230,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     USstates: state.USstates,
-    customerInfo: state.contractInfo.customerInfo
+    customerInfo: state.invoiceInfo.customerInfo
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Page4A));

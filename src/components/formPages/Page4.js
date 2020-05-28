@@ -14,7 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
-import { startSetCustomerType } from '../../actions/contractInfo';
+import { startSetCustomerType } from '../../actions/invoiceInfo';
 
 const styles = theme => ({
     root: {
@@ -144,8 +144,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    devType: state.contractInfo.devType,
-    customerType: state.contractInfo.customerType
+    devType: state.invoiceInfo.devType,
+    customerType: state.invoiceInfo.customerType
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Page4));

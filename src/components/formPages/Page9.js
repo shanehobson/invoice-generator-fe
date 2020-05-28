@@ -25,11 +25,11 @@ class Page9 extends Component {
 
     handlePreviousPageButtonClick = () => {
         if (this.props.customerType === 'business') {
-            this.props.startChangePage('8B');
+            this.props.startChangePage('5');
         } else if (this.props.devType === 'business') {
-            this.props.startChangePage('8A');
+            this.props.startChangePage('5');
         } else {
-            this.props.startChangePage('7');
+            this.props.startChangePage('5');
         }
         window.scrollTo(0, 0);
     };
@@ -72,8 +72,8 @@ Page9.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    formsAreComplete: state.contractInfo.formsAreComplete,
-    customerType: state.contractInfo.customerType
+    formsAreComplete: state.invoiceInfo.formsAreComplete,
+    customerType: state.invoiceInfo.customerType
 });
 
 const mapDispatchToProps = (dispatch) => ({

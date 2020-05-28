@@ -12,12 +12,7 @@ class Contract extends Component {
             devType,
             customerType, 
             devInfo,
-            customerInfo,
-            description,
-            specs,
-            paymentTerms,
-            sigInfoDev,
-            sigInfoCustomer
+            customerInfo
         } = this.props;
 
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
@@ -25,16 +20,11 @@ class Contract extends Component {
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
         const devState = devInfo.USstate === '' ? '__________' : devInfo.USstate;
         const devZip = devInfo.zip === '' ? '_____' : devInfo.zip;
-        const devRepresentative = devType === 'business' ? sigInfoDev.name : devInfo.name;
-        const devTitle = devType === 'business' ? sigInfoDev.title : '';
-
         const customerName = customerInfo.name === '' ? '___________________' : customerInfo.name;
         const customerStreet = customerInfo.street === '' ? '____________________' : customerInfo.street;
         const customerCity = customerInfo.city === '' ? '____________________' : customerInfo.city;
         const customerState = customerInfo.USstate === '' ? '__________' : customerInfo.USstate;
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
-        const customerRepresentative = customerType === 'business' ? sigInfoCustomer.name : customerInfo.name;
-        const customerTitle = customerType === 'business' ? sigInfoCustomer.title : '';
 
         return (
             <div id='workingDocContainer'>
@@ -90,24 +80,14 @@ Contract.propTypes = {
     devType: PropTypes.string.isRequired,
     customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
-    customerInfo: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
-    specs: PropTypes.string.isRequired,
-    paymentTerms: PropTypes.string.isRequired,
-    sigInfoDev: PropTypes.object.isRequired,
-    sigInfoCustomer: PropTypes.object.isRequired
+    customerInfo: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devType: state.contractInfo.devType,
-    customerType: state.contractInfo.customerType,
-    devInfo: state.contractInfo.devInfo,
-    customerInfo: state.contractInfo.customerInfo,
-    description: state.contractInfo.description,
-    specs: state.contractInfo.specs,
-    paymentTerms: state.contractInfo.paymentTerms,
-    sigInfoDev: state.contractInfo.sigInfoDev,
-    sigInfoCustomer: state.contractInfo.sigInfoCustomer
+    devType: state.invoiceInfo.devType,
+    customerType: state.invoiceInfo.customerType,
+    devInfo: state.invoiceInfo.devInfo,
+    customerInfo: state.invoiceInfo.customerInfo
 });
 
 

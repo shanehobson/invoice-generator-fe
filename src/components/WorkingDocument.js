@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { generate } from '../documents/contract';
 import Contract from './Contract';
-import { startSetFormsAreComplete } from '../actions/contractInfo';
+import { startSetFormsAreComplete } from '../actions/invoiceInfo';
 
 
 const styles = theme => ({
@@ -56,40 +56,14 @@ class WorkingDocument extends Component {
         const { devType,
                 customerType, 
                 devInfo,
-                customerInfo,
-                description,
-                specs,
-                paymentTerms,
-                sigInfoDev,
-                sigInfoCustomer
+                customerInfo
             } = this.props;
 
-        let result;
+        let result = true; // todo: check if all required fields have been filled out here.
 
-        if (devType === 'business' && customerType === 'individual') {
-            result = (
-                sigInfoDev.name !== '' &&
-                description !== '' &&
-                specs !== '' &&
-                paymentTerms !== ''
-            );            
-        } else if (customerType === 'business') {
-            result = (
-                sigInfoCustomer.name !== '' &&
-                description !== '' &&
-                specs !== '' &&
-                paymentTerms !== ''
-            );
-        } else {
-            result = !(
-                description === '' &&
-                specs === '' &&
-                paymentTerms === ''
-            );
-        }
+       
         
         this.props.startSetFormsAreComplete(result);
-        console.log(paymentTerms);
         return result;
     }
 
@@ -133,24 +107,14 @@ WorkingDocument.propTypes = {
     customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
     customerInfo: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
-    specs: PropTypes.string.isRequired,
-    paymentTerms: PropTypes.string.isRequired,
-    sigInfoDev: PropTypes.object.isRequired,
-    sigInfoCustomer: PropTypes.object.isRequired,
     startSetFormsAreComplete: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devType: state.contractInfo.devType,
-    customerType: state.contractInfo.customerType,
-    devInfo: state.contractInfo.devInfo,
-    customerInfo: state.contractInfo.customerInfo,
-    description: state.contractInfo.description,
-    specs: state.contractInfo.specs,
-    paymentTerms: state.contractInfo.paymentTerms,
-    sigInfoDev: state.contractInfo.sigInfoDev,
-    sigInfoCustomer: state.contractInfo.sigInfoCustomer
+    devType: state.invoiceInfo.devType,
+    customerType: state.invoiceInfo.customerType,
+    devInfo: state.invoiceInfo.devInfo,
+    customerInfo: state.invoiceInfo.customerInfo
 });
 
 const mapDispatchToProps = (dispatch) => ({
