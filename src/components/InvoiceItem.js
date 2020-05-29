@@ -19,6 +19,11 @@ const styles = theme => ({
     },
 });
 
+const options = {
+    style: "currency",
+    currency: "USD"
+}
+
 class InvoiceItem extends Component {
     constructor(props) {
         super(props);
@@ -65,7 +70,7 @@ class InvoiceItem extends Component {
     };
 
     handleRateChange = e => {
-        this.setState({ rate: parseInt(e.target.value) || 0 });
+        this.setState({ rate: parseInt(e.target.value).toLocaleString("en-US", options) || 0 });
         this.calculateTotal();
     };
 
@@ -95,6 +100,7 @@ class InvoiceItem extends Component {
     render() {
         const { classes, FeeTypes } = this.props;
         const { description, unit, rate, feeType, total } = this.state;
+ 
 
         return (
             <div className='TextFieldContainer'>
@@ -147,7 +153,7 @@ class InvoiceItem extends Component {
                 </Select>
 
                 <p className='InvoiceItemTotal'>
-                    {feeType === 'Flat fee' ? (rate) : (rate * unit)}
+                    {feeType === 'Flat fee' ? (rate) : (rate * unit).toLocaleString("en-US", options)}
                 </p>
             </div>
         );
