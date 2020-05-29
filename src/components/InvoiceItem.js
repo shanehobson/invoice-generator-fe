@@ -70,7 +70,7 @@ class InvoiceItem extends Component {
     };
 
     handleRateChange = e => {
-        this.setState({ rate: parseInt(e.target.value).toLocaleString("en-US", options) || 0 });
+        this.setState({ rate: parseInt(e.target.value) || 0 });
         this.calculateTotal();
     };
 
@@ -153,7 +153,9 @@ class InvoiceItem extends Component {
                 </Select>
 
                 <p className='InvoiceItemTotal'>
-                    {feeType === 'Flat fee' ? (rate) : (rate * unit).toLocaleString("en-US", options)}
+                    {feeType === 'Flat fee' ? 
+                    (rate).toLocaleString(undefined, options) : 
+                    (rate * unit).toLocaleString(undefined, options)}
                 </p>
             </div>
         );
