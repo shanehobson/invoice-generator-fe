@@ -32,8 +32,12 @@ a {
     border-radius: 3px;
 }
 
-.addInvoiceItemButton{
-    margin: 0 40px;
+.addInvoiceItemButton {
+    margin: 0;
+}
+
+.InvoiceItemTotal {
+    font-size: 16px;
 }
 
 .FormInputGroupContainer {

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+// import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+// import TextField from '@material-ui/core/TextField';
+// import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
@@ -75,27 +75,13 @@ class Page5 extends Component {
         this.setState({ feeType: e.target.value });
     };
 
-    // addInvoiceItem = () => {
-    //     const items = this.state.invoiceItems.slice();
-    //     items.push({
-    //         description: '',
-    //         unit: 0,
-    //         rate: 0,
-    //         feeType: '',
-    //         total: 0
-    //     })
-    //     this.setState({
-    //         invoiceItems: items
-    //     })
-    // }
-
     addInvoiceItem = () => {
         const items = this.state.invoiceItems.slice();
         items.push({
             description: '',
             unit: 0,
             rate: 0,
-            feeType: '',
+            feeType: 'Flat fee',
             total: 0
         })
         this.setState({
