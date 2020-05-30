@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Button from '@material-ui/core/Button';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -19,16 +18,25 @@ const styles = theme => ({
     },
 });
 
+const options = {
+    style: "currency",
+    currency: "USD"
+  }
+
 class InvoiceItem extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             description: '',
-            unit: null,
-            rate: null,
+            unit: '0',
+            rate: '0',
             feeType: '',
-            total: 0
+            total: 0,
+            errors: {
+                rate: false,
+                unit: false
+            }
         };
     };
 
@@ -56,56 +64,128 @@ class InvoiceItem extends Component {
         this.setState({ open: true });
     };
 
-    handleChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
-
     handleDescriptionChange = e => {
         this.setState({ description: e.target.value });
     };
 
     handleRateChange = e => {
-        this.setState({ rate: parseInt(e.target.value) || 0 });
+        const rate = e.target.value || '0';
+        this.setState({ rate });
         this.calculateTotal();
     };
 
     handleUnitChange = e => {
-        console.log(e);
-        this.setState({ unit: parseInt(e.target.value) || 0 });
-        
+        const unit = e.target.value;
+        this.setState({ unit });
         this.calculateTotal();
     };
 
     calculateTotal = () => {
-        console.log(this.state);
-        const { unit = 0, rate = 0, feeType } = this.state;
+        let { unit = '0', rate = '0', feeType } = this.state;
         let total = 0;
+        unit = this.stringToNumber(unit);
+        rate = this.stringToNumber(rate);
+
+        console.log(unit);
+        console.log('rate in calc total function: ' + rate);
+
         if (feeType === 'Flat fee') {
             total = Math.round(rate, 2);
         } else {
             total = Math.round(unit * rate, 2);
         }
 
-        console.log('Calculate total was called')
-        console.log(total);
+        console.log('total: ' + total)
         this.setState(() => ({ total }));
-       
+    }
+
+    stringToNumber(str) {
+        if (!str) return 0;
+        if (typeof str === 'number') return str;
+
+        const arr = str.split('');
+        console.log(arr);
+        const filteredArr = arr.filter(char => {
+            const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
+            const isNumber = nums.indexOf(char) > - 1;
+            const isPeriod = char === '.';
+            if (isNumber || isPeriod) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        // '$770.75' -> '770.75'
+        const isDecimal = filteredArr.indexOf('.') > -1;
+        const joined = filteredArr.join('');
+        console.log(joined);
+        if (!isDecimal) {
+            return parseInt(joined);
+        } else {
+            // '770.75' 
+            // joined.split('.') -> ['770', '75']
+            const dollars = joined.split('.')[0];
+            const cents = joined.split('.')[1] || 0;
+            return parseInt(dollars, 10) + parseInt(cents / 100, 10);
+        }
+    }
+
+    handleRateKeyPress = (event) => {
+        if (event.key === 'Enter'){
+           this.convertRateToCurrency();
+        }
+    }
+
+    handleRateBlur = () => {
+        this.convertRateToCurrency();
+    }
+
+    convertRateToCurrency = () => {
+        const rate = this.state.rate;
+        console.log(rate);
+        const convertedRate = this.stringToNumber(rate).toLocaleString("en-US", options);
+        console.log(convertedRate);
+        this.setState({
+            rate: convertedRate
+        });
+    }
+
+    handleRateFocus = () => {
+        if (!this.state.rate) {
+            return;
+        }
+        const rateString = this.state.rate || '0'; // $.
+        const arr = rateString.split(''); // turn to array of every character
+        const filteredArr = arr.filter(char => {
+            const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
+            const isNumber = nums.indexOf(char) > - 1;
+            const isPeriod = char === '.';
+            if (isNumber || isPeriod) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        const rate = parseInt(filteredArr.join(''), 10);
+        this.setState({
+            rate
+        });
     }
 
     render() {
-        const { classes, FeeTypes } = this.props;
+        const { FeeTypes } = this.props;
         const { description, unit, rate, feeType, total } = this.state;
  
         return (
 
             <div>
                 <div className='TextFieldContainer'>
+
                     <div  className='RemoveInvoiceButton'>
                         <HighlightOffIcon />
                     </div>
-                    
-                    <div className='InvoiceDescription'>
-                        <TextField
+
+                    <TextField
                             id="outlined-basic"
                             fullWidth
                             variant="outlined"
@@ -113,43 +193,38 @@ class InvoiceItem extends Component {
                             onChange={this.handleDescriptionChange}
                             value={description}
                         >
-                        </TextField>
-                    </div>
+                    </TextField>
                     
                     <div className='SecondRowInvoice'>
-                        <div
-                            style={{
-                                width: '50px'
-                            }}>
-                            {this.state.feeType !== 'Flat fee' &&
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                variant="outlined"
-                                placeholder="Unit"
-                                type="number"
-                                onChange={this.handleUnitChange}
-                                value={unit}
+                        {this.state.feeType !== 'Flat fee' &&
+                        <TextField
+                            style={{width: '50px'}}
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            placeholder="Unit"
+                            onChange={this.handleUnitChange}
+                            value={unit}
+                        >
+                        </TextField>}
+                    
+                        <TextField
+                            style={{ width: '50px'}}
+                            fullWidth
+                            id="outlined-basic"
+                            variant="outlined"
+                            placeholder="Rate"
+                            onChange={this.handleRateChange}
+                            onKeyPress={this.handleRateKeyPress}
+                            onFocus={this.handleRateFocus}
+                            onBlur={this.handleRateBlur}
+                            value={rate}
                             >
-                            </TextField>}
-                        </div>
-                        
-                        <div style={{
-                                width: '50px'
-                            }}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                variant="outlined"
-                                placeholder="Rate"
-                                type="number"
-                                onChange={this.handleRateChange}
-                                value={rate}
-                                >
-                            </TextField>
-                        </div>
-                        
+                        </TextField>
+
                         <Select
+                            style={{ width: feeType === 'Flat fee' ? '160px' : '120px'}}
+                            fullWidth
                             open={this.state.open}
                             onChange={this.handleFeeTypeChange}
                             onClose={this.handleClose}
@@ -161,6 +236,7 @@ class InvoiceItem extends Component {
                                 id: 'controlled-open-select',
                             }}
                         >
+
                             {
                                 FeeTypes.FeeTypes.map((feeType, i) => (
                                     <MenuItem key={i} value={feeType}>{feeType}</MenuItem>
@@ -168,8 +244,10 @@ class InvoiceItem extends Component {
                             }
                         </Select>
 
-                        <p className='InvoiceItemTotal'>
-                            {feeType === 'Flat fee' ? (rate) : (rate * unit)}
+                        <p style={{ width: '40px'}} className='InvoiceItemTotal'>
+                            {feeType === 'Flat fee' ? 
+                            this.stringToNumber(rate).toLocaleString("en-US", options): 
+                            this.stringToNumber(rate * unit).toLocaleString("en-US", options)}
                         </p>
                     </div>
                 </div>
@@ -183,10 +261,6 @@ class InvoiceItem extends Component {
 InvoiceItem.propTypes = {
     FeeTypes: PropTypes.object.isRequired
 };
-
-// const mapStateToProps = (state) ({
-//     feeType: state.FeeTypes.FeeTypes
-// })
 
 
 export default (withStyles(styles)(InvoiceItem));

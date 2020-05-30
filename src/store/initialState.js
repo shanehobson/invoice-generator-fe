@@ -20,10 +20,10 @@ let devType = '',
     invoiceItems = [
         {
             description: '',
-            unit: null,
-            rate: null,
+            unit: 0,
+            rate: 0,
             feeType: 'Flat fee',
-            total: null
+            total: 0
         }
     ],
 
