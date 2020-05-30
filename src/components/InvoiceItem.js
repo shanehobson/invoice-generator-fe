@@ -18,21 +18,17 @@ const styles = theme => ({
     },
 });
 
-const options = {
-    style: "currency",
-    currency: "USD"
-  }
-
 class InvoiceItem extends Component {
     constructor(props) {
         super(props);
+        console.log(props)
 
         this.state = {
             description: '',
-            unit: '0',
-            rate: '0',
+            unit: '1',
+            rate: '',
             feeType: '',
-            total: 0,
+            total: '',
             errors: {
                 rate: false,
                 unit: false
@@ -51,11 +47,6 @@ class InvoiceItem extends Component {
         })
     }
 
-    handleFeeTypeChange = e => {
-        this.setState({ feeType: e.target.value });
-        this.calculateTotal();
-    };
-
     handleClose = () => {
         this.setState({ open: false });
     };
@@ -68,35 +59,32 @@ class InvoiceItem extends Component {
         this.setState({ description: e.target.value });
     };
 
+    handleFeeTypeChange = e => {
+        const feeType = e.target.value;
+        const { unit, rate } = this.state;
+        const total = this.calculateTotal(unit, rate, feeType)
+        this.setState({ feeType, total });
+    };
+
     handleRateChange = e => {
-        const rate = e.target.value || '0';
-        this.setState({ rate });
-        this.calculateTotal();
+        const rate = e.target.value || '';
+        const { unit, feeType } = this.state;
+        const total = this.calculateTotal(unit, rate, feeType);
+        this.setState({ rate, total });
     };
 
     handleUnitChange = e => {
         const unit = e.target.value;
-        this.setState({ unit });
-        this.calculateTotal();
+        const { rate, feeType } = this.state;
+        const total = this.calculateTotal(unit, rate, feeType);
+        this.setState({ unit, total });
     };
 
-    calculateTotal = () => {
-        let { unit = '0', rate = '0', feeType } = this.state;
-        let total = 0;
-        unit = this.stringToNumber(unit);
+    calculateTotal = (unit, rate, feeType) => {
+        if (!unit) {  unit = '1' }
+        if (!rate) { rate = '0' }
         rate = this.stringToNumber(rate);
-
-        console.log(unit);
-        console.log('rate in calc total function: ' + rate);
-
-        if (feeType === 'Flat fee') {
-            total = Math.round(rate, 2);
-        } else {
-            total = Math.round(unit * rate, 2);
-        }
-
-        console.log('total: ' + total)
-        this.setState(() => ({ total }));
+        return (unit * rate).toFixed(2).toString();
     }
 
     stringToNumber(str) {
@@ -104,72 +92,23 @@ class InvoiceItem extends Component {
         if (typeof str === 'number') return str;
 
         const arr = str.split('');
-        console.log(arr);
         const filteredArr = arr.filter(char => {
             const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
             const isNumber = nums.indexOf(char) > - 1;
             const isPeriod = char === '.';
-            if (isNumber || isPeriod) {
-                return true;
-            } else {
-                return false;
-            }
+            return isNumber || isPeriod;
         });
-        // '$770.75' -> '770.75'
+      
         const isDecimal = filteredArr.indexOf('.') > -1;
         const joined = filteredArr.join('');
-        console.log(joined);
+
         if (!isDecimal) {
             return parseInt(joined);
         } else {
-            // '770.75' 
-            // joined.split('.') -> ['770', '75']
             const dollars = joined.split('.')[0];
             const cents = joined.split('.')[1] || 0;
-            return parseInt(dollars, 10) + parseInt(cents / 100, 10);
+            return parseInt(dollars, 10) + (parseFloat(cents / 100, 10));
         }
-    }
-
-    handleRateKeyPress = (event) => {
-        if (event.key === 'Enter'){
-           this.convertRateToCurrency();
-        }
-    }
-
-    handleRateBlur = () => {
-        this.convertRateToCurrency();
-    }
-
-    convertRateToCurrency = () => {
-        const rate = this.state.rate;
-        console.log(rate);
-        const convertedRate = this.stringToNumber(rate).toLocaleString("en-US", options);
-        console.log(convertedRate);
-        this.setState({
-            rate: convertedRate
-        });
-    }
-
-    handleRateFocus = () => {
-        if (!this.state.rate) {
-            return;
-        }
-        const rateString = this.state.rate || '0'; // $.
-        const arr = rateString.split(''); // turn to array of every character
-        const filteredArr = arr.filter(char => {
-            const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
-            const isNumber = nums.indexOf(char) > - 1;
-            const isPeriod = char === '.';
-            if (isNumber || isPeriod) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        const rate = parseInt(filteredArr.join(''), 10);
-        this.setState({
-            rate
-        });
     }
 
     render() {
@@ -198,7 +137,7 @@ class InvoiceItem extends Component {
                     <div className='SecondRowInvoice'>
                         {this.state.feeType !== 'Flat fee' &&
                         <TextField
-                            style={{width: '50px'}}
+                            style={{width: '40px'}}
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
@@ -209,28 +148,24 @@ class InvoiceItem extends Component {
                         </TextField>}
                     
                         <TextField
-                            style={{ width: '50px'}}
+                            style={{ width: '70px'}}
                             fullWidth
                             id="outlined-basic"
                             variant="outlined"
                             placeholder="Rate"
                             onChange={this.handleRateChange}
-                            onKeyPress={this.handleRateKeyPress}
-                            onFocus={this.handleRateFocus}
-                            onBlur={this.handleRateBlur}
                             value={rate}
                             >
                         </TextField>
 
                         <Select
-                            style={{ width: feeType === 'Flat fee' ? '160px' : '120px'}}
+                            style={{ width: feeType === 'Flat fee' ? '110px' : '120px'}}
                             fullWidth
                             open={this.state.open}
                             onChange={this.handleFeeTypeChange}
                             onClose={this.handleClose}
                             onOpen={this.handleOpen}
                             value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
-                            onChange={this.handleChange}
                             inputProps={{
                                 name: 'feeType',
                                 id: 'controlled-open-select',
@@ -245,9 +180,8 @@ class InvoiceItem extends Component {
                         </Select>
 
                         <p style={{ width: '40px'}} className='InvoiceItemTotal'>
-                            {feeType === 'Flat fee' ? 
-                            this.stringToNumber(rate).toLocaleString("en-US", options): 
-                            this.stringToNumber(rate * unit).toLocaleString("en-US", options)}
+                            {/* {(this.stringToNumber(rate) * unit).toLocaleString("en-US", options)} */}
+                            ${total}
                         </p>
                     </div>
                 </div>

@@ -79,10 +79,10 @@ class Page5 extends Component {
         const items = this.state.invoiceItems.slice();
         items.push({
             description: '',
-            unit: 0,
-            rate: 0,
+            unit: '1',
+            rate: '',
             feeType: 'Flat fee',
-            total: 0
+            total: ''
         })
         this.setState({
             invoiceItems: items
