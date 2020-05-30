@@ -79,10 +79,10 @@ class Page5 extends Component {
         const items = this.state.invoiceItems.slice();
         items.push({
             description: '',
-            unit: 0,
-            rate: 0,
+            unit: null,
+            rate: null,
             feeType: 'Flat fee',
-            total: 0
+            total: null
         })
         this.setState({
             invoiceItems: items
@@ -129,14 +129,18 @@ class Page5 extends Component {
                     </div>
                 </div>
 
-                <div className='addInvoiceItemButton'>
+                <div className='AddInvoiceItemButton'>
 
                  {invoiceItems.map((item, i) => 
                      <InvoiceItem key={i} item={item} FeeTypes={this.state.FeeTypes}></InvoiceItem>
                  )}       
 
-                <AddCircleIcon onClick={this.addInvoiceItem} />
-                <p>Add line item</p>
+                <div className='AddInvoiceContainer'>
+                    <AddCircleIcon onClick={this.addInvoiceItem} />
+                    <p>Add line item</p>
+                    <p>Your currency is USD now. <a href="Change currency">Change currency</a></p>
+                </div>    
+
 
                 </div>
       

@@ -30,10 +30,31 @@ a {
     padding: 20px 25px;
     border: 1px solid grey;
     border-radius: 3px;
+    position: relative;
 }
 
-.addInvoiceItemButton {
+.AddInvoiceItemButton {
     margin: 0;
+}
+
+.AddInvoiceContainer {
+    margin-left: 40px;
+}
+
+.MuiFormControl-root-225 {
+    flex-direction: row !important;
+}
+
+.SecondRowInvoice {
+    display: flex;
+    justify-content: space-between;
+}
+
+.RemoveInvoiceButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }
 
 .InvoiceItemTotal {
