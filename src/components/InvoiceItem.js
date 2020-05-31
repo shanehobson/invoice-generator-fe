@@ -117,68 +117,79 @@ class InvoiceItem extends Component {
  
         return (
 
-            <div>
+            <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
                 <div className='TextFieldContainer'>
 
                     <div  className='RemoveInvoiceButton'>
                         <HighlightOffIcon />
                     </div>
 
-                    <TextField
-                            id="outlined-basic"
-                            fullWidth
-                            variant="outlined"
-                            placeholder="Description"
-                            onChange={this.handleDescriptionChange}
-                            value={description}
-                        >
-                    </TextField>
-                    
-                    <div className='SecondRowInvoice'>
-                        {this.state.feeType !== 'Flat fee' &&
+                    <div className='DescriptionField'>
                         <TextField
-                            style={{width: '40px'}}
-                            fullWidth
-                            id="outlined-basic"
-                            variant="outlined"
-                            placeholder="Unit"
-                            onChange={this.handleUnitChange}
-                            value={unit}
-                        >
-                        </TextField>}
-                    
-                        <TextField
-                            style={{ width: '70px'}}
-                            fullWidth
-                            id="outlined-basic"
-                            variant="outlined"
-                            placeholder="Rate"
-                            onChange={this.handleRateChange}
-                            value={rate}
+                                id="outlined-basic"
+                                fullWidth
+                                variant="outlined"
+                                placeholder="Description"
+                                onChange={this.handleDescriptionChange}
+                                value={description}
                             >
                         </TextField>
+                    </div>
+                
+                    <div className='SecondRowInvoice'>
+                        <div className='UnitRateTypeGridArea'>
+                            <div className='UnitField'>
+                                {this.state.feeType !== 'Flat fee' &&
+                                <TextField
+                                    style={{width: '50px'}}
+                                    fullWidth
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    placeholder="Unit"
+                                    onChange={this.handleUnitChange}
+                                    value={unit}
+                                >
+                                </TextField>}
+                            </div>
+                
+                            <div className='FormControlPrepend'>
+                                <span className='RateDollarSymbol'>$ </span>
+                                <TextField
+                                    style={{ width: '50px'}}
+                                    fullWidth
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    placeholder="Rate"
+                                    onChange={this.handleRateChange}
+                                    value={rate}
+                                >
+                                </TextField>
+                            </div>
+                            <div className='SelectField'>
+                                <Select
+                                    style={{ width: feeType === 'Flat fee' ? '160px' : '120px'}}
+                                    fullWidth
+                                    open={this.state.open}
+                                    onChange={this.handleFeeTypeChange}
+                                    onClose={this.handleClose}
+                                    onOpen={this.handleOpen}
+                                    value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
+                                    inputProps={{
+                                        name: 'feeType',
+                                        id: 'controlled-open-select',
+                                    }}
+                                >
 
-                        <Select
-                            style={{ width: feeType === 'Flat fee' ? '110px' : '120px'}}
-                            fullWidth
-                            open={this.state.open}
-                            onChange={this.handleFeeTypeChange}
-                            onClose={this.handleClose}
-                            onOpen={this.handleOpen}
-                            value={feeType ? FeeTypes.FeeTypes.find(type => type === feeType): ''}
-                            inputProps={{
-                                name: 'feeType',
-                                id: 'controlled-open-select',
-                            }}
-                        >
-
-                            {
-                                FeeTypes.FeeTypes.map((feeType, i) => (
-                                    <MenuItem key={i} value={feeType}>{feeType}</MenuItem>
-                                ))
-                            }
-                        </Select>
-
+                                    {
+                                        FeeTypes.FeeTypes.map((feeType, i) => (
+                                            <MenuItem key={i} value={feeType}>{feeType}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </div>
+                        </div>
+                        
+                        
                         <p style={{ width: '40px'}} className='InvoiceItemTotal'>
                             {/* {(this.stringToNumber(rate) * unit).toLocaleString("en-US", options)} */}
                             ${total}
@@ -195,6 +206,5 @@ class InvoiceItem extends Component {
 InvoiceItem.propTypes = {
     FeeTypes: PropTypes.object.isRequired
 };
-
 
 export default (withStyles(styles)(InvoiceItem));

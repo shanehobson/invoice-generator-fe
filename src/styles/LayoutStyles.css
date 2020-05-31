@@ -26,14 +26,53 @@ a {
 }
 
 .TextFieldContainer {
-    margin: 40px;
-    padding: 20px 25px;
+    margin: 40px auto;
+    padding: 30px 25px;
     border: 1px solid grey;
     border-radius: 3px;
     position: relative;
+    max-width: 600px;
 }
 
-.AddInvoiceItemButton {
+.SecondRowInvoice {
+    padding-top: 20px;
+    display: grid;
+    grid-template-areas: "main total";
+    grid-template-columns: 2fr 1fr;
+}
+
+.UnitRateTypeGridArea {
+    display: grid;
+    grid-template-areas: "unit rate type";
+    grid-area: main;
+}
+
+.UnitField {
+    grid-area: unit;
+}
+
+.FormControlPrepend {
+    grid-area: rate;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.SelectField {
+    grid-area: type;
+}
+
+.InvoiceItemTotal {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    align-items: flex-end;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+.InvoiceItems {
     margin: 0;
 }
 
@@ -45,13 +84,6 @@ a {
     flex-direction: row !important;
 }
 
-.SecondRowInvoice {
-    display: flex;
-    padding-top: 20px;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
 .RemoveInvoiceButton {
     position: absolute;
     top: 5px;
@@ -59,15 +91,18 @@ a {
     cursor: pointer;
 }
 
-.InvoiceItemTotal {
+.RateDollarSymbol {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     font-weight: bold;
     align-items: flex-end;
-    margin-bottom: 0;
+    margin-bottom: 3px;
     padding-bottom: 5px;
+    padding-right: 5px;
     font-size: 16px;
 }
+
+
 
 .FormInputGroupContainer {
     display: flex;
@@ -85,9 +120,4 @@ a {
     flex-direction: 'column';
     align-content: 'center';
     align-items: 'center';
-}
-
-.TextFieldContainer {
-    padding-right: 5%;
-    padding-left: 5%;
 }

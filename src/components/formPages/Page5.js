@@ -3,12 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-// import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Typography from '@material-ui/core/Typography';
-// import TextField from '@material-ui/core/TextField';
-// import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
 import InvoiceItem from '../InvoiceItem';
@@ -129,19 +125,17 @@ class Page5 extends Component {
                     </div>
                 </div>
 
-                <div className='AddInvoiceItemButton'>
+                <div className='InvoiceItems'>
 
-                 {invoiceItems.map((item, i) => 
-                     <InvoiceItem key={i} item={item} FeeTypes={this.state.FeeTypes}></InvoiceItem>
-                 )}       
+                    {invoiceItems.map((item, i) => 
+                        <InvoiceItem key={i} item={item} FeeTypes={this.state.FeeTypes}></InvoiceItem>
+                    )}       
 
-                <div className='AddInvoiceContainer'>
-                    <AddCircleIcon onClick={this.addInvoiceItem} />
-                    <p>Add line item</p>
-                    <p>Your currency is USD now. <a href="Change currency">Change currency</a></p>
-                </div>    
-
-
+                    <div className='AddInvoiceContainer'>
+                        <AddCircleIcon onClick={this.addInvoiceItem} />
+                        <p>Add line item</p>
+                        <p>Your currency is USD now. <a href="Change currency">Change currency</a></p>
+                    </div>    
                 </div>
       
                 <div className='AltFormContainer'>
