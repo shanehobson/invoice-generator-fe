@@ -9,11 +9,10 @@ import { generate } from '../documents/contract';
 import Contract from './Contract';
 import { startSetFormsAreComplete } from '../actions/invoiceInfo';
 
-
 const styles = theme => ({
     root: {
         height: 720,
-        marginLeft: 10
+        // marginLeft: '10px'
     },
     docContainer: {
         height: 720,
@@ -72,7 +71,8 @@ class WorkingDocument extends Component {
         const { classes } = this.props;
 
         return (
-            <Paper classes={{root: this.props.classes.root}} elevation={1}>
+            <div className="WorkingDoc">
+                <Paper classes={{root: this.props.classes.root}} elevation={1}>
                 {   formsAreComplete ? 
                         <div className='WorkingDoc-buttonContainer'> 
                             <Button
@@ -97,6 +97,8 @@ class WorkingDocument extends Component {
                     <Contract />
                 </div>
             </Paper>
+            </div>
+            
         );
     }
 };

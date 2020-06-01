@@ -1,8 +1,7 @@
 .Header-headerContainer {
     background-color: #eaeaea;
-    /* min-height: 80px; */
     margin-top: 1.3rem;
-    padding: 2rem;
+    padding: 1rem;
 }
 .Header-gridContainer {
     padding-top: 1.5rem;

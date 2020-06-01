@@ -23,7 +23,8 @@ let devType = '',
             unit: '1',
             rate: '',
             feeType: 'Flat fee',
-            total: ''
+            total: '',
+            show: true
         }
     ],
 

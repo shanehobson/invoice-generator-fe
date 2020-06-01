@@ -11,12 +11,15 @@ import InvoiceItem from '../InvoiceItem';
 
 const styles = theme => ({
     root: {
-        minHeight: 720,
+        minHeight: 691,
         paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit
+        paddingBottom: theme.spacing.unit,
     },
     PageFormInput: {
         margin: 20
+    },
+    invoiceTitle: {
+        paddingLeft: theme.typography.paddingLeft
     },
     button: {
         margin: theme.spacing.unit,
@@ -35,7 +38,7 @@ class Page5 extends Component {
     };
 
 
-    componentDidMount() { 
+    componentDidMount = () => { 
         this.setState({ 
             invoiceItems: this.props.invoiceItems,
             FeeTypes: this.props.FeeTypes
@@ -78,19 +81,24 @@ class Page5 extends Component {
             unit: '1',
             rate: '',
             feeType: 'Flat fee',
-            total: ''
-        })
+            total: '',
+            show: true
+        });
         this.setState({
             invoiceItems: items
         })
     }
 
-    removeInvoiceItem = (i) => {
-        const items = this.state.invoiceItems.slice();
-        if (items.length === 0) { return; }
+    updateInvoiceItem = (item, index) => {
+        const invoiceItems = this.state.invoiceItems.slice();
+
+        for (const [k, v] of Object.entries(item)) {
+            invoiceItems[index][k] = v;
+        }
+        
         this.setState({
-            invoiceItems: items.splice(i, 1)
-        })
+            invoiceItems
+        });
     }
 
     handleNextPageButtonClick = () => {
@@ -101,14 +109,13 @@ class Page5 extends Component {
 
     render() {
         const { classes, FeeTypes } = this.props;
-        const { nextButtonDisabled, feeType, invoiceItems} = this.state;
-
+        const { nextButtonDisabled, feeType, invoiceItems } = this.state;
 
         return (
             <Paper classes={{root: classes.root}} elevation={1}>
                 <div className='AltFormContainer'>       
                     <div className='FormHeaderContainer'>
-                        <Typography variant='title'>
+                        <Typography className={classes.invoiceTitle}>
                             What are you invoicing?
                         </Typography>
                     </div>
@@ -128,9 +135,16 @@ class Page5 extends Component {
                 <div className='InvoiceItems'>
 
                     {invoiceItems.map((item, i) => 
-                        <InvoiceItem key={i} item={item} FeeTypes={this.state.FeeTypes}></InvoiceItem>
-                    )}       
-
+                        <InvoiceItem
+                        key={i}
+                        index={i}
+                        item={item} 
+                        FeeTypes={this.state.FeeTypes}
+                        updateInvoiceItem={this.updateInvoiceItem}
+                        >
+                        </InvoiceItem>
+                    )}      
+                
                     <div className='AddInvoiceContainer'>
                         <AddCircleIcon onClick={this.addInvoiceItem} />
                         <p>Add line item</p>

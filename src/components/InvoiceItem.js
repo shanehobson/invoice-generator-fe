@@ -8,8 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import '../styles/LayoutStyles.css';
 
 const styles = theme => ({
-    root: {
-    },
     PageFormInput: {
         margin: 20
     },
@@ -21,7 +19,6 @@ const styles = theme => ({
 class InvoiceItem extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
 
         this.state = {
             description: '',
@@ -29,6 +26,7 @@ class InvoiceItem extends Component {
             rate: '',
             feeType: '',
             total: '',
+            show: true,
             errors: {
                 rate: false,
                 unit: false
@@ -45,6 +43,20 @@ class InvoiceItem extends Component {
             total: this.props.item.total,
             FeeTypes: this.props.FeeTypes
         })
+    }
+
+    componentDidUpdate = (_, prevState) => {
+        let stateHasChanged = false;
+
+        for (const [k, v] of Object.entries(prevState)) {
+            if (this.state[k] !== v) {
+                stateHasChanged = true;
+            }
+        }
+
+        if (stateHasChanged) {
+            this.onUpdate();
+        }
     }
 
     handleClose = () => {
@@ -80,6 +92,22 @@ class InvoiceItem extends Component {
         this.setState({ unit, total });
     };
 
+    handleRemoveInvoiceItem = () => {
+        this.setState({ show: false });
+    }
+
+    onUpdate = () => {
+        const { description, unit, rate, feeType, total, show } = this.state;
+        this.props.updateInvoiceItem({
+            description,
+            unit,
+            rate,
+            feeType,
+            total,
+            show
+        }, this.props.index)
+    }
+
     calculateTotal = (unit, rate, feeType) => {
         if (!unit) {  unit = '1' }
         if (!rate) { rate = '0' }
@@ -112,33 +140,39 @@ class InvoiceItem extends Component {
     }
 
     render() {
+
         const { FeeTypes } = this.props;
-        const { description, unit, rate, feeType, total } = this.state;
+        const { description, unit, rate, feeType, total, show } = this.state;
+
+        if (!show) {
+            return <span></span>
+        }
  
         return (
-
-            <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
+            <div>
                 <div className='TextFieldContainer'>
 
-                    <div  className='RemoveInvoiceButton'>
+                    <div className='RemoveInvoiceButton' onClick={this.handleRemoveInvoiceItem}>
                         <HighlightOffIcon />
                     </div>
 
                     <div className='DescriptionField'>
                         <TextField
-                                id="outlined-basic"
-                                fullWidth
-                                variant="outlined"
-                                placeholder="Description"
-                                onChange={this.handleDescriptionChange}
-                                value={description}
-                            >
+                            id="outlined-basic"
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Description"
+                            onChange={this.handleDescriptionChange}
+                            value={description}
+                        >
                         </TextField>
                     </div>
                 
                     <div className='SecondRowInvoice'>
-                        <div className='UnitRateTypeGridArea'>
-                            <div className='UnitField'>
+                        <div className='UnitRateTypeContainer'>
+
+                            <div className='UnitField'
+                                style={{display: feeType === 'Flat fee' ? 'none' : 'flex'}}>
                                 {this.state.feeType !== 'Flat fee' &&
                                 <TextField
                                     style={{width: '50px'}}
@@ -151,11 +185,12 @@ class InvoiceItem extends Component {
                                 >
                                 </TextField>}
                             </div>
-                
-                            <div className='FormControlPrepend'>
-                                <span className='RateDollarSymbol'>$ </span>
+                         
+                            <div className='FormControlPrepend'
+                                style={{ paddingLeft: feeType === 'Flat fee' ? '0' : '15px'}}>
+                                <span className='RateDollarSymbol'>$</span>
                                 <TextField
-                                    style={{ width: '50px'}}
+                                    style={{width: '50px'}}
                                     fullWidth
                                     id="outlined-basic"
                                     variant="outlined"
@@ -165,9 +200,9 @@ class InvoiceItem extends Component {
                                 >
                                 </TextField>
                             </div>
-                            <div className='SelectField'>
+
+                            <div className='SelectField' style={{width: '100%', paddingLeft: '25px'}}>
                                 <Select
-                                    style={{ width: feeType === 'Flat fee' ? '160px' : '120px'}}
                                     fullWidth
                                     open={this.state.open}
                                     onChange={this.handleFeeTypeChange}
@@ -186,19 +221,15 @@ class InvoiceItem extends Component {
                                         ))
                                     }
                                 </Select>
-                            </div>
+                            </div>       
                         </div>
-                        
-                        
+                          
                         <p style={{ width: '40px'}} className='InvoiceItemTotal'>
-                            {/* {(this.stringToNumber(rate) * unit).toLocaleString("en-US", options)} */}
                             ${total}
                         </p>
                     </div>
                 </div>
             </div>
-            
-            
         );
     }
 };
