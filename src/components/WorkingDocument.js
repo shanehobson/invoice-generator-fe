@@ -25,7 +25,7 @@ const styles = theme => ({
 
 class WorkingDocument extends Component {
     constructor(props) {
-        console.log('Entered WorkingDocument constructor')
+        // console.log('Entered WorkingDocument constructor')
         super(props);
         this.state = {
             formsAreComplete: false,

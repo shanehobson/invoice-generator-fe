@@ -58,7 +58,9 @@ export const startSetFormsAreComplete = (formsAreComplete) => {
     }
 };
 
-export const setInvoiceItems = (invoiceItems) => ({
-    type: 'SET_INVOICE_ITEMS',
-    invoiceItems
-});
+export const setInvoiceItems = (invoiceItems) => {
+    return {
+        type: 'SET_INVOICE_ITEMS',
+        invoiceItems: invoiceItems
+    }
+};

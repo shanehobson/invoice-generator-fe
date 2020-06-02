@@ -45,7 +45,7 @@ class ProgressBar extends React.Component {
         if (devInfo.zip !== '') totalCompleted++;
         if (customerInfo.zip !== '') totalCompleted++;
 
-        console.log(totalCompleted);
+        // console.log(totalCompleted);
         return totalCompleted;
     };
 

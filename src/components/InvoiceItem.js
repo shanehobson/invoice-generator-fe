@@ -93,7 +93,7 @@ class InvoiceItem extends Component {
     };
 
     handleRemoveInvoiceItem = () => {
-        this.setState({ show: false });
+        this.setState({ show: false});
     }
 
     onUpdate = () => {
@@ -141,20 +141,22 @@ class InvoiceItem extends Component {
 
     render() {
 
-        const { FeeTypes } = this.props;
+        const { FeeTypes, index, invoiceItems } = this.props;
         const { description, unit, rate, feeType, total, show } = this.state;
 
-        if (!show) {
+        console.log(invoiceItems)
+
+        if (!show)  {
             return <span></span>
         }
  
         return (
             <div>
                 <div className='TextFieldContainer'>
-
+                    {invoiceItems.length > 1 &&
                     <div className='RemoveInvoiceButton' onClick={this.handleRemoveInvoiceItem}>
                         <HighlightOffIcon />
-                    </div>
+                    </div>}
 
                     <div className='DescriptionField'>
                         <TextField
