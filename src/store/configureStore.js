@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import initialState from './initialState';
 import pagesReducer from '../reducers/pages';
-import contractInfoReducer from '../reducers/contractInfo';
+import invoiceInfoReducer from '../reducers/invoiceInfo';
 import USstatesReducer from '../reducers/USstates';
 import FeeTypesReducer from '../reducers/FeeTypes';
 
@@ -13,7 +13,7 @@ export default () => {
   const store = createStore(
     combineReducers({
       pages: pagesReducer,
-      contractInfo: contractInfoReducer,
+      invoiceInfo: invoiceInfoReducer,
       USstates: USstatesReducer,
       FeeTypes: FeeTypesReducer
     }),

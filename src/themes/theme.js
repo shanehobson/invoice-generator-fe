@@ -1,4 +1,3 @@
-import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { grey, green} from '@material-ui/core/colors';
 

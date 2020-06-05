@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { generate } from '../documents/contract';
 import Contract from './Contract';
-import { startSetFormsAreComplete } from '../actions/contractInfo';
-
+import { startSetFormsAreComplete } from '../actions/invoiceInfo';
 
 const styles = theme => ({
     root: {
         height: 720,
-        marginLeft: 10
     },
     docContainer: {
         height: 720,
@@ -26,7 +24,6 @@ const styles = theme => ({
 
 class WorkingDocument extends Component {
     constructor(props) {
-        console.log('Entered WorkingDocument constructor')
         super(props);
         this.state = {
             formsAreComplete: false,
@@ -56,40 +53,12 @@ class WorkingDocument extends Component {
         const { devType,
                 customerType, 
                 devInfo,
-                customerInfo,
-                description,
-                specs,
-                paymentTerms,
-                sigInfoDev,
-                sigInfoCustomer
+                customerInfo
             } = this.props;
 
-        let result;
+        let result = true; // todo: check if all required fields have been filled out here.
 
-        if (devType === 'business' && customerType === 'individual') {
-            result = (
-                sigInfoDev.name !== '' &&
-                description !== '' &&
-                specs !== '' &&
-                paymentTerms !== ''
-            );            
-        } else if (customerType === 'business') {
-            result = (
-                sigInfoCustomer.name !== '' &&
-                description !== '' &&
-                specs !== '' &&
-                paymentTerms !== ''
-            );
-        } else {
-            result = !(
-                description === '' &&
-                specs === '' &&
-                paymentTerms === ''
-            );
-        }
-        
         this.props.startSetFormsAreComplete(result);
-        console.log(paymentTerms);
         return result;
     }
 
@@ -98,31 +67,13 @@ class WorkingDocument extends Component {
         const { classes } = this.props;
 
         return (
-            <Paper classes={{root: this.props.classes.root}} elevation={1}>
-                {   formsAreComplete ? 
-                        <div className='WorkingDoc-buttonContainer'> 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size='medium'
-                                className={classes.button}
-                                onClick={this.generatePDF}
-                                >
-                                <p className='ButtonText'>Generate PDF</p>
-                            </Button> 
-                        </div> 
-                        :
-                        <div className='WorkingDoc-buttonContainer' 
-                            style={{justifyContent: 'left', paddingLeft: '60px', paddingTop: '60px'}}>
-                            <Typography variant='display1' style={{color: 'red', display: 'flex'}}>
-                                Invoice
-                            </Typography>
-                        </div>
-                }
-                <div className='Contract-contractContainer' style={{color: `${textColor}`}}>
-                    <Contract />
-                </div>
-            </Paper>
+            <div className="WorkingDoc">
+                <Paper>
+                    <div>
+                        <Contract />
+                    </div>
+                </Paper>
+            </div>     
         );
     }
 };
@@ -133,24 +84,14 @@ WorkingDocument.propTypes = {
     customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
     customerInfo: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
-    specs: PropTypes.string.isRequired,
-    paymentTerms: PropTypes.string.isRequired,
-    sigInfoDev: PropTypes.object.isRequired,
-    sigInfoCustomer: PropTypes.object.isRequired,
     startSetFormsAreComplete: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devType: state.contractInfo.devType,
-    customerType: state.contractInfo.customerType,
-    devInfo: state.contractInfo.devInfo,
-    customerInfo: state.contractInfo.customerInfo,
-    description: state.contractInfo.description,
-    specs: state.contractInfo.specs,
-    paymentTerms: state.contractInfo.paymentTerms,
-    sigInfoDev: state.contractInfo.sigInfoDev,
-    sigInfoCustomer: state.contractInfo.sigInfoCustomer
+    devType: state.invoiceInfo.devType,
+    customerType: state.invoiceInfo.customerType,
+    devInfo: state.invoiceInfo.devInfo,
+    customerInfo: state.invoiceInfo.customerInfo
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -158,3 +99,6 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(WorkingDocument));
+
+
+{/* <Paper classes={{root: this.props.classes.root}} elevation={1}> */}

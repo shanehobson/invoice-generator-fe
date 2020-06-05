@@ -37,26 +37,21 @@ class ProgressBar extends React.Component {
     };
 
     calculateNumberCompleted = (nextProps) => {
-        const { devType, customerType, devInfo, customerInfo, description, specs, paymentTerms, sigInfoDev, sigInfoCustomer } = nextProps;
+        const { devType, customerType, devInfo, customerInfo } = nextProps;
         let totalCompleted = 0;
 
         if (devType !== '') totalCompleted++;
         if (customerType !== '') totalCompleted++;
         if (devInfo.zip !== '') totalCompleted++;
         if (customerInfo.zip !== '') totalCompleted++;
-        if (description !== '') totalCompleted++;
-        if (specs !== '') totalCompleted++;
-        if (paymentTerms !== '') totalCompleted++;
-        if (devType === 'business' && sigInfoDev.sigName !== '') totalCompleted++;
-        if (customerType === 'business' && sigInfoCustomer.sigName !== '') totalCompleted++;
 
-        console.log(totalCompleted);
+        // console.log(totalCompleted);
         return totalCompleted;
     };
 
     calculateTotal(nextProps) {
         const { devType, customerType } = nextProps;
-        let total = 7;
+        let total = 4;
 
         if (devType === 'business') total++;
         if (customerType === 'business') total++;
@@ -88,24 +83,14 @@ ProgressBar.propTypes = {
     customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
     customerInfo: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
-    specs: PropTypes.string.isRequired,
-    paymentTerms: PropTypes.string.isRequired,
-    sigInfoDev: PropTypes.object.isRequired,
-    sigInfoCustomer: PropTypes.object.isRequired,
     currentPage: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devType: state.contractInfo.devType,
-    customerType: state.contractInfo.customerType,
-    devInfo: state.contractInfo.devInfo,
-    customerInfo: state.contractInfo.customerInfo,
-    description: state.contractInfo.description,
-    specs: state.contractInfo.specs,
-    paymentTerms: state.contractInfo.paymentTerms,
-    sigInfoDev: state.contractInfo.sigInfoDev,
-    sigInfoCustomer: state.contractInfo.sigInfoCustomer,
+    devType: state.invoiceInfo.devType,
+    customerType: state.invoiceInfo.customerType,
+    devInfo: state.invoiceInfo.devInfo,
+    customerInfo: state.invoiceInfo.customerInfo,
     currentPage: state.pages.currentPage
 });
 

@@ -16,7 +16,7 @@ a {
 }
 
 .PageBottomDiv {
-    margin: 0 auto 20px auto;
+    margin: 20px auto;
     display: flex;
     justify-content: center;
 }
@@ -25,12 +25,76 @@ a {
     margin: 50px;
 }
 
+.InvoiceItems {
+    margin-bottom: 40px;
+    padding: 0 35px;
+}
+
 .TextFieldContainer {
-    margin: 40px;
- 
-    padding: 20px 25px;
+    margin: 24px auto;
+    padding: 30px 25px;
     border: 1px solid grey;
     border-radius: 3px;
+    position: relative;
+    max-width: 540px;
+}
+
+.MuiSvgIcon-root-179 {
+    
+    font-size: 20px !important;
+}
+
+.SecondRowInvoice {
+    padding-top: 20px;
+    display: grid;
+    grid-template-areas: "main total";
+    grid-template-columns: 70% 30%;
+}
+
+.UnitRateTypeContainer {
+    display: flex;
+}
+
+.FormControlPrepend {
+    grid-area: rate;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.InvoiceItemTotal {
+    margin-left: auto;
+    font-weight: bold;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+.MuiSelect-selectMenu-244 {
+    padding-top: 12px;
+}
+
+.AddInvoiceContainer {
+    margin-left: 20px;
+}
+
+.MuiFormControl-root-225 {
+    flex-direction: row !important;
+}
+
+.RemoveInvoiceButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.RateDollarSymbol {
+    display: flex;
+    align-items: flex-end;
+    font-weight: bold;
+    margin-bottom: 3px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    font-size: 16px;
 }
 
 .FormInputGroupContainer {
@@ -38,10 +102,14 @@ a {
 }
 
 .FormHeaderContainer {
+    display: flex;
+    justify-content: center;
     margin-top: 5%;
-    padding-left: 10%;
-    padding-right: 10%;
-    text-align: center;
+}
+
+.Page5-invoiceTitle-177 {
+    font-size: 30px !important;
+    font-weight: bold !important;
 }
 
 .AltFormContainer {
@@ -49,9 +117,4 @@ a {
     flex-direction: 'column';
     align-content: 'center';
     align-items: 'center';
-}
-
-.TextFieldContainer {
-    padding-right: 5%;
-    padding-left: 5%;
 }

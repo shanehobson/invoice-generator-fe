@@ -10,7 +10,7 @@ export const history = createHistory();
 class AppRouter extends Component {
 
   componentDidMount() {
-    document.title = "Contract Generator";
+    document.title = "Invoice Generator";
   }
 
   render() {
