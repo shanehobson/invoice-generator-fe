@@ -59,23 +59,24 @@ class Contract extends Component {
                         
                     </div>
               
-                    <div className='Invoice-Items-Container'>
+                    <div className='Third-Container Middle-Third-Container'>
                         <div className='Line-Items'>
                             <div id='Item'>{invoiceItem}</div>
                             <div id='Unit'>Unit</div>
                             <div id='Rate'>Rate/FeeType</div>
                             <div id='Item-Total'>Total</div>
                         </div>
+                        <div className='Third-Container Total-Info'>
+                            <div id='Subtotal'>Subtotal</div>
+                            <div id='Subtotal-Price'>$0.00</div>
+                            <div id='Total'>Total</div>
+                            <div id='Total-Price'>$0.00</div>
+                            <div id='Amount-Due'>Amount Due</div>
+                        <div id='Amount-Price'>$0.00</div>
+                    </div>
                     </div>
 
-                    <div className='Total-Info'>
-                        <div id='Subtotal'>Subtotal</div>
-                        <div id='Total'>Total</div>
-                        <div id='Amount-Due'>Amount Due</div>
-                    </div>
-
-
-                    <div className='Dev-Address'>
+                    <div className='Third-Container Bottom-Third-Container'>
                         <h4 className='Client-Customer'>{devName}</h4> 
                         {devStreet}, 
                         <br></br>

@@ -2,6 +2,9 @@
     min-height: 80vh;
     margin-bottom: 2rem;
     padding: 2rem;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .Dashboard-progressBarContainer {
