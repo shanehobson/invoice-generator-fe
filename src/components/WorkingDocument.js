@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { generate } from '../documents/contract';
 import Contract from './Contract';
@@ -12,7 +12,6 @@ import { startSetFormsAreComplete } from '../actions/invoiceInfo';
 const styles = theme => ({
     root: {
         height: 720,
-        // marginLeft: '10px'
     },
     docContainer: {
         height: 720,
@@ -25,7 +24,6 @@ const styles = theme => ({
 
 class WorkingDocument extends Component {
     constructor(props) {
-        // console.log('Entered WorkingDocument constructor')
         super(props);
         this.state = {
             formsAreComplete: false,
@@ -60,8 +58,6 @@ class WorkingDocument extends Component {
 
         let result = true; // todo: check if all required fields have been filled out here.
 
-       
-        
         this.props.startSetFormsAreComplete(result);
         return result;
     }
@@ -72,33 +68,12 @@ class WorkingDocument extends Component {
 
         return (
             <div className="WorkingDoc">
-                <Paper classes={{root: this.props.classes.root}} elevation={1}>
-                {   formsAreComplete ? 
-                        <div className='WorkingDoc-buttonContainer'> 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size='medium'
-                                className={classes.button}
-                                onClick={this.generatePDF}
-                                >
-                                <p className='ButtonText'>Generate PDF</p>
-                            </Button> 
-                        </div> 
-                        :
-                        <div className='WorkingDoc-buttonContainer' 
-                            style={{justifyContent: 'left', paddingLeft: '60px', paddingTop: '60px'}}>
-                            <Typography variant='display1' style={{color: 'red', display: 'flex'}}>
-                                Invoice
-                            </Typography>
-                        </div>
-                }
-                <div className='Contract-contractContainer' style={{color: `${textColor}`}}>
-                    <Contract />
-                </div>
-            </Paper>
-            </div>
-            
+                <Paper>
+                    <div>
+                        <Contract />
+                    </div>
+                </Paper>
+            </div>     
         );
     }
 };
@@ -124,3 +99,6 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(WorkingDocument));
+
+
+{/* <Paper classes={{root: this.props.classes.root}} elevation={1}> */}

@@ -42,22 +42,33 @@ class Page9 extends Component {
                     <Typography variant='title'>
                         {
                             formsAreComplete ?
-                                'Congratulations, your contract is ready for your review! Please take a moment to review the document to make sure all the information is correct. If you need to edit any of the information you entered, click the button below to navigate to the information you wish to edit. Once you are sure that the information in the contraft is correct, click the "Generate PDF" button to download a PDF of your contract.'
+                                'Congratulations! Your invoice is ready for your review. Please take a moment to review your invoice to make sure all the information is correct. If you need to edit any of the information you entered, click the "Previous" button below to navigate to the information you wish to edit. Once you are sure that the information in the invoice is correct, click the "Generate PDF" button to download a PDF of your invoice.'
                             :
                                 'Some information is missing. Please go back and complete all form fields so we can generate your Web Development Services Agreement.'
                         }
                     </Typography>
                 </div>
                 <div className='PageBottomDiv'>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size='large'
-                    className={classes.button}
-                    onClick={this.handlePreviousPageButtonClick}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size='large'
+                        className={classes.button}
+                        onClick={this.handlePreviousPageButtonClick}
                     >
-                    <p className='ButtonText'>Go Back</p>
-              </Button>   
+                        <p className='ButtonText'>Previous</p>
+                    </Button>
+                <div> 
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size='medium'
+                        className={classes.button}
+                        onClick={this.generatePDF}
+                    >
+                        <p className='ButtonText'>Generate PDF</p>
+                    </Button> 
+                </div> 
                 </div>             
             </Paper>
         );

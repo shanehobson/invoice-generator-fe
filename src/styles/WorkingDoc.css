@@ -1,17 +1,27 @@
+.Dev-Address {
+    height: 20%;
+}
+
 .WorkingDoc {
     margin-left: 10px;
 }
 
-#workingDocContainer {
-    padding: 25px;
+#InvoiceContainer {
+    box-sizing: border-box;
+    height: 720px;
+    padding: 60px;
+    /* overflow: scroll; */
 }
-.WorkingDoc-buttonContainer {
-    display: flex;
-    justify-content: center;
-    padding-top: 25px;
+
+.Invoice-Items {
+    height: 50%;
+    padding: 20px;
 }
-.Contract-contractContainer {
-    height: 610px;
+
+.Top-Third {
+    border-bottom: 2px solid #ccc;
+    /* height: 250px; */
+    height: 30%;
 }
 
 @media only screen and (max-width: 1280px) {
@@ -19,7 +29,8 @@
     .WorkingDoc {
         margin-left: 0;
     }
-    .WorkingDoc-buttonContainer {
+    #InvoiceContainer {
         border-top: 2px solid #4caf50;
     }
+
 }
