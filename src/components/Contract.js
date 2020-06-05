@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
 class Contract extends Component {
@@ -11,12 +10,12 @@ class Contract extends Component {
 
     render() {
         const { 
-            devType,
-            customerType, 
             devInfo,
-            customerInfo
+            customerInfo,
+            invoiceInfo,
         } = this.props;
 
+        const invoiceItem = invoiceInfo.toString() === '' ? '___________________' : invoiceInfo.toString() ;
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -30,58 +29,60 @@ class Contract extends Component {
 
         return (
             <Fragment>
-                <div id='InvoiceContainer'>
-                    <div className='Top-Third'>
-                        <div id='Title'>
-                            <Typography variant='display1' style={{color: 'red'}}>
-                                Invoice
-                            </Typography>
+                <div id='Invoice-Page-Container'>
+                    <div className='Top-Third-Container'>
+                        <h1 id='Invoice-Title'>Invoice</h1>
+                        <div className='Top-Right-Grid-Area'>
+                            <h1 id='Invoice-Total'>
+                                $0.00
+                            </h1>
+                            <div id='Due'>
+                                Due:
+                            </div>
+                            <div id='Issued'>
+                                Issued: (date)
+                            </div>
                         </div>
 
-                        <div id='Total'>
-                            $0.00
-                        </div>
-                        
-                        <div id='Client-Address'>
-                            <p>
-                                {customerName} 
-                                <br></br>
+                        <div id='Client-Address-Area'>
+                            <h2 className='Client-Customer'>
+                                {customerName}
+                            </h2>
+                            <div id='Client-Address'>
                                 {customerStreet}, 
                                 <br></br>
                                 {customerCity}, {customerState}, 
                                 <br></br>
-                                {customerZip}  
-                            </p>
+                                {customerZip}
+                            </div>   
                         </div>
                         
                     </div>
               
-                    <div className='Invoice-Items'>
-                        <div className='Line-Item'>
-                            <div>Invoice Item</div>
-                            <div>Unit</div>
-                            <div>Rate/FeeType</div>
-                            <div>Total</div>
+                    <div className='Invoice-Items-Container'>
+                        <div className='Line-Items'>
+                            <div id='Item'>{invoiceItem}</div>
+                            <div id='Unit'>Unit</div>
+                            <div id='Rate'>Rate/FeeType</div>
+                            <div id='Item-Total'>Total</div>
                         </div>
+                    </div>
 
-                        <div className='Total-Info'>
-                            <div>Subtotal</div>
-                            <div>Total for All</div>
-                            <div>Amount Due</div>
-                        </div>
-
+                    <div className='Total-Info'>
+                        <div id='Subtotal'>Subtotal</div>
+                        <div id='Total'>Total</div>
+                        <div id='Amount-Due'>Amount Due</div>
                     </div>
 
 
-                    <p className='Dev-Address'>
-                        {devName} 
-                        <br></br>
+                    <div className='Dev-Address'>
+                        <h4 className='Client-Customer'>{devName}</h4> 
                         {devStreet}, 
                         <br></br>
                         {devCity}, {devState}, 
                         <br></br>
                         {devZip}
-                    </p>
+                    </div>
 
                 </div>
             </Fragment>      
@@ -90,17 +91,14 @@ class Contract extends Component {
 };
 
 Contract.propTypes = {
-    devType: PropTypes.string.isRequired,
-    customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
     customerInfo: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devType: state.invoiceInfo.devType,
-    customerType: state.invoiceInfo.customerType,
     devInfo: state.invoiceInfo.devInfo,
-    customerInfo: state.invoiceInfo.customerInfo
+    customerInfo: state.invoiceInfo.customerInfo,
+    invoiceInfo: state.invoiceInfo.invoiceItems
 });
 
 

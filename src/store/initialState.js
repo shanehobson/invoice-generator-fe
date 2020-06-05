@@ -28,6 +28,17 @@ let devType = '',
         }
     ],
 
+    // invoiceItems = 
+    //     {
+    //         description: '',
+    //         unit: '1',
+    //         rate: '',
+    //         feeType: 'Flat fee',
+    //         total: '',
+    //         show: true
+    //     },
+    
+
     currentPage = '1',
     formsAreComplete = false;
 
@@ -75,6 +86,14 @@ const initialState = {
             zip: customerInfo.zip
         },
         invoiceItems,
+        // invoiceItems: {
+        //     description: invoiceItems.description,
+        //     unit: invoiceItems.unit,
+        //     rate: invoiceItems.rate,
+        //     feeType: invoiceItems.feeType,
+        //     total: invoiceItems.total,
+        //     show: true
+        // },
         formsAreComplete: formsAreComplete
     },
     pages: {

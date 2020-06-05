@@ -1,27 +1,105 @@
+#Invoice-Page-Container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    min-height: 720px;
+    padding: 60px;
+    overflow: scroll;
+}
+
+/* Top 1/3 of the Invoice */
+
+.Top-Third-Container {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 20% 60% 20%;
+    border-bottom: 2px solid #ccc;
+    height: 250px;
+    padding: 20px;
+}
+
+.Top-Right-Grid-Area {
+    font-size: 14px;
+    grid-area: 1/3/2/3;
+}
+
+#Invoice-Title {
+    font-size: 40px;
+    margin-bottom: 0;
+}
+
+#Invoice-Total {
+    font-size: 24px;
+}
+
+#Client-Address-Area {
+    grid-area: 2/1/2/1;
+}
+
+#Client-Address {
+    font-size: 14px;
+}
+
+.Client-Customer {
+    font-size: 18px;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+/* Invoice Items */
+
+.Invoice-Items-Container {
+    font-size: 14px;
+    height: 300px;
+    padding: 20px;
+}
+
+.Line-Items {
+    display: grid;
+    padding: 10px;
+    margin-bottom: 20px;
+    grid-template-columns: 40% 20% 20% 20%;
+    border: 2px solid gainsboro;
+}
+
+/* Subtotal, Total, and Amount-Due */
+
+.Total-Info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-template-columns: 40% 20% 20% 20%;
+    font-size: 14px;
+    height: 180px;
+    border-bottom: 2px solid gainsboro;
+}
+
+#Subtotal {
+    grid-area: 1/3/1/4;
+    height: 50%;
+    border-bottom: 2px solid gainsboro;
+}
+
+#Total {
+    grid-area: 2/3/2/4;
+    height: 50%;
+    border-bottom: 2px solid gainsboro;
+}
+
+#Amount-Due {
+    font-weight: 600;
+    grid-area: 3/3/3/4;
+}
+
+/* Bottom of Invoice */
+
 .Dev-Address {
-    height: 20%;
+    font-size: 14px;
+    padding: 20px;
+    height: 200px;
 }
 
 .WorkingDoc {
     margin-left: 10px;
-}
-
-#InvoiceContainer {
-    box-sizing: border-box;
-    height: 720px;
-    padding: 60px;
-    /* overflow: scroll; */
-}
-
-.Invoice-Items {
-    height: 50%;
-    padding: 20px;
-}
-
-.Top-Third {
-    border-bottom: 2px solid #ccc;
-    /* height: 250px; */
-    height: 30%;
 }
 
 @media only screen and (max-width: 1280px) {
@@ -29,8 +107,8 @@
     .WorkingDoc {
         margin-left: 0;
     }
-    #InvoiceContainer {
-        border-top: 2px solid #4caf50;
+    #Invoice-Page-Container {
+        border-top: 3px solid #4caf50;
     }
 
 }
