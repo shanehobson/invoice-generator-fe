@@ -52,8 +52,20 @@ class Contract extends Component {
         return (
             <Fragment>
                 <div id='Invoice-Page-Container'>
+                    <div className='Invoice-Settings'>
+                        <button className='Invoice-Button'>
+                            <span className='Gray-Text'
+                            style={{fontWeight: '600', fontSize: '15px'}}>
+                                Invoice settings
+                                </span>
+                        </button>
+                    </div>
                     <div className='Top-Third-Container'>
-                        <h1 id='Invoice-Title'>Invoice</h1>
+                        <div>
+                            <h1 id='Invoice-Title'>Invoice</h1>
+                            <p>#1 invoice</p>
+                        </div>
+                       
                         <div className='Top-Right-Grid-Area'>
                             <h1 id='Invoice-Total'>
                                 $0.00
@@ -76,6 +88,9 @@ class Contract extends Component {
                                 {customerCity}, {customerState}
                                 <br></br>
                                 {customerZip}
+                                <br></br>
+                                <br></br>
+                                <div className='Gray-Text'>+ Tax Id</div>
                             </div>   
                         </div>
                         
@@ -100,6 +115,9 @@ class Contract extends Component {
                         <div className='Total-Info'>
                             <div id='Subtotal'>Subtotal</div>
                             <div id='Subtotal-Price'>$0.00</div>
+                            <div id='Taxes'>+ Taxes</div>
+                            <div id='Discount'>+ Discount</div>
+                            
                             <div id='Total'>Total</div>
                             <div id='Total-Price'>$0.00</div>
                             <div id='Amount-Due'>Amount Due</div>
