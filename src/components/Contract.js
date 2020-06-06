@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-
 import PropTypes from 'prop-types';
+
+import SettingsIcon from '@material-ui/icons/Settings';
 
 class Contract extends Component {
     constructor(props) {
@@ -52,12 +53,13 @@ class Contract extends Component {
         return (
             <Fragment>
                 <div id='Invoice-Page-Container'>
+                    
                     <div className='Invoice-Settings'>
                         <button className='Invoice-Button'>
-                            <span className='Gray-Text'
-                            style={{fontWeight: '600', fontSize: '15px'}}>
+                            <SettingsIcon/>
+                            <span className='Gray-Text'>
                                 Invoice settings
-                                </span>
+                            </span>
                         </button>
                     </div>
                     <div className='Top-Third-Container'>
@@ -117,9 +119,11 @@ class Contract extends Component {
                             <div id='Subtotal-Price'>$0.00</div>
                             <div id='Taxes'>+ Taxes</div>
                             <div id='Discount'>+ Discount</div>
-                            
+
+                            <div id='Add-Line-Item'>+ Line item</div>
                             <div id='Total'>Total</div>
                             <div id='Total-Price'>$0.00</div>
+                            <div id='Add-Notes'>+ Notes</div>
                             <div id='Amount-Due'>Amount Due</div>
                             <div id='Amount-Price'>$0.00</div>
                         </div>
