@@ -58,9 +58,14 @@ export const startSetFormsAreComplete = (formsAreComplete) => {
     }
 };
 
-export const setInvoiceItems = (invoiceItems) => {
-    return {
-        type: 'SET_INVOICE_ITEMS',
-        invoiceItems: invoiceItems
+export const startSetInvoiceItems = (invoiceItems) => {
+    return (dispatch) => {
+        localStorage.setItem('invoiceItems', JSON.stringify(invoiceItems));
+        return dispatch(setInvoiceItems((invoiceItems)));
     }
 };
+
+export const setInvoiceItems = (invoiceItems) => ({
+    type: 'SET_INVOICE_ITEMS',
+    invoiceItems: invoiceItems
+});

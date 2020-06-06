@@ -6,16 +6,38 @@ import PropTypes from 'prop-types';
 class Contract extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            invoiceInfo: {
+                devInfo: {
+                    name: '',
+                    street: '',
+                    city: '',
+                    USstate: '',
+                    zip: ''
+                },
+                customerInfo: {
+                    name: '',
+                    street: '',
+                    city: '',
+                    USstate: '',
+                    zip: ''
+                },
+                invoiceItems: []
+            }
+        };
+    };
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            invoiceInfo: nextProps.invoiceInfo
+        });
     };
 
     render() {
-        const { 
-            devInfo,
-            customerInfo,
-            invoiceInfo,
-        } = this.props;
-
-        const invoiceItem = invoiceInfo.toString() === '' ? '___________________' : invoiceInfo.toString() ;
+        console.log('rendering contract component')
+        const { invoiceInfo } = this.state;
+        const { devInfo, customerInfo, invoiceItems } = invoiceInfo;      
+        
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -49,9 +71,9 @@ class Contract extends Component {
                                 {customerName}
                             </h2>
                             <div id='Client-Address'>
-                                {customerStreet}, 
+                                {customerStreet}
                                 <br></br>
-                                {customerCity}, {customerState}, 
+                                {customerCity}, {customerState}
                                 <br></br>
                                 {customerZip}
                             </div>   
@@ -59,28 +81,37 @@ class Contract extends Component {
                         
                     </div>
               
-                    <div className='Third-Container Middle-Third-Container'>
-                        <div className='Line-Items'>
-                            <div id='Item'>{invoiceItem}</div>
-                            <div id='Unit'>Unit</div>
-                            <div id='Rate'>Rate/FeeType</div>
-                            <div id='Item-Total'>Total</div>
-                        </div>
-                        <div className='Third-Container Total-Info'>
+                    <div className='Middle-Third-Container'>
+                        {invoiceItems.map((item, i) => {
+                        console.log(item)
+                        return (
+                            <div key={i} className='Line-Items'>
+                                <div id='Item'>{item.description}</div>
+                                <div id='Unit'>{item.unit}</div>
+                                <div id='Rate'>
+                                    {item.feeType === 'Flat fee' && item.rate }
+                                    {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
+                                    </div>
+                                <div id='Item-Total'>{item.total}</div>
+                            </div>
+                        
+                        )})}
+                       
+                        <div className='Total-Info'>
                             <div id='Subtotal'>Subtotal</div>
                             <div id='Subtotal-Price'>$0.00</div>
                             <div id='Total'>Total</div>
                             <div id='Total-Price'>$0.00</div>
                             <div id='Amount-Due'>Amount Due</div>
-                        <div id='Amount-Price'>$0.00</div>
-                    </div>
+                            <div id='Amount-Price'>$0.00</div>
+                        </div>
                     </div>
 
-                    <div className='Third-Container Bottom-Third-Container'>
+                    <div className='Bottom-Third-Container'>
                         <h4 className='Client-Customer'>{devName}</h4> 
-                        {devStreet}, 
+                        {devStreet}
                         <br></br>
-                        {devCity}, {devState}, 
+                        {devCity}, {devState}
                         <br></br>
                         {devZip}
                     </div>
@@ -92,22 +123,11 @@ class Contract extends Component {
 };
 
 Contract.propTypes = {
-    devInfo: PropTypes.object.isRequired,
-    customerInfo: PropTypes.object.isRequired
+    invoiceInfo: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    devInfo: state.invoiceInfo.devInfo,
-    customerInfo: state.invoiceInfo.customerInfo,
-    invoiceInfo: state.invoiceInfo.invoiceItems
+    invoiceInfo: state.invoiceInfo
 });
 
-
 export default connect(mapStateToProps)(Contract);
-
-
-
-
-// style={{justifyContent: 'left', paddingLeft: '60px', paddingTop: '60px'}} (possible title style) (display: flex was set on typography)
-
-//{customerType === 'business' && 'registered'} (this was under customer name)

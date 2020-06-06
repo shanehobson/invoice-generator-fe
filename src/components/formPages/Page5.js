@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
 import InvoiceItem from '../InvoiceItem';
-import setInvoiceItems from '../../actions/invoiceInfo';
+import { startSetInvoiceItems } from '../../actions/invoiceInfo';
 
 const styles = theme => ({
     root: {
@@ -103,7 +103,7 @@ class Page5 extends Component {
     }
 
     handleNextPageButtonClick = () => {
-        this.props.setInvoiceItems(this.state.invoiceItems);
+        this.props.startSetInvoiceItems(this.state.invoiceItems);
         this.props.startChangePage('9');
         window.scrollTo(0, 0);
     };
@@ -189,10 +189,7 @@ Page5.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
     startChangePage: (pageNumber) => dispatch(startChangePage(pageNumber)),
-    setInvoiceItems: (invoiceItems) => {
-            console.log(invoiceItems)
-        // dispatch(setInvoiceItems(invoiceItems))
-    }
+    startSetInvoiceItems: (invoiceItems) => dispatch(startSetInvoiceItems(invoiceItems))
 });
 
 const mapStateToProps = (state) => ({
