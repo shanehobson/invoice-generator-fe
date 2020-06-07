@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 
 import SettingsIcon from '@material-ui/icons/Settings';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Contract extends Component {
     constructor(props) {
@@ -98,6 +100,10 @@ class Contract extends Component {
         return subtotal.toFixed(2); 
     }
 
+    addNewItem = () => {
+        
+    }
+
     render() {
 
         const { invoiceInfo, editIcons } = this.state;
@@ -116,17 +122,17 @@ class Contract extends Component {
 
         return (
             <Fragment>
-                <div id='Invoice-Page-Container'>
-                    
+
+                <div id='Invoice-Page-Container'>    
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
                             <span>
                                 Invoice settings
                             </span>
-                        </button>
+                        </button>            
                     </div>
-
+                    
                     <div onMouseLeave={this.onMouseLeaveInvoice}>
                         <div className='Top-Third-Container'
                             onMouseEnter={this.onMouseEnterTopThird}>
@@ -180,20 +186,19 @@ class Contract extends Component {
                                         {item.feeType === 'Flat fee' && item.rate }
                                         {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
                                     </div>
-                                    <div id='Item-Total'>${item.total}</div>
+                                    <div id='Item-Total'>${item.total}</div>                                
                                 </div>  
                             )})}
 
-                            
-                        
                             <div className='Total-Info'>
-                                
-                            
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
                                 <div id='Discount'>+ Discount</div>
-                                <div id='Add-Line-Item'>+ Line item</div>
+                                
+                
+                                <div id='Add-Line-Item' onClick={this.addNewItem}> + Line item </div>
+
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
                                 <div id='Add-Notes'>+ Notes</div>

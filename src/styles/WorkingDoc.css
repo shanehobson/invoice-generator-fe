@@ -140,6 +140,12 @@
     border-top: 1px solid gainsboro;
 }
 
+.Line-Items:hover {
+    box-shadow: none;
+    background-color: rgb(239, 242, 246);
+    color: rgb(22, 38, 55);
+}
+
 #Item-Total {
     display: flex;
     justify-content: flex-end;
@@ -234,6 +240,12 @@
     border-bottom: 1px solid gainsboro; 
 }
 
+#Add-Line-Item:hover {
+    box-shadow: none;
+    background-color: rgb(239, 242, 246);
+    color: rgb(22, 38, 55);
+}
+
 #Total {
     grid-column-start: 3;
     display: flex;
@@ -299,8 +311,6 @@
 .WorkingDoc {
     margin-top: 20px;
 }
-
-
 
 @media only screen and (max-width: 1280px) {
 
