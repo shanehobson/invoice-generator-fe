@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { startChangePage } from '../../actions/pages';
 import InvoiceItem from '../InvoiceItem';
-import setInvoiceItems from '../../actions/invoiceInfo';
+import { startSetInvoiceItems } from '../../actions/invoiceInfo';
 
 const styles = theme => ({
     root: {
@@ -103,7 +103,7 @@ class Page5 extends Component {
     }
 
     handleNextPageButtonClick = () => {
-        this.props.setInvoiceItems(this.state.invoiceItems);
+        this.props.startSetInvoiceItems(this.state.invoiceItems);
         this.props.startChangePage('9');
         window.scrollTo(0, 0);
     };
@@ -137,12 +137,12 @@ class Page5 extends Component {
 
                     {invoiceItems.map((item, i) => 
                         <InvoiceItem
-                        key={i}
-                        index={i}
-                        item={item}
-                        invoiceItems={this.state.invoiceItems}
-                        FeeTypes={this.state.FeeTypes}
-                        updateInvoiceItem={this.updateInvoiceItem}
+                            key={i}
+                            index={i}
+                            item={item}
+                            invoiceItems={this.state.invoiceItems}
+                            FeeTypes={this.state.FeeTypes}
+                            updateInvoiceItem={this.updateInvoiceItem}
                         >
                         </InvoiceItem>
                     )}      
@@ -162,7 +162,7 @@ class Page5 extends Component {
                             size='medium'
                             className={classes.button}
                             onClick={this.handlePreviousPageButtonClick}
-                            >
+                        >
                             <p className='ButtonText'>Previous</p>
                         </Button>  
                         <Button
@@ -172,7 +172,7 @@ class Page5 extends Component {
                             disabled={false}
                             className={classes.button}
                             onClick={this.handleNextPageButtonClick}
-                            >
+                        >
                             <p className='ButtonText'>Next</p>
                         </Button>  
                     </div>
@@ -189,10 +189,7 @@ Page5.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
     startChangePage: (pageNumber) => dispatch(startChangePage(pageNumber)),
-    setInvoiceItems: (invoiceItems) => {
-            console.log(invoiceItems)
-        // dispatch(setInvoiceItems(invoiceItems))
-    }
+    startSetInvoiceItems: (invoiceItems) => dispatch(startSetInvoiceItems(invoiceItems))
 });
 
 const mapStateToProps = (state) => ({

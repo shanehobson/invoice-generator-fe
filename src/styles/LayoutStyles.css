@@ -39,8 +39,7 @@ a {
     max-width: 540px;
 }
 
-.MuiSvgIcon-root-179 {
-    
+.MuiSvgIcon-root-179 {  
     font-size: 20px !important;
 }
 
@@ -73,7 +72,7 @@ a {
 }
 
 .AddInvoiceContainer {
-    margin-left: 20px;
+    margin-left: 45px;
 }
 
 .MuiFormControl-root-225 {
@@ -117,4 +116,13 @@ a {
     flex-direction: 'column';
     align-content: 'center';
     align-items: 'center';
+}
+
+
+@media only screen and (max-width: 734px) {
+
+    .AddInvoiceContainer {
+        margin-left: 15px;
+    }
+
 }

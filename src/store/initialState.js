@@ -17,19 +17,9 @@ let devType = '',
         USstate: '',
         zip: ''
     },
-    invoiceItems = [
-        {
-            description: '',
-            unit: '1',
-            rate: '',
-            feeType: 'Flat fee',
-            total: '',
-            show: true
-        }
-    ],
-
     currentPage = '1',
-    formsAreComplete = false;
+    formsAreComplete = false,
+    invoiceItems = [];
 
 if (localStorage.getItem('devType') !== null) {
     devType = localStorage.getItem('devType');
@@ -55,6 +45,10 @@ if (localStorage.getItem('formsAreComplete') !== null) {
     formsAreComplete = true;
 }
 
+if (JSON.parse(localStorage.getItem('invoiceItems')) !== null) {
+    invoiceItems = JSON.parse(localStorage.getItem('invoiceItems'));
+}
+
 
 const initialState = {
     invoiceInfo: {
@@ -74,7 +68,7 @@ const initialState = {
             USstate: customerInfo.USstate,
             zip: customerInfo.zip
         },
-        invoiceItems,
+        invoiceItems: invoiceItems,
         formsAreComplete: formsAreComplete
     },
     pages: {
