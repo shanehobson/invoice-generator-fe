@@ -137,12 +137,12 @@ class Page5 extends Component {
 
                     {invoiceItems.map((item, i) => 
                         <InvoiceItem
-                        key={i}
-                        index={i}
-                        item={item}
-                        invoiceItems={this.state.invoiceItems}
-                        FeeTypes={this.state.FeeTypes}
-                        updateInvoiceItem={this.updateInvoiceItem}
+                            key={i}
+                            index={i}
+                            item={item}
+                            invoiceItems={this.state.invoiceItems}
+                            FeeTypes={this.state.FeeTypes}
+                            updateInvoiceItem={this.updateInvoiceItem}
                         >
                         </InvoiceItem>
                     )}      
@@ -162,7 +162,7 @@ class Page5 extends Component {
                             size='medium'
                             className={classes.button}
                             onClick={this.handlePreviousPageButtonClick}
-                            >
+                        >
                             <p className='ButtonText'>Previous</p>
                         </Button>  
                         <Button
@@ -172,7 +172,7 @@ class Page5 extends Component {
                             disabled={false}
                             className={classes.button}
                             onClick={this.handleNextPageButtonClick}
-                            >
+                        >
                             <p className='ButtonText'>Next</p>
                         </Button>  
                     </div>
