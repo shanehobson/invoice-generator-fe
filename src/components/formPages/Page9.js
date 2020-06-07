@@ -19,7 +19,6 @@ const style = theme => ({
 
 class Page9 extends Component {
     constructor(props) {
-        console.log('Entered 9 constructor');
         super(props);
     };
 

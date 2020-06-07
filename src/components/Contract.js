@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-function debounce(a,b,c){var d,e;return function(){function h(){d=null,c||(e=a.apply(f,g))}var f=this,g=arguments;return clearTimeout(d),d=setTimeout(h,b),c&&!d&&(e=a.apply(f,g)),e}}
+import { debounce } from '../utility/debounce';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -24,7 +24,11 @@ class Contract extends Component {
                     USstate: '',
                     zip: ''
                 },
-                invoiceItems: []
+                invoiceItems: [],
+                subtotal: 0, // @todo add to redux
+                taxes: 0, // @todo add to redux
+                discount: 0, // @todo add to redux
+                total: 0 // @todo add to redux
             },
             editIcons: {
                 topThird: false,
@@ -35,8 +39,14 @@ class Contract extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+        console.log('component will receive props')
+        const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
+        console.log(subtotal);
         this.setState({
-            invoiceInfo: nextProps.invoiceInfo
+            invoiceInfo: {
+                ...nextProps.invoiceInfo,
+                subtotal
+            }
         });
     };
 
@@ -48,7 +58,7 @@ class Contract extends Component {
                 bottomThird: third === 'bottomThird'
             }
         })
-        console.log('mouse enter' + third);
+        // console.log('mouse enter' + third);
     }, 50)
 
     onMouseLeaveInvoice = debounce(() => {
@@ -59,7 +69,7 @@ class Contract extends Component {
                 bottomThird: false
             }
         })
-        console.log('mouse exit');
+        // console.log('mouse exit');
     }, 50)
 
     onMouseEnterTopThird = () => {
@@ -74,10 +84,24 @@ class Contract extends Component {
         this.onMouseEnter('bottomThird')
     }
 
+    calculateSubtotal = (invoiceItems) => {
+        if (!invoiceItems || invoiceItems.length === 0) {
+            return 0;
+        }
+        const subtotal = invoiceItems
+        .map(item => parseFloat(item.total))
+        .reduce((a, b) => {
+            console.log(a)
+            return a + b;
+        });
+        console.log(subtotal)
+        return subtotal.toFixed(2); 
+    }
+
     render() {
-        console.log('rendering contract component')
+
         const { invoiceInfo, editIcons } = this.state;
-        const { devInfo, customerInfo, invoiceItems } = invoiceInfo;      
+        const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
@@ -146,8 +170,8 @@ class Contract extends Component {
                 
                         <div className='Middle-Third-Container'
                             onMouseEnter={this.onMouseEnterMiddleThird}>
+
                             {invoiceItems.map((item, i) => {
-                            console.log(item)
                             return (
                                 <div key={item.description} className='Line-Items'>
                                     <div id='Item'>{item.description}</div>
@@ -155,15 +179,18 @@ class Contract extends Component {
                                     <div id='Rate'>
                                         {item.feeType === 'Flat fee' && item.rate }
                                         {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
-                                        </div>
+                                    </div>
                                     <div id='Item-Total'>${item.total}</div>
-                                </div>
-                            
+                                </div>  
                             )})}
+
+                            
                         
                             <div className='Total-Info'>
+                                
+                            
                                 <div id='Subtotal'>Subtotal</div>
-                                <div id='Subtotal-Price'>$0.00</div>
+                                <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
                                 <div id='Discount'>+ Discount</div>
                                 <div id='Add-Line-Item'>+ Line item</div>
