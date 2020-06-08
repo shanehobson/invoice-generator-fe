@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
-
+import Button from '@material-ui/core/Button';
+import Sidebar from './Sidebar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,6 +12,7 @@ class Contract extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            right: false,
             invoiceInfo: {
                 devInfo: {
                     name: '',
@@ -100,9 +102,15 @@ class Contract extends Component {
         return subtotal.toFixed(2); 
     }
 
-    addNewItem = () => {
+    // addNewItem = () => {
         
-    }
+    // }
+
+    
+
+    
+
+
 
     render() {
 
@@ -123,6 +131,8 @@ class Contract extends Component {
         return (
             <Fragment>
 
+                
+                <Sidebar />
                 <div id='Invoice-Page-Container'>    
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
