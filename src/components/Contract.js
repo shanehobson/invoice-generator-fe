@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 import Button from '@material-ui/core/Button';
-import Sidebar from './Sidebar';
+import InvoiceSidebar from './InvoiceSidebar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -12,7 +12,7 @@ class Contract extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            right: false,
+            
             invoiceInfo: {
                 devInfo: {
                     name: '',
@@ -102,15 +102,17 @@ class Contract extends Component {
         return subtotal.toFixed(2); 
     }
 
+    updateInvoiceItem = (item) => {
+        const items = this.state.invoiceItems;
+        item.push(item);
+        this.setState({
+            invoiceItems: items
+        });
+    }
+
     // addNewItem = () => {
         
     // }
-
-    
-
-    
-
-
 
     render() {
 
@@ -129,10 +131,7 @@ class Contract extends Component {
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
         return (
-            <Fragment>
-
-                
-                <Sidebar />
+            <Fragment>         
                 <div id='Invoice-Page-Container'>    
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
@@ -205,10 +204,12 @@ class Contract extends Component {
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
                                 <div id='Discount'>+ Discount</div>
-                                
-                
-                                <div id='Add-Line-Item' onClick={this.addNewItem}> + Line item </div>
-
+                                <InvoiceSidebar
+                                    index={invoiceItems.length}
+                                    FeeTypes={this.props.FeeTypes}
+                                    updateInvoiceItem={this.updateInvoiceItem}
+                                    invoiceItems={invoiceItems}
+                                    />
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
                                 <div id='Add-Notes'>+ Notes</div>
@@ -236,7 +237,8 @@ Contract.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    invoiceInfo: state.invoiceInfo
+    invoiceInfo: state.invoiceInfo,
+    FeeTypes: state.FeeTypes
 });
 
 export default connect(mapStateToProps)(Contract);
