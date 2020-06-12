@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+
 
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -10,7 +11,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 
-class Sidebar extends Component {
+class NewSidebar extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -19,7 +20,7 @@ class Sidebar extends Component {
   }
 
   list = (anchor) => (
-    <div
+    <div 
       role="presentation"
       onClick={this.toggleDrawer(anchor, false)}
       onKeyDown={this.toggleDrawer(anchor, false)}
@@ -55,24 +56,23 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div></div>
-      // <div id='Add-Line-Item'>
-      //     {['right'].map((anchor) => (
-      //   <React.Fragment key={anchor}>
-      //       <Button onClick={this.toggleDrawer(anchor, true)}>{anchor}</Button>
-      //       <Drawer
-      //         anchor={anchor}
-      //         open={this.state[anchor]}
-      //         onClose={this.toggleDrawer(anchor, false)}
-      //         onOpen={this.toggleDrawer(anchor, true)}
-      //       >
-      //         {this.list(anchor)}
-      //       </Drawer>
-      //   </React.Fragment>
-      // ))}
-      // </div>     
+    <div id='Add-Line-Item'>
+      {['right'].map((anchor) => (
+        <React.Fragment key={anchor}>
+            <Button onClick={this.toggleDrawer(anchor, true)}>{anchor}</Button>
+            <Drawer
+            anchor={anchor}
+            open={this.state[anchor]}
+            onClose={this.toggleDrawer(anchor, false)}
+            onOpen={this.toggleDrawer(anchor, true)}
+            >
+            {this.list(anchor)}
+            </Drawer>
+        </React.Fragment>
+      ))}
+    </div> 
     )
   }
 }
 
-export default Sidebar;
+export default NewSidebar;

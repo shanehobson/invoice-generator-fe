@@ -56,7 +56,6 @@
 .Gray-Text {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
-    letter-spacing: 0px;
     color: rgb(147, 160, 174);
     cursor: pointer;
 }
@@ -66,7 +65,6 @@
     background-color: rgb(239, 242, 246);
     color: rgb(22, 38, 55);
 }
-
 
 .Top-Third-Container {
     display: grid;
@@ -85,7 +83,7 @@
 .Middle-Third-Container {
     font-size: 12px;
     height: 435px;
-    padding: 0 20px 40px 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .Bottom-Third-Container {
@@ -113,7 +111,6 @@
     font-size: 22px;
     font-weight: 500;
     margin: 8px 0 4px 0;
-
 }
 
 #Client-Address-Area {
@@ -166,7 +163,7 @@
     margin-top: 40px;
     justify-items: flex-end;
     display: grid;
-    grid-template-columns: 40% 20% 18% 22%;
+    grid-template-columns: 25% 35% 18% 22%;
     font-size: 12px;
 }
 
@@ -201,7 +198,6 @@
     padding: 8px;
     font-size: 14px;
     font-weight: lighter;
-    letter-spacing: 0px;
     line-height: 24px;
     color: rgb(147, 160, 174);
     cursor: pointer;
@@ -211,33 +207,30 @@
 #Discount {
     display: flex;
     justify-content: flex-end;
-    width: 100%;
-    grid-column-start: 3;
     grid-column-end: 5;
-    height: 50%;
     padding: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-size: 14px;
-    font-weight: lighter;
-    letter-spacing: 0px;
-    line-height: 24px;
     color: rgb(147, 160, 174);
     cursor: pointer;
-
 }
 
 #Add-Line-Item {
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    height: 50%;
-    padding: 8px;
+    height: 60%;
+    padding: 0 8px 8px 8px;
     font-size: 14px;
-    letter-spacing: 0px;
-    line-height: 24px;
-    color: rgb(147, 160, 174);
     cursor: pointer;
     border-bottom: 1px solid gainsboro; 
+}
+
+.MuiButton-root-177 {
+    padding: 8px !important;
+    text-transform: none !important;
+    color: rgb(147, 160, 174) !important;
+
 }
 
 #Add-Line-Item:hover {
@@ -251,8 +244,8 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    height: 50%;
-    padding: 8px;
+    height: 60%;
+    padding: 8px 8px 0 8px;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -262,18 +255,13 @@
     width: 100%;
     grid-column-start: 4;
     border-bottom: 1px solid gainsboro;
-    height: 50%;
-    padding: 8px;
+    height: 60%;
+    padding: 8px 8px 0 8px;
 }
 
 #Add-Notes {
-    display: flex;
-    justify-content: flex-start;
     width: 100%;
-    height: 50%;
-    padding: 8px;
     font-size: 14px;
-    letter-spacing: 0px;
     line-height: 24px;
     color: rgb(147, 160, 174);
     cursor: pointer;
@@ -282,11 +270,7 @@
 #Amount-Due {
     font-weight: 600;
     grid-column-start: 3;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 50%;
-    padding: 8px;
+    padding: 4px 8px 8px 8px;
 }
 
 #Amount-Price {
@@ -295,7 +279,7 @@
     width: 100%;
     grid-column-start: 4;
     height: 50%;
-    padding: 8px;
+    padding: 4px 8px 8px 8px;
 }
 
 .Dev-Address {
