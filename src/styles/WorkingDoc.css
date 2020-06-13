@@ -70,7 +70,7 @@
     display: grid;
     position: relative;
     grid-template-rows: 40% 60%;
-    grid-template-columns: 55% 25% 20%;
+    grid-template-columns: 55% 25% 20% 60px;
     height: 226px;
     padding: 38px 20px 0 20px;
 }
@@ -129,12 +129,24 @@
     text-transform: uppercase;
 }
 
-/* Invoice Items */
-.Line-Items {
+.Line-Items:hover > .Line-Item-Icons {
+    display: flex;
+}
+
+.Line-Items  {
+    position: relative;
     display: grid;
     padding: 14px 10px 8px 0;
-    grid-template-columns: 45% 15% 18% 22%;
+    grid-template-columns: 45% 15% 18% 22% 60px;
     border-top: 1px solid gainsboro;
+}
+
+.Line-Item-Icons {
+    grid-column-start: 5;
+    display: none;
+    padding-left: 20px;
+    color: #aaa;
+    cursor: pointer;
 }
 
 .Line-Items:hover {

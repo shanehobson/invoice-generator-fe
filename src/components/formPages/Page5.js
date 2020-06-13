@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Paper from '@material-ui/core/Paper';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { startChangePage } from '../../actions/pages';
+
 import InvoiceItem from '../InvoiceItem';
+import { startChangePage } from '../../actions/pages';
 import { startSetInvoiceItems } from '../../actions/invoiceInfo';
 
 const styles = theme => ({
@@ -30,6 +32,7 @@ const styles = theme => ({
 class Page5 extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             open: false,
             error: '',
@@ -109,8 +112,8 @@ class Page5 extends Component {
     };
 
     render() {
-        const { classes, FeeTypes } = this.props;
-        const { nextButtonDisabled, feeType, invoiceItems } = this.state;
+        const { classes } = this.props;
+        const { invoiceItems } = this.state;
 
         return (
             <Paper classes={{root: classes.root}} elevation={1}>

@@ -6,25 +6,30 @@ import Button from '@material-ui/core/Button';
 class InvoiceSidebar extends Component {
   constructor(props) {
       super(props);
+
       this.state = {
-          right: false
+          right: false,
+          item: null
     };
   }
 
-  
-//   componentDidMount() { 
-//     this.setState({ 
-//         FeeTypes: this.props.FeeTypes
-//     })
-// }
+  updateInvoiceItem = (item) => {
+    this.setState({item});
+  }
+
+  handleSubmit = () => {
+    const item = this.state.item;
+    this.props.updateInvoiceItem(item);
+    this.setState({ ...this.state, right: false });
+  }
 
   child = (anchor) => (
     <div
       style={{width: '330px'}}
       role="presentation"
-      onClick={this.toggleDrawer(anchor, false)}
-      onKeyDown={this.toggleDrawer(anchor, false)}
+      // onKeyDown={this.toggleDrawer(anchor, false)}
     >
+      <h2>Line Item</h2>
          <InvoiceItem
               index={this.props.index}
               item={
@@ -37,10 +42,13 @@ class InvoiceSidebar extends Component {
                 }
               }
               FeeTypes={this.props.FeeTypes}
-              updateInvoiceItem={this.props.updateInvoiceItem}
+              updateInvoiceItem={this.updateInvoiceItem}
               invoiceItems={this.props.invoiceItems}
           >
           </InvoiceItem>
+          <button onClick={this.handleSubmit}>
+              Submit
+          </button>
     </div>
   );
 
@@ -58,7 +66,7 @@ class InvoiceSidebar extends Component {
       <div>
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>
-            <Button onClick={this.toggleDrawer(anchor, true)}>Add Line Item</Button>
+            <Button onClick={this.toggleDrawer(anchor, true)}>+ Add Line Item</Button>
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}

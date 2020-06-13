@@ -59,6 +59,8 @@ class InvoiceItem extends Component {
         }
     }
 
+
+
     handleClose = () => {
         this.setState({ open: false });
     };
@@ -144,7 +146,7 @@ class InvoiceItem extends Component {
         const { FeeTypes, index, invoiceItems } = this.props;
         const { description, unit, rate, feeType, total, show } = this.state;
 
-        console.log(invoiceItems)
+        // console.log(invoiceItems)
 
         if (!show)  {
             return <span></span>
@@ -160,7 +162,6 @@ class InvoiceItem extends Component {
 
                     <div className='DescriptionField'>
                         <TextField
-                            // id="outlined-basic"
                             fullWidth
                             variant="outlined"
                             placeholder="Description"
@@ -179,7 +180,6 @@ class InvoiceItem extends Component {
                                 <TextField
                                     style={{width: '50px'}}
                                     fullWidth
-                                    // id="outlined-basic"
                                     variant="outlined"
                                     placeholder="Unit"
                                     onChange={this.handleUnitChange}
@@ -194,7 +194,6 @@ class InvoiceItem extends Component {
                                 <TextField
                                     style={{width: '50px'}}
                                     fullWidth
-                                    // id="outlined-basic"
                                     variant="outlined"
                                     placeholder="Rate"
                                     onChange={this.handleRateChange}

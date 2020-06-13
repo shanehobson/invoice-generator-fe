@@ -34,18 +34,20 @@ class Contract extends Component {
                 discount: 0, // @todo add to redux
                 total: 0 // @todo add to redux
             },
+
             editIcons: {
                 topThird: false,
                 middleThird: false,
                 bottomThird: false
-            }
+            },
+            activeLineItem: -1
         };
     };
 
     componentWillReceiveProps(nextProps) {
-        console.log('component will receive props')
+        // console.log('component will receive props')
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
-        console.log(subtotal);
+        // console.log(subtotal);
         this.setState({
             invoiceInfo: {
                 ...nextProps.invoiceInfo,
@@ -72,8 +74,7 @@ class Contract extends Component {
                 middleThird: false,
                 bottomThird: false
             }
-        })
-        // console.log('mouse exit');
+        });
     }, 50)
 
     onMouseEnterTopThird = () => {
@@ -95,28 +96,24 @@ class Contract extends Component {
         const subtotal = invoiceItems
         .map(item => parseFloat(item.total))
         .reduce((a, b) => {
-            console.log(a)
+            // console.log(a)
             return a + b;
         });
-        console.log(subtotal)
+        // console.log(subtotal)
         return subtotal.toFixed(2); 
     }
 
     updateInvoiceItem = (item) => {
-        const items = this.state.invoiceItems;
-        item.push(item);
+        const items = this.state.invoiceInfo.invoiceItems;
+        items.push(item)
         this.setState({
             invoiceItems: items
         });
     }
 
-    // addNewItem = () => {
-        
-    // }
-
     render() {
 
-        const { invoiceInfo, editIcons } = this.state;
+        const { invoiceInfo, editIcons, activeLineItem } = this.state;
         const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
@@ -185,31 +182,46 @@ class Contract extends Component {
                 
                         <div className='Middle-Third-Container'
                             onMouseEnter={this.onMouseEnterMiddleThird}>
-
-                            {invoiceItems.map((item, i) => {
-                            return (
-                                <div key={item.description} className='Line-Items'>
-                                    <div id='Item'>{item.description}</div>
-                                    <div id='Unit'>{item.unit}</div>
-                                    <div id='Rate'>
-                                        {item.feeType === 'Flat fee' && item.rate }
-                                        {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
+                            
+                            <div>
+                                {invoiceItems.map((item, i) => (
+                                    <div className='Line-Items-Container' key={i}>
+                                        <div className='Line-Items'>                       
+                                            <div id='Item'>{item.description}</div>
+                                            <div id='Unit'>{item.unit}</div>
+                                            <div id='Rate'>
+                                                {item.feeType === 'Flat fee' && item.rate }
+                                                {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
+                                            </div>
+                                            <div id='Item-Total'>${item.total}</div>
+                                            <div className='Line-Item-Icons' key={i}>
+                                                <span style={{paddingRight: '10px'}}>
+                                                    <DeleteIcon style={{fontSize: '20px'}} />
+                                                </span>
+                                                <EditIcon style={{fontSize: '20px'}}/> 
+                                            </div>                                                                                                                                                                                          
+                                        </div>
                                     </div>
-                                    <div id='Item-Total'>${item.total}</div>                                
-                                </div>  
-                            )})}
+                                ))}
+                            </div>
+                            
+                               
 
                             <div className='Total-Info'>
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
                                 <div id='Discount'>+ Discount</div>
-                                <InvoiceSidebar
-                                    index={invoiceItems.length}
-                                    FeeTypes={this.props.FeeTypes}
-                                    updateInvoiceItem={this.updateInvoiceItem}
-                                    invoiceItems={invoiceItems}
+
+                                <div id='Add-Line-Item'>
+                                    <InvoiceSidebar
+                                        index={invoiceItems.length}
+                                        FeeTypes={this.props.FeeTypes}
+                                        updateInvoiceItem={this.updateInvoiceItem}
+                                        invoiceItems={invoiceItems}
                                     />
+                                </div>
+                                
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
                                 <div id='Add-Notes'>+ Notes</div>
