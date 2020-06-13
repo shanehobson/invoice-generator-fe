@@ -128,7 +128,7 @@ class Contract extends Component {
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
         return (
-            <Fragment>         
+            <Fragment>        
                 <div id='Invoice-Page-Container'>    
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
