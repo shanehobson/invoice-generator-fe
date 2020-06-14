@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 import Button from '@material-ui/core/Button';
 import InvoiceSidebar from './InvoiceSidebar';
+import EditInvoice from './EditInvoice';
 import SettingsIcon from '@material-ui/icons/Settings';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 class Contract extends Component {
@@ -184,7 +185,7 @@ class Contract extends Component {
                             onMouseEnter={this.onMouseEnterMiddleThird}>
                             
                             <div>
-                                {invoiceItems.map((item, i) => (
+                                {invoiceItems.map((item, i) => (              
                                     <div className='Line-Items-Container' key={i}>
                                         <div className='Line-Items'>                       
                                             <div id='Item'>{item.description}</div>
@@ -198,7 +199,14 @@ class Contract extends Component {
                                                 <span style={{paddingRight: '10px'}}>
                                                     <DeleteIcon style={{fontSize: '20px'}} />
                                                 </span>
-                                                <EditIcon style={{fontSize: '20px'}}/> 
+                                                {/* <EditIcon style={{fontSize: '20px'}}/>  */}
+                                                    <EditInvoice
+                                                        item={item}
+                                                        index={i}
+                                                        FeeTypes={this.props.FeeTypes}
+                                                        updateInvoiceItem={this.updateInvoiceItem}
+                                                        invoiceItems={invoiceItems}
+                                                    />
                                             </div>                                                                                                                                                                                          
                                         </div>
                                     </div>
@@ -215,7 +223,6 @@ class Contract extends Component {
 
                                 <div id='Add-Line-Item'>
                                     <InvoiceSidebar
-                                        index={invoiceItems.length}
                                         FeeTypes={this.props.FeeTypes}
                                         updateInvoiceItem={this.updateInvoiceItem}
                                         invoiceItems={invoiceItems}

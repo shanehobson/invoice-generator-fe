@@ -71,8 +71,8 @@
     position: relative;
     grid-template-rows: 40% 60%;
     grid-template-columns: 55% 25% 20% 60px;
-    /* height: 226px; */
-    height: 206px;
+    height: 226px;
+    /* height: 206px; */
 
     padding: 30px 20px 0 20px;
 }
@@ -86,13 +86,13 @@
     font-size: 12px;
     /* height: 435px; */
     height: 445px;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px;
 }
 
 .Bottom-Third-Container {
     font-size: 12px;
-    padding: 30px 8px;
-    margin-top: 60px;
+    padding: 40px 8px;
+    /* margin-top: 60px; */
     height: 140px;
     line-height: 1.3;
     border-top: 1px solid gainsboro;
@@ -142,6 +142,7 @@
     display: grid;
     padding: 14px 10px 8px 0;
     grid-template-columns: 45% 15% 18% 22% 60px;
+    grid-template-rows: repeat(auto-fill, 20px);
     border-top: 1px solid gainsboro;
 }
 
@@ -151,6 +152,7 @@
     padding-left: 20px;
     color: #aaa;
     cursor: pointer;
+    max-height: 30px;
 }
 
 .Line-Items:hover {
@@ -176,8 +178,8 @@
 /* Subtotal, Total, and Amount-Due */
 
 .Total-Info {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    /* margin-bottom: 40px; */
     justify-items: flex-end;
     display: grid;
     grid-template-columns: 25% 35% 18% 22%;
@@ -226,7 +228,7 @@
     justify-content: flex-end;
     grid-column-end: 5;
     padding: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-size: 14px;
     color: rgb(147, 160, 174);
     cursor: pointer;

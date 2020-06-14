@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InvoiceItem from './InvoiceItem';
+import EditIcon from '@material-ui/icons/Edit';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 
@@ -23,35 +24,38 @@ class InvoiceSidebar extends Component {
     this.setState({ ...this.state, right: false });
   }
 
-  child = (anchor) => (
-    <div
-      style={{width: '330px'}}
-      role="presentation"
-      // onKeyDown={this.toggleDrawer(anchor, false)}
-    >
-      <h2>Line Item</h2>
-         <InvoiceItem
-              index={this.props.index}
-              item={
-                {
-                  description: '',
-                  unit: '1',
-                  rate: '',
-                  feeType: '',
-                  total: ''
+  child = (anchor) => {
+    const {description, unit, rate, feeType, total} = this.props.item;
+    return (
+        <div
+        style={{width: '330px'}}
+        role="presentation"
+        // onKeyDown={this.toggleDrawer(anchor, false)}
+      >
+        <h2>Line Item</h2>
+           <InvoiceItem
+                index={this.props.index}
+                item={
+                  {
+                    description: description ? description : '',
+                    unit: unit ? unit : '1',
+                    rate: rate ? rate : '',
+                    feeType: feeType ? feeType : 'Flat fee',
+                    total: total ? total : ''
+                  }
                 }
-              }
-       
-              FeeTypes={this.props.FeeTypes}
-              updateInvoiceItem={this.updateInvoiceItem}
-              invoiceItems={this.props.invoiceItems}
-          >
-          </InvoiceItem>
-          <button onClick={this.handleSubmit}>
-              Submit
-          </button>
-    </div>
-  );
+              
+                FeeTypes={this.props.FeeTypes}
+                updateInvoiceItem={this.updateInvoiceItem}
+                invoiceItems={this.props.invoiceItems}
+            >
+            </InvoiceItem>
+            <button onClick={this.handleSubmit}>
+                Submit
+            </button>
+      </div>
+    )  
+  };
 
 
   toggleDrawer = (anchor, open) => (event) => {
@@ -67,7 +71,7 @@ class InvoiceSidebar extends Component {
       <div>
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>
-            <Button onClick={this.toggleDrawer(anchor, true)}>+ Add Line Item</Button>
+            <EditIcon onClick={this.toggleDrawer(anchor, true)}>+ Add Line Item</EditIcon>
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}
