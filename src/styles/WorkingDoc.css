@@ -1,6 +1,5 @@
-#Invoice-Page-Container {
+.Invoice-Page-Container {
     font-family: 'Roboto', sans-serif;
-    /* font-family: 'Archivo Narrow', sans-serif; */
     box-sizing: border-box;
     position: relative;
     height: 950px;
@@ -9,6 +8,30 @@
     width: 750px;
     padding: 50px 60px 0 60px;
     border-top: 3px solid hsl(122, 39%, 49%);   
+}
+
+.Invoice-Page-Container_tall {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    padding: 50px 60px 0 60px;
+    border-top: 3px solid hsl(122, 39%, 49%);   
+    height: 1000px !important;
+}
+
+.Invoice-Page-Container_taller {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    padding: 50px 60px 0 60px;
+    border-top: 3px solid hsl(122, 39%, 49%);   
+    height: 1125px !important;
 }
 
 .Edit-Container {
@@ -84,8 +107,7 @@
 
 .Middle-Third-Container {
     font-size: 12px;
-    /* height: 435px; */
-    height: 445px;
+    min-height: 445px;
     padding: 0 20px;
 }
 

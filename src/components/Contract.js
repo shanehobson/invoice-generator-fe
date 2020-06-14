@@ -112,6 +112,16 @@ class Contract extends Component {
         });
     }
 
+    getPageHeight = (invoiceItems) => {
+        if (invoiceItems.length < 5) {
+            return 'Invoice-Page-Container ';
+        } else if (invoiceItems.length >= 5 && invoiceItems.length < 7) {
+            return 'Invoice-Page-Container_tall';
+        } else {
+            return 'Invoice-Page-Container_taller';
+        }
+    }
+
     render() {
 
         const { invoiceInfo, editIcons, activeLineItem } = this.state;
@@ -130,7 +140,8 @@ class Contract extends Component {
 
         return (
             <Fragment>        
-                <div id='Invoice-Page-Container'>    
+                <div
+                    className={this.getPageHeight(invoiceItems)}>    
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
