@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import InvoiceSidebar from './InvoiceSidebar';
+import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
 import SettingsIcon from '@material-ui/icons/Settings';
-// import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 class Contract extends Component {
     constructor(props) {
@@ -39,9 +39,9 @@ class Contract extends Component {
             editIcons: {
                 topThird: false,
                 middleThird: false,
-                bottomThird: false
+                bottomThird: false,
             },
-            activeLineItem: -1
+            notes: ''
         };
     };
 
@@ -50,6 +50,8 @@ class Contract extends Component {
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
         // console.log(subtotal);
         this.setState({
+            ...this.state,
+            ...nextProps,
             invoiceInfo: {
                 ...nextProps.invoiceInfo,
                 subtotal
@@ -112,6 +114,12 @@ class Contract extends Component {
         });
     }
 
+    updateNotes = (notes) => {
+        this.setState({
+            notes: notes
+        });
+    }
+
     getPageHeight = (invoiceItems) => {
         if (invoiceItems.length < 3) {
             return 'Invoice-Page-Container';
@@ -142,7 +150,7 @@ class Contract extends Component {
 
     render() {
 
-        const { invoiceInfo, editIcons, activeLineItem } = this.state;
+        const { invoiceInfo, editIcons, notes } = this.state;
         const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
@@ -225,26 +233,17 @@ class Contract extends Component {
                                             </div>
                                             <div id='Item-Total'>${item.total}</div>
                                             <div className='Line-Item-Icons' key={i}>
-                                                {/* <span style={{paddingRight: '10px'}}> */}
-
-                                                    <span
-                                                        onClick={() => this.removeLineItem(i)} 
-                                                        style={{paddingRight: '10px'}}
-                                                    >
-                                                        <DeleteIcon 
-                                                            style={{fontSize: '20px'}}                              
-                                                        />
-                                                    </span>
-                                                   
-                                                {/* </span> */}
-                                                {/* <EditIcon style={{fontSize: '20px'}}/>  */}
-                                                    <EditInvoice
-                                                        item={item}
-                                                        index={i}
-                                                        FeeTypes={this.props.FeeTypes}
-                                                        updateInvoiceItem={this.updateInvoiceItem}
-                                                        invoiceItems={invoiceItems}
-                                                    />
+                                                <DeleteIcon
+                                                    onClick={() => this.removeLineItem(i)}
+                                                    style={{fontSize: '20px', paddingRight: '10px'}}                              
+                                                />         
+                                                <EditInvoice
+                                                    item={item}
+                                                    index={i}
+                                                    FeeTypes={this.props.FeeTypes}
+                                                    updateInvoiceItem={this.updateInvoiceItem}
+                                                    invoiceItems={invoiceItems}
+                                                />
                                             </div>                                                                                                                                                                                          
                                         </div>
                                     </div>
@@ -269,9 +268,19 @@ class Contract extends Component {
                                 
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
-                                <div id='Add-Notes'>+ Notes</div>
+
+                                <div id='Add-Notes'>
+                                    <NotesSidebar 
+                                        updateNotes={this.updateNotes}
+                                        notes={notes}
+                                    />  
+                                </div>
+                                
                                 <div id='Amount-Due'>Amount Due</div>
                                 <div id='Amount-Price'>$0.00</div>
+                            </div>
+                            <div className='Notes-Container'>
+                                {notes}
                             </div>
                         </div>
 

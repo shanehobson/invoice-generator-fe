@@ -105,8 +105,12 @@ class Page5 extends Component {
         });
     }
 
+    filterDeleted = (items) => {
+        return items.filter(item => item.show);
+    }
+
     handleNextPageButtonClick = () => {
-        this.props.startSetInvoiceItems(this.state.invoiceItems);
+        this.props.startSetInvoiceItems(this.filterDeleted(this.state.invoiceItems));
         this.props.startChangePage('9');
         window.scrollTo(0, 0);
     };
