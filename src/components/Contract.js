@@ -113,13 +113,31 @@ class Contract extends Component {
     }
 
     getPageHeight = (invoiceItems) => {
-        if (invoiceItems.length < 5) {
-            return 'Invoice-Page-Container ';
+        if (invoiceItems.length < 3) {
+            return 'Invoice-Page-Container';
+        } else if (invoiceItems.length >= 3 && invoiceItems.length < 5) {
+            return 'Invoice-Page-Container-Medium';
         } else if (invoiceItems.length >= 5 && invoiceItems.length < 7) {
-            return 'Invoice-Page-Container_tall';
+            return 'Invoice-Page-Container_Tall';
+        } else if (invoiceItems.length >= 7 && invoiceItems.length <= 9) {
+            return 'Invoice-Page-Container_Tallest';
         } else {
-            return 'Invoice-Page-Container_taller';
+            return 'Invoice-Page-Container_Yao';
         }
+    }
+
+    removeLineItem = (index) => {
+        console.log(index);
+        const newList = this.state.invoiceInfo.invoiceItems.filter((_, i) => i !== index);
+        console.log(newList);
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                invoiceItems: newList
+            }
+            
+        });
     }
 
     render() {
@@ -207,9 +225,18 @@ class Contract extends Component {
                                             </div>
                                             <div id='Item-Total'>${item.total}</div>
                                             <div className='Line-Item-Icons' key={i}>
-                                                <span style={{paddingRight: '10px'}}>
-                                                    <DeleteIcon style={{fontSize: '20px'}} />
-                                                </span>
+                                                {/* <span style={{paddingRight: '10px'}}> */}
+
+                                                    <span
+                                                        onClick={() => this.removeLineItem(i)} 
+                                                        style={{paddingRight: '10px'}}
+                                                    >
+                                                        <DeleteIcon 
+                                                            style={{fontSize: '20px'}}                              
+                                                        />
+                                                    </span>
+                                                   
+                                                {/* </span> */}
                                                 {/* <EditIcon style={{fontSize: '20px'}}/>  */}
                                                     <EditInvoice
                                                         item={item}

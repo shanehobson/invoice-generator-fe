@@ -2,6 +2,18 @@
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     position: relative;
+    height: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    padding: 50px 60px 0 60px;
+    border-top: 3px solid hsl(122, 39%, 49%);   
+}
+
+.Invoice-Page-Container-Medium {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    position: relative;
     height: 950px;
     margin-left: auto;
     margin-right: auto;
@@ -10,7 +22,7 @@
     border-top: 3px solid hsl(122, 39%, 49%);   
 }
 
-.Invoice-Page-Container_tall {
+.Invoice-Page-Container_Tall {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     position: relative;
@@ -19,10 +31,10 @@
     width: 750px;
     padding: 50px 60px 0 60px;
     border-top: 3px solid hsl(122, 39%, 49%);   
-    height: 1000px !important;
+    height: 1050px !important;
 }
 
-.Invoice-Page-Container_taller {
+.Invoice-Page-Container_Taller {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     position: relative;
@@ -31,7 +43,31 @@
     width: 750px;
     padding: 50px 60px 0 60px;
     border-top: 3px solid hsl(122, 39%, 49%);   
-    height: 1125px !important;
+    height: 1150px !important;
+}
+
+.Invoice-Page-Container_Tallest {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    padding: 50px 60px 0 60px;
+    border-top: 3px solid hsl(122, 39%, 49%);   
+    height: 1200px !important;
+}
+
+.Invoice-Page-Container_Yao {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    padding: 50px 60px 0 60px;
+    border-top: 3px solid hsl(122, 39%, 49%);   
+    height: 1340px !important;
 }
 
 .Edit-Container {
@@ -107,8 +143,14 @@
 
 .Middle-Third-Container {
     font-size: 12px;
-    min-height: 445px;
+    min-height: 350px;
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 50px;
+   
 }
 
 .Bottom-Third-Container {
