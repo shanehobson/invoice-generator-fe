@@ -148,7 +148,7 @@ handleValueChange = e => {
       <div>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            <Button onClick={this.toggleDrawer(anchor, true)}>+ Discount</Button>
+            <div onClick={this.toggleDrawer(anchor, true)}>+ Discount</div>
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}

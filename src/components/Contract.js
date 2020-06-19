@@ -15,7 +15,11 @@ class Contract extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            colors: {
+                standard: '#4cae4f',
+                dark: '#162637',
+                light: '#EEFFEC'
+            },
             invoiceInfo: {
                 devInfo: {
                     name: '',
@@ -48,9 +52,7 @@ class Contract extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        // console.log('component will receive props')
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
-        // console.log(subtotal);
         this.setState({
             ...this.state,
             ...nextProps,
@@ -68,8 +70,7 @@ class Contract extends Component {
                 middleThird: third === 'middleThird',
                 bottomThird: third === 'bottomThird'
             }
-        })
-        // console.log('mouse enter' + third);
+        });
     }, 50)
 
     onMouseLeaveInvoice = debounce(() => {
@@ -81,6 +82,25 @@ class Contract extends Component {
             }
         });
     }, 50)
+
+    onColorChange = (newColor) => {
+        this.setState({
+            ...this.state,
+            colors: {
+                standard: newColor,
+                light: this.lighten(newColor),
+                dark: this.darken(newColor)
+            }
+        });
+    }
+
+    lighten = (color) => {
+        return color;
+    }
+
+    darken = (color) => {
+        return color;
+    }
 
     onMouseEnterTopThird = () => {
         this.onMouseEnter('topThird')
@@ -101,10 +121,8 @@ class Contract extends Component {
         const subtotal = invoiceItems
         .map(item => parseFloat(item.total))
         .reduce((a, b) => {
-            // console.log(a)
             return a + b;
         });
-        // console.log(subtotal)
         return subtotal.toFixed(2); 
     }
 
@@ -142,6 +160,8 @@ class Contract extends Component {
 
     render() {
 
+        const { standard, dark, light } = this.state.colors;
+
         const { invoiceInfo, editIcons, notes } = this.state;
         const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
@@ -157,8 +177,8 @@ class Contract extends Component {
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
         return (
-            <Fragment>        
-                <div className='Invoice-Page-Container'>
+            <Fragment>   
+                <div className='Invoice-Page-Container' style={{borderTop: `3px solid ${standard}`}}>
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
@@ -176,7 +196,9 @@ class Contract extends Component {
                                         Edit Branding
                                     </div>
                                 }
-                                <h1 id='Invoice-Title' className='Invoice-Branding'>Invoice</h1>
+                                <h1 id='Invoice-Title' style={{color: standard}}>
+                                    Invoice
+                                    </h1>
                                 <p style={{fontSize: '14px', marginBottom: 0}}>#1</p>
                             </div>
                         

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import InvoiceItem from './InvoiceItem';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import '../styles/WorkingDoc.css';
@@ -27,7 +27,6 @@ class InvoiceSidebar extends Component {
     <div
       style={{width: '400px', padding: '10px 20px'}}
       role="presentation"
-      // onKeyDown={this.toggleDrawer(anchor, false)}
     >
       <h2>Line Item</h2>
          <InvoiceItem
@@ -66,7 +65,7 @@ class InvoiceSidebar extends Component {
     return (
       <div>
         {['right'].map((anchor) => (
-          <React.Fragment key={anchor}>
+          <Fragment key={anchor}>
             
             <div
               className='Add-Line-Item'
@@ -83,7 +82,7 @@ class InvoiceSidebar extends Component {
             >
               {this.child(anchor)}
             </SwipeableDrawer>
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     );
