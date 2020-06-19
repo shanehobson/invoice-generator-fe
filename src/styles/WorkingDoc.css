@@ -157,6 +157,7 @@
 
 .Line-Item-Icons {
     display: flex;
+    align-items: center;
     grid-column-start: 5;
     opacity: 0;
     padding-left: 20px;
@@ -258,21 +259,14 @@
 #Add-Line-Item {
     display: flex;
     justify-content: flex-start;
-    height: 60%;
-    padding: 0 8px 12px 0;
+    height: 39%;
+    padding: 0 0px 17px 0;
     width: 100%;
     font-size: 14px;
     line-height: 24px;
     color: rgb(147, 160, 174);
     cursor: pointer;
     border-bottom: 1px solid gainsboro;
-}
-
-.MuiButton-root-177 {
-    padding: 8px !important;
-    text-transform: none !important;
-    color: rgb(147, 160, 174) !important;
-    min-width: 0 !important;   
 }
 
 #Total {
@@ -299,8 +293,9 @@
 
 .Notes {
     display: grid;
-    padding-bottom: 14px;
-    grid-template-columns: 104% 60px;
+    margin: 20px 0;
+    padding: 10px 0;
+    grid-template-columns: 100% 60px;
 }
 
 .Notes:hover {
@@ -309,9 +304,13 @@
     color: rgb(22, 38, 55);
 }
 
+.Notes-Header > h3 {
+    margin-top: 0 !important;
+}
+
 .Add-Notes {
     height: 60%;
-    padding: 0 8px 8px 0;
+    /* padding: 0 8px 8px 0; */
     width: 100%;
     font-size: 14px;
     line-height: 24px;
@@ -328,8 +327,6 @@
     opacity: 0;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    margin-top: 10px;
     color: #aaa;
     cursor: pointer;
 }

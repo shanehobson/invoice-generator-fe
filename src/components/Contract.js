@@ -7,6 +7,7 @@ import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
+import '../styles/WorkingDoc.css';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -286,7 +287,7 @@ class Contract extends Component {
                                     <div className='Notes-Icons'>
                                         <DeleteIcon
                                             onClick={() => this.removeNotes(notes)}
-                                            style={{fontSize: '20px', paddingRight: '3px'}}                              
+                                            style={{fontSize: '20px', paddingRight: '10px'}}                              
                                         />                  
                                         <NotesSidebar                   
                                             updateNotes={this.updateNotes}
@@ -296,18 +297,18 @@ class Contract extends Component {
                                     </div>        
                                 </div>
                             }
-
-
-
-
-
                         </div>
 
                         <div className='Bottom-Third-Container'
                             onMouseEnter={this.onMouseEnterBottomThird}
-                            >
+                        >
                             <h4 className='Client-Customer'>{devName}</h4> 
-                            <p className='Dev-Address'>{devStreet} {devCity}, {devState}{devZip}</p>
+                            <p className='Dev-Address'>
+                                {devStreet} 
+                                {devCity}, 
+                                {devState}
+                                {devZip}
+                            </p>
                             <p className='Email'>mikerooze12@gmail.com</p>
                         </div>
                     </div>

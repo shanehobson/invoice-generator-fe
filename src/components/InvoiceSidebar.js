@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InvoiceItem from './InvoiceItem';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
+import '../styles/WorkingDoc.css';
 
 class InvoiceSidebar extends Component {
   constructor(props) {
@@ -67,7 +67,14 @@ class InvoiceSidebar extends Component {
       <div>
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>
-            <Button onClick={this.toggleDrawer(anchor, true)}>+ Add Line Item</Button>
+            
+            <div
+              className='Add-Line-Item'
+              onClick={this.toggleDrawer(anchor, true)}
+            >
+              + Add Line Item
+            </div>
+
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}
