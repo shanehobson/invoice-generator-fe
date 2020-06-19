@@ -2,12 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
-import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
-import EditIcon from '@material-ui/icons/Edit';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -159,7 +158,6 @@ class Contract extends Component {
         return (
             <Fragment>        
                 <div className='Invoice-Page-Container'>
-                     {/* className={this.getPageHeight(invoiceItems)}    */}
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
@@ -167,8 +165,7 @@ class Contract extends Component {
                                 Invoice settings
                             </span>
                         </button>            
-                    </div>
-                    
+                    </div>          
                     <div onMouseLeave={this.onMouseLeaveInvoice}>
                         <div className='Top-Third-Container'
                             onMouseEnter={this.onMouseEnterTopThird}>
@@ -246,7 +243,12 @@ class Contract extends Component {
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
-                                <div id='Discount'>+ Discount</div>
+
+                                <div id='Discount'>
+                                    <DiscountSidebar 
+                                        subtotal={this.calculateSubtotal}
+                                    />
+                                </div>
 
                                 <div id='Add-Line-Item'>
                                     <InvoiceSidebar

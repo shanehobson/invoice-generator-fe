@@ -1,0 +1,56 @@
+.Discount-Container {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 400px;
+    height: 800px;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0 0 0 40px;
+    height: 72px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.PercAndVal {
+    display: flex;
+    height: 800px;
+    padding: 24px 40px;
+    justify-content: space-between;
+}
+
+.Equals {
+    font-size: 20px;
+    padding-top: 40px;
+}
+
+.Buttons-Container {
+    display: flex;
+    height: 84px;
+    align-content: flex-end;
+    justify-content: flex-end;
+    padding: 0 40px;
+    border-top: 1px solid gainsboro;
+
+}
+
+.Cancel {
+    display: flex;
+    align-content: flex-end;
+    justify-content: flex-end;
+}
+
+.Submit {
+    align-content: flex-end;
+    justify-content: flex-end;
+}
+
+
+
+.MuiSvgIcon-root-179 {
+    font-size: 30px !important;
+}

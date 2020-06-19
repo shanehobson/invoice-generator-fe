@@ -59,8 +59,6 @@ class InvoiceItem extends Component {
         }
     }
 
-
-
     handleClose = () => {
         this.setState({ open: false });
     };
@@ -145,8 +143,6 @@ class InvoiceItem extends Component {
 
         const { FeeTypes, index, invoiceItems } = this.props;
         const { description, unit, rate, feeType, total, show } = this.state;
-
-        // console.log(invoiceItems)
 
         if (!show)  {
             return <span></span>

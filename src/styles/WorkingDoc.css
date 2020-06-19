@@ -181,10 +181,6 @@
     color: rgb(22, 38, 55);
 }
 
-
-
-
-
 /* *************End of Line-Items********** */
 
 #Item-Total {
@@ -263,7 +259,7 @@
     display: flex;
     justify-content: flex-start;
     height: 60%;
-    padding: 0 8px 8px 0;
+    padding: 0 8px 12px 0;
     width: 100%;
     font-size: 14px;
     line-height: 24px;
@@ -278,17 +274,6 @@
     color: rgb(147, 160, 174) !important;
     min-width: 0 !important;   
 }
-
-.MuiButton-root-177:hover {
-    color: rgb(22, 38, 55) !important;
-    background-color: #FFF !important;
-}
-
-/* #Add-Line-Item:hover {
-    box-shadow: none; 
-    background-color: rgb(239, 242, 246);
-    color: rgb(22, 38, 55);
-} */
 
 #Total {
     grid-column-start: 3;
@@ -310,10 +295,7 @@
     padding: 8px 8px 0 8px;
 }
 
-
-
 /*  *********Notes************ */
-
 
 .Notes {
     display: grid;
