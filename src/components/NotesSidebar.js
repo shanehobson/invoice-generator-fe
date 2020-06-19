@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -20,17 +20,20 @@ class NotesSidebar extends Component {
           open: false,
           notes: ''
     };
+    console.log(this.props)
   }
 
-  updateNotes= (notes) => {
-    this.setState({notes});
-  }
+  // handleupdateNotes= (notes) => {
+  //   this.setState({notes});
+  // }
 
   handleSubmit = () => {
-    const notes = this.state.notes;
-    this.props.updateNotes(notes)
+    const newNotes = this.state.notes;
+    this.props.updateNotes(newNotes)
     this.setState({ ...this.state, right: false});
+    // console.log(newNotes);
   }
+  
 
   handleClose = () => {
     this.setState({ ...this.state, right: false});
@@ -62,16 +65,9 @@ class NotesSidebar extends Component {
                 id="name"
                 multiline
                 value={this.state.notes}
-                rows={4}
+                rows={20}
                 label="Add a Note..."
                 fullWidth
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                  }}
                 onChange={e => this.setState({
                   notes: e.target.value
                 })}
@@ -98,12 +94,19 @@ class NotesSidebar extends Component {
     this.setState({ ...this.state, notes: this.props.notes, [anchor]: open });
 };
 
+
   render() {
+    const { notes } = this.state;
     return (
       <div>
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>
-            <Button onClick={this.toggleDrawer(anchor, true)}>+ Notes</Button>
+          
+             <Button onClick={this.toggleDrawer(anchor, true)}>
+               {this.props.icon !== 'edit' && '+Notes'}
+               {this.props.icon === 'edit' && <EditIcon />}
+               </Button>
+      
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}

@@ -7,6 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import InvoiceSidebar from './InvoiceSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
+import EditIcon from '@material-ui/icons/Edit';
+
 import SettingsIcon from '@material-ui/icons/Settings';
 
 class Contract extends Component {
@@ -120,31 +122,21 @@ class Contract extends Component {
         });
     }
 
-    getPageHeight = (invoiceItems) => {
-        if (invoiceItems.length < 3) {
-            return 'Invoice-Page-Container';
-        } else if (invoiceItems.length >= 3 && invoiceItems.length < 5) {
-            return 'Invoice-Page-Container-Medium';
-        } else if (invoiceItems.length >= 5 && invoiceItems.length < 7) {
-            return 'Invoice-Page-Container_Tall';
-        } else if (invoiceItems.length >= 7 && invoiceItems.length <= 9) {
-            return 'Invoice-Page-Container_Tallest';
-        } else {
-            return 'Invoice-Page-Container_Yao';
-        }
+    removeNotes = () => {
+        this.setState({
+            ...this.state,
+            notes: ''
+        });
     }
 
     removeLineItem = (index) => {
-        console.log(index);
         const newList = this.state.invoiceInfo.invoiceItems.filter((_, i) => i !== index);
-        console.log(newList);
         this.setState({
             ...this.state,
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 invoiceItems: newList
-            }
-            
+            }        
         });
     }
 
@@ -166,8 +158,8 @@ class Contract extends Component {
 
         return (
             <Fragment>        
-                <div
-                    className={this.getPageHeight(invoiceItems)}>    
+                <div className='Invoice-Page-Container'>
+                     {/* className={this.getPageHeight(invoiceItems)}    */}
                     <div className='Invoice-Settings'>  
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
@@ -250,8 +242,6 @@ class Contract extends Component {
                                 ))}
                             </div>
                             
-                               
-
                             <div className='Total-Info'>
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
@@ -269,19 +259,46 @@ class Contract extends Component {
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
 
-                                <div id='Add-Notes'>
+                                <div className='Add-Notes'>
                                     <NotesSidebar 
                                         updateNotes={this.updateNotes}
                                         notes={notes}
-                                    />  
+                                        icon={'add'}
+                                    />        
                                 </div>
                                 
                                 <div id='Amount-Due'>Amount Due</div>
-                                <div id='Amount-Price'>$0.00</div>
+                                <div id='Amount-Price'>$0.00</div>                                                     
                             </div>
-                            <div className='Notes-Container'>
-                                {notes}
-                            </div>
+
+                            {notes && 
+                                <div className='Notes'>                            
+                                    <div>
+                                        <div className='Notes-Header'>
+                                            <h3>Notes</h3>
+                                        </div>
+                                        <div>
+                                            {notes}
+                                        </div>                                                                                                                                       
+                                    </div >
+                                    <div className='Notes-Icons'>
+                                        <DeleteIcon
+                                            onClick={() => this.removeNotes(notes)}
+                                            style={{fontSize: '20px', paddingRight: '3px'}}                              
+                                        />                  
+                                        <NotesSidebar                   
+                                            updateNotes={this.updateNotes}
+                                            notes={notes}
+                                            icon={'edit'}
+                                        /> 
+                                    </div>        
+                                </div>
+                            }
+
+
+
+
+
                         </div>
 
                         <div className='Bottom-Third-Container'

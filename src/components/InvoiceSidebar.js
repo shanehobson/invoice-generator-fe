@@ -25,7 +25,7 @@ class InvoiceSidebar extends Component {
 
   child = (anchor) => (
     <div
-      style={{width: '330px'}}
+      style={{width: '400px', padding: '10px 20px'}}
       role="presentation"
       // onKeyDown={this.toggleDrawer(anchor, false)}
     >

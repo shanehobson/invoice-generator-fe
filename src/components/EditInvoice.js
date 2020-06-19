@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import InvoiceItem from './InvoiceItem';
 import EditIcon from '@material-ui/icons/Edit';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
 
 class InvoiceSidebar extends Component {
   constructor(props) {
