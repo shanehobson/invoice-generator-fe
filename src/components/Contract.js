@@ -2,14 +2,15 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
+
 import DeleteIcon from '@material-ui/icons/Delete';
+import SettingsIcon from '@material-ui/icons/Settings';
+import '../styles/WorkingDoc.css';
+
 import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
-import '../styles/WorkingDoc.css';
-
-import SettingsIcon from '@material-ui/icons/Settings';
 
 class Contract extends Component {
     constructor(props) {
@@ -47,12 +48,14 @@ class Contract extends Component {
                 middleThird: false,
                 bottomThird: false,
             },
-            notes: ''
+            notes: '',
+            discounts: ''
         };
     };
 
     componentWillReceiveProps(nextProps) {
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
+
         this.setState({
             ...this.state,
             ...nextProps,
@@ -134,6 +137,12 @@ class Contract extends Component {
         });
     }
 
+    updateDiscounts = (discounts) => {
+        this.setState({
+            discounts: discounts
+        })
+    }
+
     updateNotes = (notes) => {
         this.setState({
             notes: notes
@@ -162,7 +171,7 @@ class Contract extends Component {
 
         const { standard, dark, light } = this.state.colors;
 
-        const { invoiceInfo, editIcons, notes } = this.state;
+        const { invoiceInfo, editIcons, notes, discounts } = this.state;
         const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
@@ -266,10 +275,14 @@ class Contract extends Component {
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
-
+                                {discounts &&
+                                    <div>{discounts}</div>
+                                }
                                 <div id='Discount'>
-                                    <DiscountSidebar 
-                                        subtotal={this.calculateSubtotal}
+                                    <DiscountSidebar
+                                        updateDiscounts={this.updateDiscounts}
+                                        subtotal={subtotal}
+                                        discounts={discounts}
                                     />
                                 </div>
 

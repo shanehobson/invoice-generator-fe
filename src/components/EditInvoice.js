@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import InvoiceItem from './InvoiceItem';
 import EditIcon from '@material-ui/icons/Edit';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
 
-class InvoiceSidebar extends Component {
+class EditInvoice extends Component {
   constructor(props) {
       super(props);
 
@@ -23,16 +25,21 @@ class InvoiceSidebar extends Component {
     this.setState({ ...this.state, right: false });
   }
 
+  handleClose = () => {
+    this.setState({ ...this.state, right: false });
+  }
+
   child = (anchor) => {
     const {description, unit, rate, feeType, total} = this.props.item;
     return (
         <div
-        style={{width: '330px'}}
+        style={{width: '350px', padding: '10px 20px'}}
         role="presentation"
         // onKeyDown={this.toggleDrawer(anchor, false)}
       >
         <h2>Line Item</h2>
            <InvoiceItem
+                removable={false}
                 index={this.props.index}
                 item={
                   {
@@ -49,9 +56,14 @@ class InvoiceSidebar extends Component {
                 invoiceItems={this.props.invoiceItems}
             >
             </InvoiceItem>
-            <button onClick={this.handleSubmit}>
+            <DialogActions>
+            <Button onClick={this.handleClose} color="secondary">
+                Cancel
+            </Button>
+            <Button onClick={this.handleSubmit} color="primary">
                 Submit
-            </button>
+            </Button>
+        </DialogActions>
       </div>
     )  
   };
@@ -86,4 +98,4 @@ class InvoiceSidebar extends Component {
   }
 }
 
-export default InvoiceSidebar;
+export default EditInvoice;

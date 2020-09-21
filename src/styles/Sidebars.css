@@ -18,7 +18,7 @@
 
 .PercAndVal {
     display: flex;
-    height: 800px;
+    height: 796px;
     padding: 24px 40px;
     justify-content: space-between;
 }
@@ -49,8 +49,10 @@
     justify-content: flex-end;
 }
 
-
-
-.MuiSvgIcon-root-179 {
+/* .MuiSvgIcon-root-179 {
     font-size: 30px !important;
 }
+
+.MuiButton-label-187 {
+    font-size: 20px;
+} */

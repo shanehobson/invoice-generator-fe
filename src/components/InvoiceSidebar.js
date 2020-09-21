@@ -1,20 +1,26 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+
 import InvoiceItem from './InvoiceItem';
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import '../styles/WorkingDoc.css';
+import '../styles/Sidebars.css';
 
 class InvoiceSidebar extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-          right: false,
-          item: null
+    this.state = {
+      right: false,
+      item: null,
     };
   }
 
   updateInvoiceItem = (item) => {
-    this.setState({item});
+    this.setState({ item });
   }
 
   handleSubmit = () => {
@@ -23,32 +29,45 @@ class InvoiceSidebar extends Component {
     this.setState({ ...this.state, right: false });
   }
 
+  handleClose = () => {
+    this.setState({ ...this.state, right: false });
+  }
+
   child = (anchor) => (
     <div
-      style={{width: '400px', padding: '10px 20px'}}
+      style={{ width: '350px', padding: '10px 20px' }}
       role="presentation"
     >
       <h2>Line Item</h2>
-         <InvoiceItem
-              index={this.props.index}
-              item={
-                {
-                  description: '',
-                  unit: '1',
-                  rate: '',
-                  feeType: '',
-                  total: ''
-                }
-              }
-       
-              FeeTypes={this.props.FeeTypes}
-              updateInvoiceItem={this.updateInvoiceItem}
-              invoiceItems={this.props.invoiceItems}
-          >
-          </InvoiceItem>
-          <button onClick={this.handleSubmit}>
-              Submit
-          </button>
+      <section className='PercAndVal'>
+        <InvoiceItem
+          removable={false}
+          index={this.props.index}
+          item={
+            {
+              description: '',
+              unit: '1',
+              rate: '',
+              feeType: 'Flat fee',
+              total: 0.00
+            }
+          }
+
+          FeeTypes={this.props.FeeTypes}
+          updateInvoiceItem={this.updateInvoiceItem}
+          invoiceItems={this.props.invoiceItems}
+        >
+        </InvoiceItem>
+      </section>
+
+      <DialogActions className='Buttons-Container'>
+        <Button onClick={this.handleClose} color="secondary">
+          Cancel
+            </Button>
+        <Button onClick={this.handleSubmit} color="primary">
+          Submit
+            </Button>
+      </DialogActions>
     </div>
   );
 
@@ -59,14 +78,14 @@ class InvoiceSidebar extends Component {
     }
 
     this.setState({ ...this.state, [anchor]: open });
-};
+  };
 
   render() {
     return (
       <div>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            
+
             <div
               className='Add-Line-Item'
               onClick={this.toggleDrawer(anchor, true)}
@@ -82,6 +101,7 @@ class InvoiceSidebar extends Component {
             >
               {this.child(anchor)}
             </SwipeableDrawer>
+
           </Fragment>
         ))}
       </div>
@@ -89,4 +109,8 @@ class InvoiceSidebar extends Component {
   }
 }
 
-export default InvoiceSidebar;
+const mapStateToProps = (state) => ({
+  FeeTypes: state.FeeTypes
+});
+
+export default  connect(mapStateToProps)(InvoiceSidebar);

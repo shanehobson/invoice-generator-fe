@@ -30,12 +30,14 @@ class InvoiceItem extends Component {
             errors: {
                 rate: false,
                 unit: false
-            }
+            },
+            removable: true
         };
     };
 
     componentDidMount() { 
-        this.setState({ 
+        this.setState({
+            removable: this.props.removable === false ? false : true,
             description: this.props.item.description,
             unit: this.props.item.unit,
             rate: this.props.item.rate,
@@ -142,7 +144,7 @@ class InvoiceItem extends Component {
     render() {
 
         const { FeeTypes, index, invoiceItems } = this.props;
-        const { description, unit, rate, feeType, total, show } = this.state;
+        const { description, unit, rate, feeType, total, show, removable } = this.state;
 
         if (!show)  {
             return <span></span>
@@ -151,7 +153,7 @@ class InvoiceItem extends Component {
         return (
             <div>
                 <div className='TextFieldContainer'>
-                    {invoiceItems.length > 1 &&
+                    {invoiceItems.length > 1 && removable &&
                     <div className='RemoveInvoiceButton' onClick={this.handleRemoveInvoiceItem}>
                         <HighlightOffIcon />
                     </div>}

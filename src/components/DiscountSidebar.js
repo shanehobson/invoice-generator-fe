@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import TextField from '@material-ui/core/TextField';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -11,46 +12,60 @@ class DiscountSidebar extends Component {
 
       this.state = {
           right: false,
-          percent: '',
-          value: ''
+          percent: undefined,
+          value: undefined
     };
   }
 
-  calculateValue = (percent) => {
-    if (!percent) {  percent = '0' }
-    const subtotal= this.props.subtotal
-    console.log(subtotal)
-    percent = this.stringToNumber(percent);
-    return (percent * subtotal).toFixed(2).toString();
+calculateValue = (percent, subtotal) => {
+  subtotal= this.props.subtotal;
+  if (!percent) {  percent = '0' }
+  percent = this.state.percent;
+  // percent = this.stringToNumber(percent);
+  return (percent * subtotal/10).toFixed(2).toString();
 }
 
-stringToNumber(str) {
-  if (!str) return 0;
-  if (typeof str === 'number') return str;
+// stringToNumber(str) {
+//   if (!str) return 0;
+//   if (typeof str === 'number') return str;
 
-  const arr = str.split('');
-  const filteredArr = arr.filter(char => {
-      const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
-      const isNumber = nums.indexOf(char) > - 1;
-      const isPeriod = char === '.';
-      return isNumber || isPeriod;
-  });
+//   const arr = str.split('');
+//   const filteredArr = arr.filter(char => {
+//       const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
+//       const isNumber = nums.indexOf(char) > - 1;
+//       const isPeriod = char === '.';
+//       return isNumber || isPeriod;
+//   });
 
-  const isDecimal = filteredArr.indexOf('.') > -1;
-  const joined = filteredArr.join('');
+//   const isDecimal = filteredArr.indexOf('.') > -1;
+//   const joined = filteredArr.join('');
 
-  if (!isDecimal) {
-      return parseInt(joined);
-  } else {
-      const dollars = joined.split('.')[0];
-      const cents = joined.split('.')[1] || 0;
-      return parseInt(dollars, 10) + (parseFloat(cents / 100, 10));
-  }
+//   if (!isDecimal) {
+//       return parseInt(joined);
+//   } else {
+//       const dollars = joined.split('.')[0];
+//       const cents = joined.split('.')[1] || 0;
+//       return parseInt(dollars, 10) + (parseFloat(cents / 100, 10));
+//   }
+// }
+
+updateDiscounts = (percent, value) => {
+  this.setState({percent, value});
 }
 
-  handlePercentChange = e => {
-    const percent = e.target.value || '';
-    this.setState({ percent });
+handleSubmit = () => {
+  const percent = this.state.percent;
+  const value = this.state.value;
+  this.props.updateDiscounts(percent, value);
+  this.setState({ ...this.state, right: false });
+}
+
+handlePercentChange = e => {
+     const percent = e.target.value || '';
+     const subtotal=this.props.subtotal;
+     const value = this.calculateValue(percent, subtotal);
+     console.log(subtotal);
+    this.setState({ percent, value });
 };
 
 handleValueChange = e => {
@@ -58,9 +73,11 @@ handleValueChange = e => {
   this.setState({ value });
 };
 
-  handleSubmit = () => {
-    this.setState({ ...this.state, right: false });
-  }
+// handleSubmit = () => {
+//     this.setState({ ...this.state, right: false });
+//   }
+
+
 
   child = (anchor) => (
     <div className='Discount-Container'>
@@ -92,12 +109,14 @@ handleValueChange = e => {
                 value={this.state.percent}
             >
             </TextField>
+            {/* <span>%</span> */}
         </div>
         <div className='Equals'>
           =
         </div>
         <div>
             <span className='RateDollarSymbol'>Value</span>
+            {/* <span>$</span> */}
             <TextField
                 style={{
                   width: '140px', 
