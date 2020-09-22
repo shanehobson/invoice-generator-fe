@@ -9,8 +9,10 @@ import '../styles/WorkingDoc.css';
 
 import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
+import BrandingSidebar from './BrandingSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
+
 
 class Contract extends Component {
     constructor(props) {
@@ -122,10 +124,10 @@ class Contract extends Component {
             return 0;
         }
         const subtotal = invoiceItems.map(item => parseFloat(item.total))
-        .reduce((a, b) => {
-            return a + b;
-        });
-        return subtotal.toFixed(2); 
+            .reduce((a, b) => {
+                return a + b;
+            });
+        return subtotal.toFixed(2);
     }
 
     updateInvoiceItem = (item) => {
@@ -140,6 +142,14 @@ class Contract extends Component {
         this.setState({
             discountValue,
             discountPercent
+        })
+    }
+
+    updateBranding = (standard, light, dark) => {
+        this.setState({
+            standard, 
+            light,
+            dark
         })
     }
 
@@ -163,17 +173,15 @@ class Contract extends Component {
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 invoiceItems: newList
-            }        
+            }
         });
     }
 
     render() {
 
         const { standard, dark, light } = this.state.colors;
-
         const { invoiceInfo, editIcons, notes, discountValue, discountPercent } = this.state;
-        const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
-        
+        const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -186,31 +194,38 @@ class Contract extends Component {
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
         return (
-            <Fragment>   
-                <div className='Invoice-Page-Container' style={{borderTop: `3px solid ${standard}`}}>
-                    <div className='Invoice-Settings'>  
+            <Fragment>
+                <div className='Invoice-Page-Container' style={{ borderTop: `3px solid ${standard}` }}>
+                    <div className='Invoice-Settings'>
                         <button className='Invoice-Button'>
-                            <SettingsIcon style={{paddingRight: '3px', fontSize: '18px'}}/>
+                            <SettingsIcon style={{ paddingRight: '3px', fontSize: '18px' }} />
                             <span>
                                 Invoice settings
                             </span>
-                        </button>            
-                    </div>          
+                        </button>
+                    </div>
                     <div onMouseLeave={this.onMouseLeaveInvoice}>
                         <div className='Top-Third-Container'
                             onMouseEnter={this.onMouseEnterTopThird}>
                             <div className="Edit-Container">
-                                { editIcons.topThird &&
-                                    <div className='Edit-Icon' style={{left: '100px'}}>
-                                        Edit Branding
+                                {editIcons.topThird &&
+                                    <div className='Edit-Icon' style={{ left: '100px' }}>
+                                        <div id='Discount'>
+                                            <BrandingSidebar
+                                                updateBranding={this.updateBranding}
+                                                standard={standard}
+                                                light={light}
+                                                dark={dark}               
+                                            />
+                                        </div>
                                     </div>
                                 }
-                                <h1 id='Invoice-Title' style={{color: standard}}>
+                                <h1 id='Invoice-Title' style={{ color: standard }}>
                                     Invoice
                                     </h1>
-                                <p style={{fontSize: '14px', marginBottom: 0}}>#1</p>
+                                <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
                             </div>
-                        
+
                             <div className='Top-Right-Grid-Area'>
                                 <h1 id='Invoice-Total'>
                                     $0.00
@@ -234,30 +249,30 @@ class Contract extends Component {
                                     <br></br>
                                     <br></br>
                                     <div className='Gray-Text'>+ Tax Id</div>
-                                </div>   
+                                </div>
                             </div>
-                            
+
                         </div>
-                
+
                         <div className='Middle-Third-Container'
                             onMouseEnter={this.onMouseEnterMiddleThird}>
-                            
+
                             <div>
-                                {invoiceItems.map((item, i) => (              
+                                {invoiceItems.map((item, i) => (
                                     <div className='Line-Items-Container' key={i}>
-                                        <div className='Line-Items'>                       
+                                        <div className='Line-Items'>
                                             <div id='Item'>{item.description}</div>
                                             <div id='Unit'>{item.unit}</div>
                                             <div id='Rate'>
-                                                {item.feeType === 'Flat fee' && item.rate }
-                                                {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType }
+                                                {item.feeType === 'Flat fee' && item.rate}
+                                                {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType}
                                             </div>
                                             <div id='Item-Total'>${item.total}</div>
                                             <div className='Line-Item-Icons' key={i}>
                                                 <DeleteIcon
                                                     onClick={() => this.removeLineItem(i)}
-                                                    style={{fontSize: '20px', paddingRight: '10px'}}                              
-                                                />         
+                                                    style={{ fontSize: '20px', paddingRight: '10px' }}
+                                                />
                                                 <EditInvoice
                                                     item={item}
                                                     index={i}
@@ -265,12 +280,12 @@ class Contract extends Component {
                                                     updateInvoiceItem={this.updateInvoiceItem}
                                                     invoiceItems={invoiceItems}
                                                 />
-                                            </div>                                                                                                                                                                                          
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            
+
                             <div className='Total-Info'>
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
@@ -282,7 +297,7 @@ class Contract extends Component {
                                     </div>
                                 }
                                 <div id='Discount'>
-                                    <DiscountSidebar                           
+                                    <DiscountSidebar
                                         updateDiscounts={this.updateDiscounts}
                                         subtotal={subtotal}
                                         discountValue={discountValue}
@@ -297,43 +312,43 @@ class Contract extends Component {
                                         invoiceItems={invoiceItems}
                                     />
                                 </div>
-                                
+
                                 <div id='Total'>Total</div>
                                 <div id='Total-Price'>$0.00</div>
 
                                 <div className='Add-Notes'>
-                                    <NotesSidebar 
+                                    <NotesSidebar
                                         updateNotes={this.updateNotes}
                                         notes={notes}
                                         icon={'add'}
-                                    />        
+                                    />
                                 </div>
-                                
+
                                 <div id='Amount-Due'>Amount Due</div>
-                                <div id='Amount-Price'>$0.00</div>                                                     
+                                <div id='Amount-Price'>$0.00</div>
                             </div>
 
-                            {notes && 
-                                <div className='Notes'>                            
+                            {notes &&
+                                <div className='Notes'>
                                     <div>
                                         <div className='Notes-Header'>
                                             <h3>Notes</h3>
                                         </div>
                                         <div>
                                             {notes}
-                                        </div>                                                                                                                                       
+                                        </div>
                                     </div >
                                     <div className='Notes-Icons'>
                                         <DeleteIcon
                                             onClick={() => this.removeNotes(notes)}
-                                            style={{fontSize: '20px', paddingRight: '10px'}}                              
-                                        />                  
-                                        <NotesSidebar                   
+                                            style={{ fontSize: '20px', paddingRight: '10px' }}
+                                        />
+                                        <NotesSidebar
                                             updateNotes={this.updateNotes}
                                             notes={notes}
                                             icon={'edit'}
-                                        /> 
-                                    </div>        
+                                        />
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -341,10 +356,10 @@ class Contract extends Component {
                         <div className='Bottom-Third-Container'
                             onMouseEnter={this.onMouseEnterBottomThird}
                         >
-                            <h4 className='Client-Customer'>{devName}</h4> 
+                            <h4 className='Client-Customer'>{devName}</h4>
                             <p className='Dev-Address'>
-                                {devStreet} 
-                                {devCity}, 
+                                {devStreet}
+                                {devCity},
                                 {devState}
                                 {devZip}
                             </p>
@@ -352,7 +367,7 @@ class Contract extends Component {
                         </div>
                     </div>
                 </div>
-            </Fragment>      
+            </Fragment>
         );
     }
 };

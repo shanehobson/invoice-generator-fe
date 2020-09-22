@@ -6,6 +6,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import '../styles/Sidebars.css';
 
+const initialState = {
+    right: false,
+    percent: '',
+    value: ''
+};
+
 class DiscountSidebar extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +26,11 @@ class DiscountSidebar extends Component {
   componentDidMount() {
     this.setState({
       value: this.props.discountValue || 0,
-      percent: this.props.discountPercent || 0
+      percent: this.props.discountPercent
     });
   }
 
-  calculateValue = (percent = '0', subtotal) => {
+  calculateValue = (percent, subtotal) => {
     return (percent / 100 * subtotal).toFixed(2).toString();
   }
 
@@ -52,10 +58,14 @@ class DiscountSidebar extends Component {
   };
 
   handleSubmit = () => {
-    const percent = this.state.percent;
-    const value = this.state.value;
+    const percent = 'Discount (' + this.state.percent + '%)';
+    const value = '$' + this.state.value;
     this.props.updateDiscounts(percent, value);
     this.setState({ ...this.state, right: false });
+  }
+
+  handleCancel = () => {
+    this.setState(initialState);
   }
 
   child = (anchor) => (
@@ -63,7 +73,7 @@ class DiscountSidebar extends Component {
       <div className='Header'>
         <h2>Discount</h2>
         <HighlightOffIcon
-          onClick={this.handleSubmit}
+          onClick={this.handleCancel}
           style={{
             position: 'absolute',
             top: 10,
@@ -85,7 +95,7 @@ class DiscountSidebar extends Component {
             variant="outlined"
             placeholder="0.00%"
             onChange={this.handlePercentChange}
-            value={this.state.percent}
+            value={this.state.percent || ''}
           >
           </TextField>
         </div>
@@ -104,7 +114,7 @@ class DiscountSidebar extends Component {
             variant="outlined"
             placeholder="$0.00"
             onChange={this.handleValueChange}
-            value={this.state.value}
+            value={this.state.value || ''}
           >
           </TextField>
         </div>
@@ -113,7 +123,7 @@ class DiscountSidebar extends Component {
         <Button
           color="secondary"
           className='Cancel'
-          onClick={this.handleSubmit}
+          onClick={this.handleCancel}
         >
           Cancel
         </Button>
