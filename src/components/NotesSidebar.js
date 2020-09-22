@@ -19,7 +19,6 @@ class NotesSidebar extends Component {
           open: false,
           notes: ''
     };
-    console.log(this.props)
   }
 
   handleSubmit = () => {
@@ -83,7 +82,6 @@ class NotesSidebar extends Component {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    console.log(this.props)
     this.setState({ ...this.state, notes: this.props.notes, [anchor]: open });
 };
 

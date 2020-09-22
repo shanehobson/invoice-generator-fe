@@ -49,7 +49,6 @@ if (JSON.parse(localStorage.getItem('invoiceItems')) !== null) {
     invoiceItems = JSON.parse(localStorage.getItem('invoiceItems'));
 }
 
-
 const initialState = {
     invoiceInfo: {
         devType,
@@ -68,8 +67,8 @@ const initialState = {
             USstate: customerInfo.USstate,
             zip: customerInfo.zip
         },
-        invoiceItems: invoiceItems,
-        formsAreComplete: formsAreComplete
+        invoiceItems,
+        formsAreComplete
     },
     pages: {
         currentPage

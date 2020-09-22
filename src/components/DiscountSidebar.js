@@ -8,100 +8,55 @@ import '../styles/Sidebars.css';
 
 class DiscountSidebar extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-          right: false,
-          percent: '',
-          value: ''
+    this.state = {
+      right: false,
+      percent: '',
+      value: ''
     };
   }
 
-//   componentDidUpdate = (_, prevState) => {
-//     let stateHasChanged = false;
+  componentDidMount() {
+    this.setState({
+      value: this.props.discountValue || 0,
+      percent: this.props.discountPercent || 0
+    });
+  }
 
-//     for (const [k, v] of Object.entries(prevState)) {
-//         if (this.state[k] !== v) {
-//             stateHasChanged = true;
-//         }
-//     }
+  calculateValue = (percent = '0', subtotal) => {
+    return (percent / 100 * subtotal).toFixed(2).toString();
+  }
 
-//     if (stateHasChanged) {
-//         this.onUpdate();
-//     }
-// }
+  calculatePercent = (value = '0', subtotal) => {
+    value = parseFloat(value) || 0;
+    if (subtotal === 0) { 
+      return 0;
+    } else {
+      return (value / subtotal * 100).toFixed(2).toString();
+    }
+  }
 
-// onUpdate = () => {
-//   const value = this.state;
-//   this.props.updateInvoiceItem(value)
-// }
-
-
-
-// stringToNumber(str) {
-//   if (!str) return 0;
-//   if (typeof str === 'number') return str;
-
-//   const arr = str.split('');
-//   const filteredArr = arr.filter(char => {
-//       const nums = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
-//       const isNumber = nums.indexOf(char) > - 1;
-//       const isPeriod = char === '.';
-//       return isNumber || isPeriod;
-//   });
-
-//   const isDecimal = filteredArr.indexOf('.') > -1;
-//   const joined = filteredArr.join('');
-
-//   if (!isDecimal) {
-//       return parseInt(joined);
-//   } else {
-//       const dollars = joined.split('.')[0];
-//       const cents = joined.split('.')[1] || 0;
-//       return parseInt(dollars, 10) + (parseFloat(cents / 100, 10));
-//   }
-// }
-
-
-
-
-calculateValue = (percent, subtotal) => {
-  subtotal= this.props.subtotal;
-  if (!percent) {  percent = '0' }
-  percent = this.state.percent;
- 
-  // percent = this.stringToNumber(percent);
-  return (percent/100 * subtotal).toFixed(2).toString();
-
-
-}
-
-handlePercentChange = e => {
-     const percent = e.target.value || '';
-     const subtotal=this.props.subtotal;
-     const value = this.calculateValue(percent, subtotal);
+  handlePercentChange = e => {
+    const percent = e.target.value || '';
+    const subtotal = this.props.subtotal;
+    const value = this.calculateValue(percent, subtotal);
     this.setState({ percent, value });
-};
+  };
 
-handleValueChange = e => {
-  const value = e.target.value || '';
-  const subtotal=this.props.subtotal;
-  const percent = this.calculateValue(percent, subtotal)
-  this.setState({ percent, value });
-};
+  handleValueChange = e => {
+    const value = e.target.value || '';
+    const subtotal = this.props.subtotal;
+    const percent = this.calculatePercent(value, subtotal)
+    this.setState({ percent, value });
+  };
 
-updateDiscounts = (percent, value) => {
-  this.setState({percent, value});
-}
-
-handleSubmit = () => {
-  const percent = this.state.percent;
-  const value = this.state.value;
-  this.props.updateDiscounts(percent, value);
-  this.setState({ ...this.state, right: false });
-}
-
-
+  handleSubmit = () => {
+    const percent = this.state.percent;
+    const value = this.state.value;
+    this.props.updateDiscounts(percent, value);
+    this.setState({ ...this.state, right: false });
+  }
 
   child = (anchor) => (
     <div className='Discount-Container'>
@@ -115,43 +70,43 @@ handleSubmit = () => {
             right: 10,
             fontSize: '26px !important'
           }}
-       />
+        />
       </div>
-      
+
       <section className='PercAndVal'>
         <div>
-            <span className='RateDollarSymbol'>Percentage</span>
-            <TextField
-                style={{
-                  width: '140px', 
-                  paddingTop: '10px'
-                }}
-                fullWidth
-                variant="outlined"
-                placeholder="0.00%"
-                onChange={this.handlePercentChange}
-                value={this.state.percent}
-            >
-            </TextField>
+          <span className='RateDollarSymbol'>Percentage</span>
+          <TextField
+            style={{
+              width: '140px',
+              paddingTop: '10px'
+            }}
+            fullWidth
+            variant="outlined"
+            placeholder="0.00%"
+            onChange={this.handlePercentChange}
+            value={this.state.percent}
+          >
+          </TextField>
         </div>
 
         <div className='Equals'> = </div>
 
         <div>
-            <span className='RateDollarSymbol'>Value</span>
+          <span className='RateDollarSymbol'>Value</span>
 
-            <TextField
-                style={{
-                  width: '140px', 
-                  paddingTop: '10px',
-                }}
-                fullWidth
-                variant="outlined"
-                placeholder="$0.00"
-                onChange={this.handleValueChange}
-                value={this.state.value}
-            >
-            </TextField>
+          <TextField
+            style={{
+              width: '140px',
+              paddingTop: '10px',
+            }}
+            fullWidth
+            variant="outlined"
+            placeholder="$0.00"
+            onChange={this.handleValueChange}
+            value={this.state.value}
+          >
+          </TextField>
         </div>
       </section>
       <div className='Buttons-Container-Discount'>
@@ -160,19 +115,19 @@ handleSubmit = () => {
           className='Cancel'
           onClick={this.handleSubmit}
         >
-            Cancel
+          Cancel
         </Button>
-             
+
         <Button
           color="primary"
-          style={{alignContent: 'flex-end'}}
+          style={{ alignContent: 'flex-end' }}
           className='Submit'
           onClick={this.handleSubmit}
         >
-            Submit
+          Submit
         </Button>
       </div>
-        
+
     </div>
   );
 
@@ -183,7 +138,7 @@ handleSubmit = () => {
     }
 
     this.setState({ ...this.state, [anchor]: open });
-};
+  };
 
 
 

@@ -96,9 +96,6 @@ class Page5 extends Component {
 
     updateInvoiceItem = (item, index) => {
         const invoiceItems = this.state.invoiceItems.slice();
-        console.log(invoiceItems)
-        console.log(item)
-
         for (const [k, v] of Object.entries(item)) {
             invoiceItems[index][k] = v;
         }

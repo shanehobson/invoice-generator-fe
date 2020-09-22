@@ -39,7 +39,8 @@ class Contract extends Component {
                 invoiceItems: [],
                 subtotal: 0, // @todo add to redux
                 taxes: 0, // @todo add to redux
-                discount: 0, // @todo add to redux
+                discountValue: 0,
+                discountPercent: 0, // @todo add to redux
                 total: 0 // @todo add to redux
             },
 
@@ -48,8 +49,7 @@ class Contract extends Component {
                 middleThird: false,
                 bottomThird: false,
             },
-            notes: '',
-            discounts: ''
+            notes: ''
         };
     };
 
@@ -136,9 +136,10 @@ class Contract extends Component {
         });
     }
 
-    updateDiscounts = (discounts) => {
+    updateDiscounts = (discountValue, discountPercent) => {
         this.setState({
-            discounts: discounts
+            discountValue,
+            discountPercent
         })
     }
 
@@ -170,7 +171,7 @@ class Contract extends Component {
 
         const { standard, dark, light } = this.state.colors;
 
-        const { invoiceInfo, editIcons, notes, discounts } = this.state;
+        const { invoiceInfo, editIcons, notes, discountValue, discountPercent } = this.state;
         const { devInfo, customerInfo, invoiceItems, subtotal } = invoiceInfo;      
         
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
@@ -274,14 +275,18 @@ class Contract extends Component {
                                 <div id='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
                                 <div id='Taxes'>+ Taxes</div>
-                                {discounts &&
-                                    <div>{discounts}</div>
+                                {discountValue &&
+                                    <div>
+                                        <div>{discountValue}</div>
+                                        <div>{discountPercent}</div>
+                                    </div>
                                 }
                                 <div id='Discount'>
-                                    <DiscountSidebar
+                                    <DiscountSidebar                           
                                         updateDiscounts={this.updateDiscounts}
                                         subtotal={subtotal}
-                                        discounts={discounts}
+                                        discountValue={discountValue}
+                                        discountPercent={discountPercent}
                                     />
                                 </div>
 
