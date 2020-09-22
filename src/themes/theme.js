@@ -4,7 +4,7 @@ import { grey, green} from '@material-ui/core/colors';
 const customMuiTheme = createMuiTheme({
     palette: {
         primary: green,
-        secondary: grey
+        secondary: grey,
     },
     spacing: {
         unit: 10

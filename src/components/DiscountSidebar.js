@@ -12,18 +12,31 @@ class DiscountSidebar extends Component {
 
       this.state = {
           right: false,
-          percent: undefined,
-          value: undefined
+          percent: '',
+          value: ''
     };
   }
 
-calculateValue = (percent, subtotal) => {
-  subtotal= this.props.subtotal;
-  if (!percent) {  percent = '0' }
-  percent = this.state.percent;
-  // percent = this.stringToNumber(percent);
-  return (percent * subtotal/10).toFixed(2).toString();
-}
+//   componentDidUpdate = (_, prevState) => {
+//     let stateHasChanged = false;
+
+//     for (const [k, v] of Object.entries(prevState)) {
+//         if (this.state[k] !== v) {
+//             stateHasChanged = true;
+//         }
+//     }
+
+//     if (stateHasChanged) {
+//         this.onUpdate();
+//     }
+// }
+
+// onUpdate = () => {
+//   const value = this.state;
+//   this.props.updateInvoiceItem(value)
+// }
+
+
 
 // stringToNumber(str) {
 //   if (!str) return 0;
@@ -49,6 +62,34 @@ calculateValue = (percent, subtotal) => {
 //   }
 // }
 
+
+
+
+calculateValue = (percent, subtotal) => {
+  subtotal= this.props.subtotal;
+  if (!percent) {  percent = '0' }
+  percent = this.state.percent;
+ 
+  // percent = this.stringToNumber(percent);
+  return (percent/100 * subtotal).toFixed(2).toString();
+
+
+}
+
+handlePercentChange = e => {
+     const percent = e.target.value || '';
+     const subtotal=this.props.subtotal;
+     const value = this.calculateValue(percent, subtotal);
+    this.setState({ percent, value });
+};
+
+handleValueChange = e => {
+  const value = e.target.value || '';
+  const subtotal=this.props.subtotal;
+  const percent = this.calculateValue(percent, subtotal)
+  this.setState({ percent, value });
+};
+
 updateDiscounts = (percent, value) => {
   this.setState({percent, value});
 }
@@ -60,29 +101,12 @@ handleSubmit = () => {
   this.setState({ ...this.state, right: false });
 }
 
-handlePercentChange = e => {
-     const percent = e.target.value || '';
-     const subtotal=this.props.subtotal;
-     const value = this.calculateValue(percent, subtotal);
-     console.log(subtotal);
-    this.setState({ percent, value });
-};
-
-handleValueChange = e => {
-  const value = e.target.value || '';
-  this.setState({ value });
-};
-
-// handleSubmit = () => {
-//     this.setState({ ...this.state, right: false });
-//   }
-
 
 
   child = (anchor) => (
     <div className='Discount-Container'>
       <div className='Header'>
-        <h2 className='Title'>Discount</h2>
+        <h2>Discount</h2>
         <HighlightOffIcon
           onClick={this.handleSubmit}
           style={{
@@ -109,14 +133,13 @@ handleValueChange = e => {
                 value={this.state.percent}
             >
             </TextField>
-            {/* <span>%</span> */}
         </div>
-        <div className='Equals'>
-          =
-        </div>
+
+        <div className='Equals'> = </div>
+
         <div>
             <span className='RateDollarSymbol'>Value</span>
-            {/* <span>$</span> */}
+
             <TextField
                 style={{
                   width: '140px', 
@@ -131,8 +154,9 @@ handleValueChange = e => {
             </TextField>
         </div>
       </section>
-      <div className='Buttons-Container'>
+      <div className='Buttons-Container-Discount'>
         <Button
+          color="secondary"
           className='Cancel'
           onClick={this.handleSubmit}
         >
@@ -140,6 +164,7 @@ handleValueChange = e => {
         </Button>
              
         <Button
+          color="primary"
           style={{alignContent: 'flex-end'}}
           className='Submit'
           onClick={this.handleSubmit}

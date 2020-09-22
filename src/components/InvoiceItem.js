@@ -51,6 +51,7 @@ class InvoiceItem extends Component {
         let stateHasChanged = false;
 
         for (const [k, v] of Object.entries(prevState)) {
+    
             if (this.state[k] !== v) {
                 stateHasChanged = true;
             }

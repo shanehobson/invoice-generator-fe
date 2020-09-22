@@ -38,8 +38,8 @@ class InvoiceSidebar extends Component {
       style={{ width: '350px', padding: '10px 20px' }}
       role="presentation"
     >
-      <h2>Line Item</h2>
-      <section className='PercAndVal'>
+      <h2 className='Invoice-Title'>Line Item</h2>
+      <section className='Invoice-Sidebar'>
         <InvoiceItem
           removable={false}
           index={this.props.index}
@@ -49,7 +49,7 @@ class InvoiceSidebar extends Component {
               unit: '1',
               rate: '',
               feeType: 'Flat fee',
-              total: 0.00
+              total: ''
             }
           }
 

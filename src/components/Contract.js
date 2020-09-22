@@ -121,8 +121,7 @@ class Contract extends Component {
         if (!invoiceItems || invoiceItems.length === 0) {
             return 0;
         }
-        const subtotal = invoiceItems
-        .map(item => parseFloat(item.total))
+        const subtotal = invoiceItems.map(item => parseFloat(item.total))
         .reduce((a, b) => {
             return a + b;
         });
