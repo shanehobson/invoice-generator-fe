@@ -214,7 +214,7 @@ class Contract extends Component {
                             <div className="Edit-Container">
                                 {editIcons.topThird &&
                                     <div className='Edit-Icon' style={{ left: '100px' }}>
-                                        <div className='Discount'>
+                                        <div className='Branding'>
                                             <BrandingSidebar
                                                 updateBranding={this.updateBranding}
                                                 standard={standard}

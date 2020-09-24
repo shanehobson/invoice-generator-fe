@@ -50,9 +50,9 @@ class BrandingSidebar extends Component {
   child = (anchor) => (
     <div className='Discount-Container'>
       <div className='Header'>
-        <h2>Branding</h2>
+        <h2>Select Color</h2>
         <HighlightOffIcon
-          onClick={this.handleSubmit}
+          onClick={this.handleClose}
           style={{
             position: 'absolute',
             top: 10,
@@ -61,11 +61,14 @@ class BrandingSidebar extends Component {
           }}
         />
       </div>
-      <ColorPicker
-        name='color'
-        defaultValue='#000'
-        onChange={this.handleColorChange}
-        />
+      <section className='Color-Picker'>
+        <ColorPicker
+          name='color'
+          defaultValue='Click to Customize Color'
+          onChange={this.handleColorChange}
+          />
+      </section>
+   
       <div className='Buttons-Container-Discount'>
         <Button
           color="secondary"
@@ -101,7 +104,7 @@ class BrandingSidebar extends Component {
       <div>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            <div onClick={this.toggleDrawer(anchor, true)}>Edit Branding</div>
+            <div onClick={this.toggleDrawer(anchor, true)}>Change Color Theme</div>
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}

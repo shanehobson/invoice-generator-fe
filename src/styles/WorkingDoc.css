@@ -16,9 +16,9 @@
     position: relative;
 }
 
-.Edit-Icon {
+/* .Edit-Icon {
     position: absolute;
-}
+} */
 
 .hide {
     display: none;
@@ -43,7 +43,7 @@
 
 .Invoice-Button:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333;
 }
 
@@ -63,7 +63,7 @@
 
 .Gray-Text:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333;
 }
 
@@ -78,7 +78,7 @@
 
 .Top-Third-Container:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
 }
 
 .Middle-Third-Container {
@@ -151,7 +151,7 @@
 
 .Line-Items:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 
@@ -178,7 +178,7 @@
 
 .Line-Item-Icons:hover + * {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 
@@ -247,7 +247,7 @@
 
 #Taxes:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 
@@ -302,6 +302,12 @@
     padding-right: 5px;
 }
 
+.discount:hover{
+    box-shadow: none;
+    background-color: #eaeaea;
+    color: #333;
+}
+
 
 .discount-button {
     width: 100%;
@@ -340,7 +346,7 @@
 
 .Added-Discount:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 
@@ -379,7 +385,7 @@
 
 .Add-Notes:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 
@@ -392,7 +398,7 @@
 
 .Notes:hover {
     box-shadow: none;
-    background-color: #ababab;
+    background-color: #eaeaea;
     color: #333
 }
 

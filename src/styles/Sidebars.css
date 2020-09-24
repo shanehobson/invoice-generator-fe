@@ -1,9 +1,14 @@
-.Discount-Container {
-    position: relative;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    width: 400px;
-    height: 800px;
+.Branding {
+    display: flex;
+    font-size: 16px;
+    border: 1px solid black;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.Branding:hover {
+    background-color: black;
+    color: white;
 }
 
 
@@ -22,6 +27,11 @@
     height: 796px;
     padding: 24px 40px;
     justify-content: space-between;
+}
+
+.Color-Picker {
+    height: 796px;
+    padding: 24px 40px;
 }
 
 .Invoice-Sidebar {
@@ -57,6 +67,14 @@
     display: flex;
     align-content: flex-end;
     justify-content: flex-end;
+}
+
+.Discount-Container {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 400px;
+    height: 800px;
 }
 
 .Submit {
