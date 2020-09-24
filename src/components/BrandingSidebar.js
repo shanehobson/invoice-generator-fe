@@ -26,9 +26,12 @@ class BrandingSidebar extends Component {
     });
   }
 
-  handleColorChange = (e, type) => {
-    let color = e.target.value || null;
-    this.setState({ [type]: color });
+  handleColorChange = (e) => {
+    if (e) {
+      const type = 'standard'
+      let color = e;
+      this.setState({ [type]: color });
+    }
   };
 
   handleSubmit = () => {
@@ -36,11 +39,12 @@ class BrandingSidebar extends Component {
     this.props.updateBranding(standard, light, dark);
     this.setState({
         ...this.state, 
-        standard, 
-        light, 
-        dark,
         right: false
     });
+  }
+    
+  handleClose = () => {
+    this.setState({ ...this.state, right: false});
   }
 
   child = (anchor) => (
@@ -66,7 +70,7 @@ class BrandingSidebar extends Component {
         <Button
           color="secondary"
           className='Cancel'
-          onClick={this.handleSubmit}
+          onClick={this.handleClose}
         >
           Cancel
         </Button>

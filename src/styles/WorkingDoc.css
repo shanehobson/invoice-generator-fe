@@ -202,14 +202,13 @@
 
 .Total-Info {
     margin-top: 40px;
-    /* margin-bottom: 40px; */
     justify-items: flex-end;
     display: grid;
     grid-template-columns: 25% 35% 18% 22%;
     font-size: 12px;
 }
 
-#Subtotal {
+.Subtotal {
     grid-column-start: 3;
     display: flex;
     justify-content: flex-end;
@@ -235,14 +234,15 @@
     width: 100%;
     grid-column-start: 3;
     grid-column-end: 5;
-    height: 50%;
-    border-bottom: 1px solid gainsboro;
+    height: 50%; 
     padding: 8px;
+    margin-bottom: 40px;
     font-size: 14px;
     font-weight: lighter;
     line-height: 24px;
     color: rgb(147, 160, 174);
     cursor: pointer;
+    border-top: 1px solid gainsboro;
 }
 
 #Taxes:hover {
@@ -251,24 +251,7 @@
     color: #333
 }
 
-#Discount {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    grid-column-start: 3;
-    grid-column-end: 5;
-    padding: 8px;
-    margin-bottom: 40px;
-    font-size: 14px;
-    color: rgb(147, 160, 174);
-    cursor: pointer;
-}
 
-#Discount:hover {
-    box-shadow: none;
-    background-color: #ababab;
-    color: #333
-}
 
 #Add-Line-Item {
     display: flex;
@@ -309,7 +292,96 @@
     padding: 8px 8px 0 8px;
 }
 
+/********  Discount ********/
+
+.discount {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    padding-right: 5px;
+}
+
+
+.discount-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.Add-Discount {
+    display: flex;
+    justify-content: flex-end;
+    grid-column-start: 3;
+    grid-column-end: 5;
+    height: 60%;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: rgb(147, 160, 174);
+    cursor: pointer;    
+}
+
+.Added-Discount {
+    display: flex;
+    justify-content: flex-end;
+    grid-column-start: 3; 
+    grid-column-end: 5;
+    height: 60%;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: #333;
+    cursor: pointer;    
+}
+
+.Added-Discount:hover {
+    box-shadow: none;
+    background-color: #ababab;
+    color: #333
+}
+
+.Added-Discount:hover > .Discount-Icons {
+    opacity: 1;
+    padding: 0 10px;
+}
+
+.Discount-Icons {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.Discount-Icons > *:hover {
+    color: #333
+}
+
+.Discount-Icons:hover {
+    opacity: 1;
+}
+
 /*  *********Notes************ */
+
+.Add-Notes {
+    height: 60%;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: rgb(147, 160, 174);
+    cursor: pointer;
+}
+
+.Add-Notes:hover {
+    box-shadow: none;
+    background-color: #ababab;
+    color: #333
+}
 
 .Notes {
     display: grid;
@@ -328,25 +400,12 @@
     margin-top: 0 !important;
 }
 
-.Add-Notes {
-    height: 60%;
-    width: 100%;
-    padding: 8px 0;
-    font-size: 14px;
-    line-height: 24px;
-    color: rgb(147, 160, 174);
-    cursor: pointer;
-}
 
-.Add-Notes:hover {
-    box-shadow: none;
-    background-color: #ababab;
-    color: #333
-}
 .Notes:hover > .Notes-Icons {
     opacity: 1;
     padding: 0 10px;
 }
+
 
 .Notes-Icons {
     opacity: 0;
@@ -355,6 +414,7 @@
     color: #aaa;
     cursor: pointer;
 }
+
 
 .Notes-Icons > *:hover {
     color: #333

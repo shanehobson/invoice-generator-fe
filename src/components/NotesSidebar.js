@@ -87,13 +87,13 @@ class NotesSidebar extends Component {
 
 
   render() {
-    const { notes } = this.state;
     return (
       <div>
         {['right'].map((anchor) => (
           <React.Fragment key={anchor}>      
             <div
-              onClick={this.toggleDrawer(anchor, true)}>
+              onClick={this.toggleDrawer(anchor, true)}
+            >
               {this.props.icon !== 'edit' && '+ Notes'}
               {this.props.icon === 'edit' && <EditIcon />}
             </div>   

@@ -4,12 +4,16 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import TextField from '@material-ui/core/TextField';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import '../styles/Sidebars.css';
+import '../styles/WorkingDoc.css';
 
 const initialState = {
-    right: false,
-    percent: '',
-    value: ''
+  right: false,
+  percent: '',
+  value: ''
 };
 
 class DiscountSidebar extends Component {
@@ -25,8 +29,8 @@ class DiscountSidebar extends Component {
 
   componentDidMount() {
     this.setState({
-      value: this.props.discountValue || 0,
-      percent: this.props.discountPercent
+      value: '40000' || this.props.discountValue,
+      percent: '40' || this.props.discountPercent
     });
   }
 
@@ -36,7 +40,7 @@ class DiscountSidebar extends Component {
 
   calculatePercent = (value = '0', subtotal) => {
     value = parseFloat(value) || 0;
-    if (subtotal === 0) { 
+    if (subtotal === 0) {
       return 0;
     } else {
       return (value / subtotal * 100).toFixed(2).toString();
@@ -58,10 +62,14 @@ class DiscountSidebar extends Component {
   };
 
   handleSubmit = () => {
-    const percent = 'Discount (' + this.state.percent + '%)';
-    const value = '$' + this.state.value;
-    this.props.updateDiscounts(percent, value);
+    const percent = this.state.percent;
+    this.props.updateDiscounts(percent);
     this.setState({ ...this.state, right: false });
+  }
+
+  HandleRemoveDiscount = () => {
+    this.props.removeDiscount(percent, value)
+    this.setState(initialState);
   }
 
   handleCancel = () => {
@@ -127,15 +135,15 @@ class DiscountSidebar extends Component {
         >
           Cancel
         </Button>
-
         <Button
           color="primary"
           style={{ alignContent: 'flex-end' }}
-          className='Submit'
+          className='#Subtotal'
           onClick={this.handleSubmit}
         >
           Submit
         </Button>
+
       </div>
 
     </div>
@@ -153,11 +161,27 @@ class DiscountSidebar extends Component {
 
 
   render() {
+    const { value, percent } = this.state;
     return (
-      <div>
+      <Fragment>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            <div onClick={this.toggleDrawer(anchor, true)}>+ Discount</div>
+            <div style={{width: '100%'}} onClick={this.toggleDrawer(anchor, true)}>
+              <div>
+                {!value &&
+                  <div className="discount-button">
+                    + Discount
+                  </div>
+                }
+                {value &&
+                  <div className='discount'>
+                    <span>Discount ({percent}%)</span>
+                    <span>${value}</span>
+                  </div>
+                }
+              </div>
+            </div>
+
             <SwipeableDrawer
               anchor={anchor}
               open={this.state[anchor]}
@@ -168,9 +192,11 @@ class DiscountSidebar extends Component {
             </SwipeableDrawer>
           </Fragment>
         ))}
-      </div>
+      </Fragment>
     );
   }
 }
 
 export default DiscountSidebar;
+
+

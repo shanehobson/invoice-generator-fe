@@ -13,7 +13,6 @@ import BrandingSidebar from './BrandingSidebar';
 import NotesSidebar from './NotesSidebar';
 import EditInvoice from './EditInvoice';
 
-
 class Contract extends Component {
     constructor(props) {
         super(props);
@@ -41,8 +40,9 @@ class Contract extends Component {
                 invoiceItems: [],
                 subtotal: 0, // @todo add to redux
                 taxes: 0, // @todo add to redux
+                discountPercent: 0,
                 discountValue: 0,
-                discountPercent: 0, // @todo add to redux
+                // @todo add to redux
                 total: 0 // @todo add to redux
             },
 
@@ -99,6 +99,10 @@ class Contract extends Component {
         });
     }
 
+    updateBranding = (standard) => {
+        this.onColorChange(standard);
+    }
+
     lighten = (color) => {
         return color;
     }
@@ -145,12 +149,11 @@ class Contract extends Component {
         })
     }
 
-    updateBranding = (standard, light, dark) => {
+    removeDiscount = () => {
         this.setState({
-            standard, 
-            light,
-            dark
-        })
+            discountPercent: 0,
+            discountValue: 0
+        });
     }
 
     updateNotes = (notes) => {
@@ -193,6 +196,7 @@ class Contract extends Component {
         const customerState = customerInfo.USstate === '' ? '__________' : customerInfo.USstate;
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
+        
         return (
             <Fragment>
                 <div className='Invoice-Page-Container' style={{ borderTop: `3px solid ${standard}` }}>
@@ -210,19 +214,17 @@ class Contract extends Component {
                             <div className="Edit-Container">
                                 {editIcons.topThird &&
                                     <div className='Edit-Icon' style={{ left: '100px' }}>
-                                        <div id='Discount'>
+                                        <div className='Discount'>
                                             <BrandingSidebar
                                                 updateBranding={this.updateBranding}
                                                 standard={standard}
                                                 light={light}
-                                                dark={dark}               
+                                                dark={dark}
                                             />
                                         </div>
                                     </div>
                                 }
-                                <h1 id='Invoice-Title' style={{ color: standard }}>
-                                    Invoice
-                                    </h1>
+                                <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
                                 <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
                             </div>
 
@@ -287,24 +289,49 @@ class Contract extends Component {
                             </div>
 
                             <div className='Total-Info'>
-                                <div id='Subtotal'>Subtotal</div>
+                                <div className='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
-                                <div id='Taxes'>+ Taxes</div>
-                                {discountValue &&
-                                    <div>
-                                        <div>{discountValue}</div>
-                                        <div>{discountPercent}</div>
-                                    </div>
-                                }
-                                <div id='Discount'>
-                                    <DiscountSidebar
-                                        updateDiscounts={this.updateDiscounts}
-                                        subtotal={subtotal}
-                                        discountValue={discountValue}
-                                        discountPercent={discountPercent}
-                                    />
-                                </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div className={discountValue ? 'Added-Discount' : 'Add-Discount'}>
+                                <DiscountSidebar
+                                    updateDiscounts={this.updateDiscounts}
+                                    removeDiscount={this.removeDiscount}
+                                    subtotal={subtotal}
+                                    discountValue={discountValue}
+                                    discountPercent={discountPercent}
+                                />
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div id='Taxes'>+ Taxes</div>
                                 <div id='Add-Line-Item'>
                                     <InvoiceSidebar
                                         FeeTypes={this.props.FeeTypes}
@@ -382,3 +409,25 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Contract);
+
+
+
+                                {/* <div className='Discount'>
+                                    <span className='Discount-Value'>{discountPercent}</span>
+
+                                    <span className='Discount-Percent'>{discountValue}</span>
+                                    <DiscountSidebar
+                                        updateDiscounts={this.updateDiscounts}
+                                        subtotal={subtotal}
+                                        discountValue={discountValue}
+                                        discountPercent={discountPercent}
+                                    />
+                                </div>
+
+
+                                <div className='Notes'>
+                                    <div className='Discount-Icons'>
+                                        <DeleteIcon style={{ fontSize: '20px', paddingRight: '10px' }} />
+                                        <EditIcon style={{ transform: 'translateX(80px)' }} />
+                                    </div>
+                                </div> */}
