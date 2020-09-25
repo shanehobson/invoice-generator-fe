@@ -21,7 +21,7 @@ class EditInvoice extends Component {
 
   handleSubmit = () => {
     const item = this.state.item;
-    this.props.updateInvoiceItem(item);
+    this.props.updateInvoiceItem({item, index: this.props.index});
     this.setState({ ...this.state, right: false });
   }
 

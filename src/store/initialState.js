@@ -19,7 +19,12 @@ let devType = '',
     },
     currentPage = '1',
     formsAreComplete = false,
-    invoiceItems = [];
+    invoiceItems = [],
+    subtotal = 0, // @todo add to redux
+    taxes = 0,
+    discountPercent = 0,
+    discountValue = 0,
+    total = 0 
 
 if (localStorage.getItem('devType') !== null) {
     devType = localStorage.getItem('devType');
@@ -68,7 +73,12 @@ const initialState = {
             zip: customerInfo.zip
         },
         invoiceItems,
-        formsAreComplete
+        formsAreComplete,
+        subtotal, // @todo add to redux
+        taxes, // @todo add to redux
+        discountPercent,
+        discountValue,
+        total
     },
     pages: {
         currentPage

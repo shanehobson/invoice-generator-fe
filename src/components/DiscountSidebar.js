@@ -27,12 +27,12 @@ class DiscountSidebar extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      value: '40000' || this.props.discountValue,
-      percent: '40' || this.props.discountPercent
-    });
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     value: '40000' || this.props.discountValue,
+  //     percent: '40' || this.props.discountPercent
+  //   });
+  // }
 
   calculateValue = (percent, subtotal) => {
     return (percent / 100 * subtotal).toFixed(2).toString();
@@ -63,7 +63,8 @@ class DiscountSidebar extends Component {
 
   handleSubmit = () => {
     const percent = this.state.percent;
-    this.props.updateDiscounts(percent);
+    const value = this.state.value;
+    this.props.updateDiscounts(percent, value);
     this.setState({ ...this.state, right: false });
   }
 
