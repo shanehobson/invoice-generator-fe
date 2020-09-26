@@ -25,7 +25,7 @@ class InvoiceSidebar extends Component {
 
   handleSubmit = () => {
     const item = this.state.item;
-    this.props.updateInvoiceItem(item);
+    this.props.addInvoiceItem(item);
     this.setState({ ...this.state, right: false });
   }
 

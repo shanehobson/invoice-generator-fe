@@ -64,7 +64,7 @@ class DiscountSidebar extends Component {
   handleSubmit = () => {
     const percent = this.state.percent;
     const value = this.state.value;
-    this.props.updateDiscounts(percent, value);
+    // this.props.updateDiscounts(percent, value);
     this.setState({ ...this.state, right: false });
   }
 
