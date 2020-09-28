@@ -56,15 +56,16 @@ class Contract extends Component {
 
     componentWillReceiveProps(nextProps) {
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
-        // const total = this.calculateTotal(nextProps.invoiceInfo.total)
+        const discountValue = this.state.invoiceInfo.discountValue;
+        const taxes = this.state.invoiceInfo.taxes;
+        const total = this.calculateTotal(subtotal, discountValue, taxes)
         this.setState({
             ...this.state,
             ...nextProps,
             invoiceInfo: {
                 ...nextProps.invoiceInfo,
-                // ...nextProps.total,
-                subtotal
-                // total
+                subtotal,
+                total
             }
         });
     };
@@ -80,64 +81,67 @@ class Contract extends Component {
         return subtotal.toFixed(2);
     }
 
-    updateSubtotal = (itemz) => {
-        const subtotal = this.calculateSubtotal(itemz);
+    calculateTotal = (subtotal, discountValue = 0, taxes = 0) => {
+        console.log(discountValue)
+        if (typeof discountValue === 'string') {
+            discountValue = parseFloat(discountValue);
+        }
+        if (typeof taxes === 'string') {
+            taxes = parseFloat(taxes);
+        }
+        return (subtotal - discountValue + taxes).toFixed(2);
+    };
+
+    updateInvoiceItem = ({ item, index }) => {
+        const invoiceItems = this.state.invoiceInfo.invoiceItems;
+        invoiceItems[index] = item;
+        const subtotal = this.calculateSubtotal(invoiceItems);
+        const discountValue = this.state.invoiceInfo.discountValue;
+        const taxes = this.state.invoiceInfo.taxes;
+        const total = this.calculateTotal(subtotal, discountValue, taxes);
         this.setState({
             ...this.state,
             invoiceInfo: {
                 ...this.state.invoiceInfo,
-                subtotal
+                subtotal,
+                total,
+                invoiceItems
             }
         });
     }
 
-    // updateTotal = (value) => {
-    //     this.setState({
-    //         ...this.state,
-    //         invoiceInfo: {
-    //             ...this.state.invoiceInfo,
-    //             total   
-    //         }
-    //     });
-
-    //     const total = this.calculateTotal(value);
-    //     console.log(total);
-
-    // }
-
-    // calculateTotal = ({subtotal, discountPercent}) => {
-    //     subtotal = this.state.invoiceInfo.subtotal;
-    //     discountPercent = this.state.invoiceInfo.discountPercent;
-    //     if (discountPercent) {
-    //         const total = subtotal - discountPercent;
-    //         return total;
-    //     } else {
-    //         const total = subtotal;
-    //         return total;
-    //     }
-    // };
-
-
-    updateInvoiceItem = ({ item, index }) => {
-        const items = this.state.invoiceInfo.invoiceItems;
-        // const total = this.state.invoiceInfo.total;
-        items[index] = item;
-        this.setState(() => ({
-            invoiceItems: items
-            // total: this.state.invoiceInfo.total
-        }));
-        this.updateSubtotal(items);
-        // this.updateTotal(total);
+    updateDiscount = (discountValue, discountPercent) => {
+        console.log(discountValue)
+        const taxes = this.state.invoiceInfo.taxes;
+        const subtotal = this.state.invoiceInfo.subtotal;
+        const total = this.calculateTotal(subtotal, discountValue, taxes)
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                discountValue,
+                discountPercent,
+                total
+            }
+        });
     }
 
-    
     addInvoiceItem = (item) => {
-        const items = this.state.invoiceInfo.invoiceItems;
-        items.push(item)
+        const invoiceItems = this.state.invoiceInfo.invoiceItems;
+        invoiceItems.push(item)
+        const subtotal = this.calculateSubtotal(invoiceItems);
+        const discountValue = this.state.invoiceInfo.discountValue;
+        const taxes = this.state.invoiceInfo.taxes;
+        const total = this.calculateTotal(subtotal, discountValue, taxes);
         this.setState({
-            invoiceItems: items
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                subtotal,
+                total,
+                invoiceItems
+            }
         });
-        this.updateSubtotal(items);
     }
 
     onMouseEnter = debounce((third) => {
@@ -325,8 +329,6 @@ class Contract extends Component {
                                                     item={item}
                                                     index={i}
                                                     FeeTypes={this.props.FeeTypes}
-                                                    // total={total}
-                                                    // updateTotal={this.updateTotal}
                                                     updateInvoiceItem={this.updateInvoiceItem}
                                                     invoiceItems={invoiceItems}
                                                 />
@@ -342,6 +344,7 @@ class Contract extends Component {
 
                                 <div className={discountValue ? 'Added-Discount' : 'Add-Discount'}>
                                     <DiscountSidebar
+                                        updateDiscount={this.updateDiscount}
                                         removeDiscount={this.removeDiscount}
                                         subtotal={subtotal}
                                         discountValue={discountValue}
@@ -389,7 +392,7 @@ class Contract extends Component {
                                 </div>
 
                                 <div id='Amount-Due'>Amount Due</div>
-                                <div id='Amount-Price'>$0.00</div>
+                                <div id='Amount-Price'>{total}</div>
                             </div>
 
                             {notes &&
