@@ -204,7 +204,7 @@
     margin-top: 40px;
     justify-items: flex-end;
     display: grid;
-    grid-template-columns: 25% 35% 18% 22%;
+    grid-template-columns: 25% 35% 18% 22% 70px;
     font-size: 12px;
 }
 
@@ -256,6 +256,7 @@
 #Add-Line-Item {
     display: flex;
     justify-content: flex-start;
+    grid-column-start: 1;
     height: 50%;
     padding: 8px 0;
     width: 100%;
@@ -295,11 +296,10 @@
 /********  Discount ********/
 
 .discount {
-    width: 75%;
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
-    margin-left: auto;
-    padding-right: 5px;
+    color: #333;
 }
 
 .discount:hover{
@@ -308,21 +308,28 @@
     color: #333;
 }
 
-
 .discount-button {
-    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    margin-left: auto;
+    transform: translateX(-75px);
+    justify-content: flex-end; 
+}
+
+.Discount-Value {
+    transform: translateX(-20px);
+    padding-left: 95px;
+}
+
+.Percent-Value {
+    padding-right: 15px;
 }
 
 .Add-Discount {
     display: flex;
     justify-content: flex-end;
     grid-column-start: 3;
-    grid-column-end: 5;
+    grid-column-end: 6;
     height: 60%;
-    width: 100%;
+    /* width: 100%; */
     padding: 8px 0;
     font-size: 14px;
     line-height: 24px;
@@ -330,29 +337,14 @@
     cursor: pointer;    
 }
 
-.Added-Discount {
-    display: flex;
-    justify-content: flex-end;
-    grid-column-start: 3; 
-    grid-column-end: 5;
-    height: 60%;
-    width: 100%;
-    padding: 8px 0;
-    font-size: 14px;
-    line-height: 24px;
-    color: #333;
-    cursor: pointer;    
-}
-
-.Added-Discount:hover {
+.Add-Discount:hover {
     box-shadow: none;
-    background-color: #eaeaea;
+    /* background-color: #eaeaea; */
     color: #333
 }
 
-.Added-Discount:hover > .Discount-Icons {
+.discount:hover > .Discount-Icons {
     opacity: 1;
-    padding: 0 10px;
 }
 
 .Discount-Icons {
@@ -374,6 +366,7 @@
 /*  *********Notes************ */
 
 .Add-Notes {
+    grid-column-start: 1;
     height: 60%;
     width: 100%;
     padding: 8px 0;

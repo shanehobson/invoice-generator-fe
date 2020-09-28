@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../styles/WorkingDoc.css';
 
@@ -280,7 +281,7 @@ class Contract extends Component {
 
                             <div className='Top-Right-Grid-Area'>
                                 <h1 id='Invoice-Total'>
-                                    $0.00
+                                    ${total}
                                 </h1>
                                 <div id='Due'>
                                     Due:
@@ -342,7 +343,26 @@ class Contract extends Component {
                                 <div className='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
 
-                                <div className={discountValue ? 'Added-Discount' : 'Add-Discount'}>
+
+
+
+
+
+
+
+
+
+
+                                {/* <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div> */}
+
+                                {/* <div className={discountValue && discountPercent ? 'Added-Discount' : 'Add-Discount'}> */}
+
+                
+
+                                <div className='Add-Discount'>
                                     <DiscountSidebar
                                         updateDiscount={this.updateDiscount}
                                         removeDiscount={this.removeDiscount}
@@ -351,6 +371,40 @@ class Contract extends Component {
                                         discountPercent={discountPercent}
                                     />
                                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <div id='Taxes'>+ Taxes</div>
                                 <div id='Add-Line-Item'>
                                     <InvoiceSidebar
@@ -360,29 +414,8 @@ class Contract extends Component {
                                         invoiceItems={invoiceItems}
                                     />
                                 </div>
-
-
-
-
-
                                 <div id='Total'>Total</div>
-                                <div id='Total-Price'>{total}</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                <div id='Total-Price'>${total}</div>
                                 <div className='Add-Notes'>
                                     <NotesSidebar
                                         updateNotes={this.updateNotes}

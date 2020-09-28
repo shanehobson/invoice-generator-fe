@@ -167,7 +167,7 @@ class DiscountSidebar extends Component {
       <Fragment>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            <div style={{width: '100%'}} onClick={this.toggleDrawer(anchor, true)}>
+            <div style={{ width: '100%' }} onClick={this.toggleDrawer(anchor, true)}>
               <div>
                 {!value &&
                   <div className="discount-button">
@@ -175,13 +175,24 @@ class DiscountSidebar extends Component {
                   </div>
                 }
                 {value &&
-                  <div className='discount'>
-                    <span>Discount ({percent}%)</span>
-                    <span>${value}</span>
-                  </div>
+        
+                    <div className='discount'>
+                      <span className='Percent-Value'>Discount ({percent}%)</span>
+                      <span className='Discount-Value'>${value}</span>
+                      <span className='Discount-Icons'>
+                      <DeleteIcon
+                        onClick={() => this.removeNotes(notes)}
+                        style={{ fontSize: '20px', paddingRight: '10px' }}
+                      />
+                      <EditIcon />
+                    </span>
+                    </div>
+
+       
                 }
               </div>
             </div>
+
 
             <SwipeableDrawer
               anchor={anchor}
