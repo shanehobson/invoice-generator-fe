@@ -112,19 +112,32 @@ class Contract extends Component {
     }
 
     updateDiscount = (discountValue, discountPercent) => {
-        console.log(discountValue)
         const taxes = this.state.invoiceInfo.taxes;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxes)
+        const remove = this.removeDiscount()
         this.setState({
             ...this.state,
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 discountValue,
                 discountPercent,
-                total
+                total,
+                remove
             }
         });
+    }
+
+    removeDiscount = () => { 
+        const discountValue = this.state.invoiceInfo.discountValue;
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                discountValue: 0
+            }
+        });
+        console.log(discountValue)
     }
 
     addInvoiceItem = (item) => {
@@ -200,12 +213,7 @@ class Contract extends Component {
         this.onMouseEnter('bottomThird')
     }
 
-    // removeDiscount = () => {
-    //     this.setState({
-    //         discountPercent: 0,
-    //         discountValue: 0
-    //     });
-    // }
+
 
     updateNotes = (notes) => {
         this.setState({

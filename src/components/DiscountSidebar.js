@@ -68,9 +68,10 @@ class DiscountSidebar extends Component {
     this.setState({ ...this.state, right: false });
   }
 
-  handleRemoveDiscount = () => {
-    this.props.removeDiscount(value, percent)
-    this.setState(initialState);
+  handleRemoveDiscount = (value, percent) => {
+    this.props.removeDiscount();
+    this.props.updateDiscount(value, percent);
+    this.setState({ ...this.state, value })
   }
 
   handleCancel = () => {
@@ -167,10 +168,10 @@ class DiscountSidebar extends Component {
       <Fragment>
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
-            <div style={{ width: '100%' }} onClick={this.toggleDrawer(anchor, true)}>
+            <div style={{ width: '100%' }}>
               <div>
                 {!value &&
-                  <div className="discount-button">
+                  <div className="discount-button"  onClick={this.toggleDrawer(anchor, true)}>
                     + Discount
                   </div>
                 }
@@ -181,10 +182,13 @@ class DiscountSidebar extends Component {
                       <span className='Discount-Value'>${value}</span>
                       <span className='Discount-Icons'>
                       <DeleteIcon
-                        onClick={() => this.removeNotes(notes)}
+                        onClick={() => this.handleRemoveDiscount()}
                         style={{ fontSize: '20px', paddingRight: '10px' }}
                       />
-                      <EditIcon />
+                      <EditIcon 
+                         onClick={this.toggleDrawer(anchor, true)}
+                         style={{ fontSize: '20px' }}
+                      />
                     </span>
                     </div>
 
