@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import DateFnsUtils from '@date-io/date-fns';
 import 'normalize.css/normalize.css';
 import customMuiTheme from './themes/theme.js';
 import NavBar from './components/NavBar';
@@ -26,7 +27,6 @@ const jsx = (
     </MuiThemeProvider>
   </Provider>
 );
-
 
 ReactDOM.render(jsx, document.getElementById('app'));
 

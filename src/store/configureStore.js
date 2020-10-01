@@ -6,6 +6,7 @@ import pagesReducer from '../reducers/pages';
 import invoiceInfoReducer from '../reducers/invoiceInfo';
 import USstatesReducer from '../reducers/USstates';
 import FeeTypesReducer from '../reducers/FeeTypes';
+import colorReducer from '../reducers/FeeTypes';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -15,7 +16,8 @@ export default () => {
       pages: pagesReducer,
       invoiceInfo: invoiceInfoReducer,
       USstates: USstatesReducer,
-      FeeTypes: FeeTypesReducer
+      FeeTypes: FeeTypesReducer,
+      Colors: colorReducer
     }),
     initialState,
     composeEnhancers(applyMiddleware(thunk))

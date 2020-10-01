@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../styles/WorkingDoc.css';
 
@@ -12,6 +11,8 @@ import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
 import BrandingSidebar from './BrandingSidebar';
 import NotesSidebar from './NotesSidebar';
+import DatePickerSidebar from './DatePickerSidebar';
+import TaxesSidebar from './TaxesSidebar';
 import EditInvoice from './EditInvoice';
 
 class Contract extends Component {
@@ -40,10 +41,13 @@ class Contract extends Component {
                 },
                 invoiceItems: [],
                 subtotal: 0, // @todo add to redux
-                taxes: 0, // @todo add to redux
+                taxValue: 0,
+                taxPercent: 0, // @todo add to redux
                 discountPercent: 0,
                 discountValue: 0,
-                total: 0 // @todo add to redux
+                total: 0, // @todo add to redux
+                date: null,
+                displayDate: ''
             },
 
             editIcons: {
@@ -58,18 +62,37 @@ class Contract extends Component {
     componentWillReceiveProps(nextProps) {
         const subtotal = this.calculateSubtotal(nextProps.invoiceInfo.invoiceItems)
         const discountValue = this.state.invoiceInfo.discountValue;
-        const taxes = this.state.invoiceInfo.taxes;
-        const total = this.calculateTotal(subtotal, discountValue, taxes)
+        const taxValue = this.state.invoiceInfo.taxValue;
+        const total = this.calculateTotal(subtotal, discountValue, taxValue);
+        let date, displayDate;
+
+
+        if(!nextProps.date) {
+            date = new Date();
+            displayDate = this.getCurrentDate();
+        } else if (this.state.date !== nextProps.date) {
+            date = nextProps.date;
+            displayDate = this.toString(date);
+        } 
+          
         this.setState({
             ...this.state,
             ...nextProps,
             invoiceInfo: {
                 ...nextProps.invoiceInfo,
                 subtotal,
-                total
+                total,
+                date: date ? date : null,
+                displayDate: displayDate ? displayDate : ''
             }
         });
     };
+
+    getCurrentDate = () => {
+        const today = new Date();
+        console.log(today);
+        return this.toString(today);
+    }
 
     calculateSubtotal = (invoiceItems) => {
         if (!invoiceItems || invoiceItems.length === 0) {
@@ -82,24 +105,27 @@ class Contract extends Component {
         return subtotal.toFixed(2);
     }
 
-    calculateTotal = (subtotal, discountValue = 0, taxes = 0) => {
-        console.log(discountValue)
+    calculateTotal = (subtotal, discountValue = 0, taxValue = 0) => {
+        console.log('subtotal: ' + subtotal )
+        console.log('discountValue: ' + discountValue)
+        console.log('taxValue: ' + taxValue)
         if (typeof discountValue === 'string') {
             discountValue = parseFloat(discountValue);
         }
-        if (typeof taxes === 'string') {
-            taxes = parseFloat(taxes);
+        if (typeof taxValue === 'string') {
+            taxValue = parseFloat(taxValue);
         }
-        return (subtotal - discountValue + taxes).toFixed(2);
+            return (subtotal - discountValue + taxValue).toFixed(2);
     };
 
     updateInvoiceItem = ({ item, index }) => {
         const invoiceItems = this.state.invoiceInfo.invoiceItems;
         invoiceItems[index] = item;
+
         const subtotal = this.calculateSubtotal(invoiceItems);
         const discountValue = this.state.invoiceInfo.discountValue;
-        const taxes = this.state.invoiceInfo.taxes;
-        const total = this.calculateTotal(subtotal, discountValue, taxes);
+        const taxValue = this.state.invoiceInfo.taxValue;
+        const total = this.calculateTotal(subtotal, discountValue, taxValue);
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -112,9 +138,9 @@ class Contract extends Component {
     }
 
     updateDiscount = (discountValue, discountPercent) => {
-        const taxes = this.state.invoiceInfo.taxes;
+        const taxValue = this.state.invoiceInfo.taxValue;
         const subtotal = this.state.invoiceInfo.subtotal;
-        const total = this.calculateTotal(subtotal, discountValue, taxes)
+        const total = this.calculateTotal(subtotal, discountValue, taxValue)
         const remove = this.removeDiscount()
         this.setState({
             ...this.state,
@@ -128,8 +154,34 @@ class Contract extends Component {
         });
     }
 
-    removeDiscount = () => { 
+    updateTaxes = (taxValue, taxPercent) => {
         const discountValue = this.state.invoiceInfo.discountValue;
+        const subtotal = this.state.invoiceInfo.subtotal;
+        const total = this.calculateTotal(subtotal, discountValue, taxValue)
+        const remove = this.removeTaxes()
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                taxValue,
+                taxPercent,
+                total,
+                remove
+            }
+        });
+    }
+
+    removeTaxes = () => { 
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                taxValue: 0
+            }
+        });
+    }
+
+    removeDiscount = () => { 
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -137,16 +189,17 @@ class Contract extends Component {
                 discountValue: 0
             }
         });
-        console.log(discountValue)
     }
 
     addInvoiceItem = (item) => {
         const invoiceItems = this.state.invoiceInfo.invoiceItems;
         invoiceItems.push(item)
+
         const subtotal = this.calculateSubtotal(invoiceItems);
         const discountValue = this.state.invoiceInfo.discountValue;
-        const taxes = this.state.invoiceInfo.taxes;
-        const total = this.calculateTotal(subtotal, discountValue, taxes);
+        const taxValue = this.state.invoiceInfo.taxValue;
+        const total = this.calculateTotal(subtotal, discountValue, taxValue);
+
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -213,8 +266,6 @@ class Contract extends Component {
         this.onMouseEnter('bottomThird')
     }
 
-
-
     updateNotes = (notes) => {
         this.setState({
             notes: notes
@@ -239,11 +290,34 @@ class Contract extends Component {
         });
     }
 
+    updateDate = (date) => {
+        if(!date) {
+            return;
+        }
+        Object.keys(date).forEach(key => console.log(key + ': ' + date[key] ))
+        this.setState({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                date,
+                displayDate: this.toString(date)
+            }
+        });
+    }
+
+    toString = date => {
+        const arr = date.toString().split(' ');
+        const month = arr[1];
+        const day = arr[2];
+        const year = arr[3];
+        return month + ' ' + day + ', ' + year;
+    }
+
     render() {
 
         const { standard, dark, light } = this.state.colors;
-        const { invoiceInfo, editIcons, notes, discountValue, discountPercent } = this.state;
-        const { devInfo, customerInfo, invoiceItems, subtotal, total } = invoiceInfo;
+        const { invoiceInfo, editIcons, notes, discountValue, discountPercent, taxValue, taxPercent } = this.state;
+        const { devInfo, customerInfo, invoiceItems, subtotal, total, displayDate } = invoiceInfo;
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -283,20 +357,20 @@ class Contract extends Component {
                                         </div>
                                     </div>
                                 }
-                                <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
-                                <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
+                                    <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
+                                    <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
                             </div>
 
-                            <div className='Top-Right-Grid-Area'>
+                            <div className='Top-Right-Grid-Area'>           
                                 <h1 id='Invoice-Total'>
                                     ${total}
                                 </h1>
-                                <div id='Due'>
-                                    Due:
-                                </div>
-                                <div id='Issued'>
-                                    Issued: (date)
-                                </div>
+                                <div className='Date'>
+                                    {displayDate}
+                                    <DatePickerSidebar 
+                                        updateDate={this.updateDate}
+                                    />
+                                </div>            
                             </div>
 
                             <div id='Client-Address-Area'>
@@ -351,25 +425,6 @@ class Contract extends Component {
                                 <div className='Subtotal'>Subtotal</div>
                                 <div id='Subtotal-Price'>${subtotal}</div>
 
-
-
-
-
-
-
-
-
-
-
-                                {/* <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div> */}
-
-                                {/* <div className={discountValue && discountPercent ? 'Added-Discount' : 'Add-Discount'}> */}
-
-                
-
                                 <div className='Add-Discount'>
                                     <DiscountSidebar
                                         updateDiscount={this.updateDiscount}
@@ -379,41 +434,16 @@ class Contract extends Component {
                                         discountPercent={discountPercent}
                                     />
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                <div id='Taxes'>+ Taxes</div>
+                                <div className='Add-Discount'>
+                                    <TaxesSidebar
+                                        updateTaxes={this.updateTaxes}
+                                        removeTaxes={this.removeTaxes}
+                                        subtotal={subtotal}
+                                        taxValue={taxValue}
+                                        taxPercent={taxPercent}
+                                    />
+                                </div>
+                               
                                 <div id='Add-Line-Item'>
                                     <InvoiceSidebar
                                         FeeTypes={this.props.FeeTypes}
@@ -486,7 +516,8 @@ Contract.propTypes = {
 
 const mapStateToProps = (state) => ({
     invoiceInfo: state.invoiceInfo,
-    FeeTypes: state.FeeTypes
+    FeeTypes: state.FeeTypes,
+    Colors: state.colors
 });
 
 export default connect(mapStateToProps)(Contract);

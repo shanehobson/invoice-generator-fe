@@ -1,7 +1,7 @@
 import initialState from '../store/initialState';
 
 const invoiceInfoReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'SET_DEV_TYPE':
             return {
                 ...state,
@@ -32,19 +32,19 @@ const invoiceInfoReducer = (state = initialState, action) => {
                     city: action.customerInfo.city,
                     USstate: action.customerInfo.USstate,
                     zip: action.customerInfo.zip,
-            }
+                }
             };
-       
+
         case 'SET_FORMS_ARE_COMPLETE':
             return {
                 ...state,
-                formsAreComplete: action.formsAreComplete           
+                formsAreComplete: action.formsAreComplete
             };
         case 'SET_INVOICE_ITEMS':
-                return {
-                    ...state,
-                    invoiceItems: action.invoiceItems          
-                };
+            return {
+                ...state,
+                invoiceItems: action.invoiceItems
+            };
         default:
             return state;
     }

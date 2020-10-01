@@ -228,22 +228,14 @@
     padding: 8px;
 }
 
-#Taxes {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    grid-column-start: 3;
-    grid-column-end: 5;
-    height: 50%; 
-    padding: 8px;
+
+#Taxes {       
     margin-bottom: 40px;
-    font-size: 14px;
-    font-weight: lighter;
-    line-height: 24px;
-    color: rgb(147, 160, 174);
-    cursor: pointer;
-    border-top: 1px solid gainsboro;
+    display: flex;
+    transform: translateX(-75px);
+    justify-content: flex-end; 
 }
+
 
 #Taxes:hover {
     box-shadow: none;

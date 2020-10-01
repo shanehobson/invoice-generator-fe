@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../styles/Sidebars.css';
 import '../styles/WorkingDoc.css';
+import { FormHelperText } from '@material-ui/core';
 
 const initialState = {
   right: false,
@@ -16,7 +17,7 @@ const initialState = {
   value: ''
 };
 
-class DiscountSidebar extends Component {
+class TaxesSidebar extends Component {
   constructor(props) {
     super(props);
 
@@ -24,22 +25,15 @@ class DiscountSidebar extends Component {
       right: false,
       percent: '',
       value: '',
-      taxes: 0
+      
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     value: '40000' || this.props.discountValue,
-  //     percent: '40' || this.props.discountPercent
-  //   });
-  // }
-
-  calculateValue = (percent, subtotal) => {
+calculateValue = (percent, subtotal) => {
     return (percent / 100 * subtotal).toFixed(2).toString();
   }
 
-  calculatePercent = (value = '0', subtotal) => {
+calculatePercent = (value = '0', subtotal) => {
     value = parseFloat(value) || 0;
     if (subtotal === 0) {
       return 0;
@@ -48,44 +42,54 @@ class DiscountSidebar extends Component {
     }
   }
 
-  handlePercentChange = e => {
+handlePercentChange = e => {
     const percent = e.target.value || '';
     const subtotal = this.props.subtotal;
     const value = this.calculateValue(percent, subtotal);
     this.setState({ percent, value });
   };
 
-  handleValueChange = e => {
+handleValueChange = e => {
     const value = e.target.value || '';
     const subtotal = this.props.subtotal;
     const percent = this.calculatePercent(value, subtotal)
     this.setState({ percent, value });
   };
 
+  handleLabelChange = e => {
+    const label = e.target.value || '';
+    this.setState({ label });
+  };
+
   handleSubmit = () => {
+    console.log(taxes)
     const percent = this.state.percent;
     const value = this.state.value;
-    // const taxes = this.state.value;
-    const taxes = this.props.taxValue;
-
-    this.props.updateDiscount(value, percent, taxes);
+    const taxes = this.props.taxes;
+    console.log(taxes)
+    this.props.updateTaxes(value, percent, taxes);
     this.setState({ ...this.state, right: false });
   }
 
-  handleRemoveDiscount = (value, percent) => {
-    this.props.removeDiscount();
-    this.props.updateDiscount(value, percent);
+  handleRemoveTaxes = (value, percent) => {
+    this.props.removeTaxes();
+    this.props.updateTaxes(value, percent);
     this.setState({ ...this.state, value, percent })
   }
 
   handleCancel = () => {
-    this.setState(initialState);
+    this.setState({
+        ...this.state,
+        right: false,
+        percent: '',
+        value: ''
+    });
   }
 
   child = (anchor) => (
     <div className='Discount-Container'>
       <div className='Header'>
-        <h2>Discount</h2>
+        <h2>Taxes</h2>
         <HighlightOffIcon
           onClick={this.handleCancel}
           style={{
@@ -96,7 +100,19 @@ class DiscountSidebar extends Component {
           }}
         />
       </div>
-
+      <TextField
+            style={{
+              marginLeft: '40px',
+              width: '140px',
+              paddingTop: '10px'
+            }}
+            fullWidth
+            variant="outlined"
+            placeholder="Tax Label"
+            onChange={this.handleLabelChange}
+            value={this.state.label || ''}
+          >
+      </TextField>
       <section className='PercAndVal'>
         <div>
           <span className='RateDollarSymbol'>Percentage</span>
@@ -113,9 +129,7 @@ class DiscountSidebar extends Component {
           >
           </TextField>
         </div>
-
         <div className='Equals'> = </div>
-
         <div>
           <span className='RateDollarSymbol'>Value</span>
 
@@ -149,9 +163,7 @@ class DiscountSidebar extends Component {
         >
           Submit
         </Button>
-
       </div>
-
     </div>
   );
 
@@ -175,18 +187,18 @@ class DiscountSidebar extends Component {
             <div style={{ width: '100%' }}>
               <div>
                 {!value &&
-                  <div className="discount-button"  onClick={this.toggleDrawer(anchor, true)}>
-                    + Discount
+                  <div id='Taxes' onClick={this.toggleDrawer(anchor, true)}>
+                    + Taxes
                   </div>
                 }
                 {value &&
         
                     <div className='discount'>
-                      <span className='Percent-Value'>Discount ({percent}%)</span>
+                      <span className='Percent-Value'>Tax ({percent}%)</span>
                       <span className='Discount-Value'>${value}</span>
                       <span className='Discount-Icons'>
                       <DeleteIcon
-                        onClick={() => this.handleRemoveDiscount()}
+                        onClick={() => this.handleRemoveTaxes()}
                         style={{ fontSize: '20px', paddingRight: '10px' }}
                       />
                       <EditIcon 
@@ -217,6 +229,6 @@ class DiscountSidebar extends Component {
   }
 }
 
-export default DiscountSidebar;
+export default TaxesSidebar;
 
 

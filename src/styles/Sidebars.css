@@ -34,6 +34,10 @@
     padding: 24px 40px;
 }
 
+.Date:hover {
+    background: rgb(252, 252, 252);
+}
+
 .Invoice-Sidebar {
     height: 850px;
     justify-content: space-between;
