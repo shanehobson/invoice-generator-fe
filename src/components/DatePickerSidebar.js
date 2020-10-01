@@ -16,19 +16,6 @@ class DatePickerSidebar extends Component {
     };
   }
 
-
-  componentDidMount() {
-    // this.setState({
-
-    // });
-  }
-
-  handleDateChange = (e) => {
-    if (e) {
-      console.log(e)
-    }
-  };
-
   handleSubmit = () => {
     this.props.updateDate(this.state.date);
     this.handleClose();

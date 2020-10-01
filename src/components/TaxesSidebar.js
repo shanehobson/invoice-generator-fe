@@ -11,12 +11,6 @@ import '../styles/Sidebars.css';
 import '../styles/WorkingDoc.css';
 import { FormHelperText } from '@material-ui/core';
 
-const initialState = {
-  right: false,
-  percent: '',
-  value: ''
-};
-
 class TaxesSidebar extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +19,13 @@ class TaxesSidebar extends Component {
       right: false,
       percent: '',
       value: '',
-      
+      taxLabel: ''  
     };
   }
+
+// addTaxLabel = () => {
+
+// }
 
 calculateValue = (percent, subtotal) => {
     return (percent / 100 * subtotal).toFixed(2).toString();
@@ -57,18 +55,21 @@ handleValueChange = e => {
   };
 
   handleLabelChange = e => {
-    const label = e.target.value || '';
-    this.setState({ label });
+    const taxLabel = e.target.value || '';
+    this.setState({ taxLabel });
   };
 
   handleSubmit = () => {
-    console.log(taxes)
     const percent = this.state.percent;
     const value = this.state.value;
-    const taxes = this.props.taxes;
-    console.log(taxes)
-    this.props.updateTaxes(value, percent, taxes);
-    this.setState({ ...this.state, right: false });
+    const taxLabel = this.state.taxLabel;
+
+    this.props.updateTaxes(value, percent, taxLabel);
+
+    this.setState({ 
+        ...this.state,
+        right: false 
+    });
   }
 
   handleRemoveTaxes = (value, percent) => {
@@ -110,10 +111,10 @@ handleValueChange = e => {
             variant="outlined"
             placeholder="Tax Label"
             onChange={this.handleLabelChange}
-            value={this.state.label || ''}
+            value={this.state.taxLabel || ''}
           >
       </TextField>
-      <section className='PercAndVal'>
+      <section className='Tax-Sidebar'>
         <div>
           <span className='RateDollarSymbol'>Percentage</span>
           <TextField
@@ -176,10 +177,8 @@ handleValueChange = e => {
     this.setState({ ...this.state, [anchor]: open });
   };
 
-
-
   render() {
-    const { value, percent } = this.state;
+    const { value, percent, taxLabel } = this.state;
     return (
       <Fragment>
         {['right'].map((anchor) => (
@@ -191,10 +190,9 @@ handleValueChange = e => {
                     + Taxes
                   </div>
                 }
-                {value &&
-        
+                {value &&      
                     <div className='discount'>
-                      <span className='Percent-Value'>Tax ({percent}%)</span>
+                      <span className='Percent-Value'>{taxLabel}({percent}%)</span>
                       <span className='Discount-Value'>${value}</span>
                       <span className='Discount-Icons'>
                       <DeleteIcon
@@ -207,12 +205,9 @@ handleValueChange = e => {
                       />
                     </span>
                     </div>
-
-       
                 }
               </div>
             </div>
-
 
             <SwipeableDrawer
               anchor={anchor}

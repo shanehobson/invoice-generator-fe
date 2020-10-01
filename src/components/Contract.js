@@ -42,7 +42,8 @@ class Contract extends Component {
                 invoiceItems: [],
                 subtotal: 0, // @todo add to redux
                 taxValue: 0,
-                taxPercent: 0, // @todo add to redux
+                taxPercent: 0,
+                taxLabel: '', // @todo add to redux
                 discountPercent: 0,
                 discountValue: 0,
                 total: 0, // @todo add to redux
@@ -90,7 +91,6 @@ class Contract extends Component {
 
     getCurrentDate = () => {
         const today = new Date();
-        console.log(today);
         return this.toString(today);
     }
 
@@ -106,9 +106,6 @@ class Contract extends Component {
     }
 
     calculateTotal = (subtotal, discountValue = 0, taxValue = 0) => {
-        console.log('subtotal: ' + subtotal )
-        console.log('discountValue: ' + discountValue)
-        console.log('taxValue: ' + taxValue)
         if (typeof discountValue === 'string') {
             discountValue = parseFloat(discountValue);
         }
@@ -154,7 +151,7 @@ class Contract extends Component {
         });
     }
 
-    updateTaxes = (taxValue, taxPercent) => {
+    updateTaxes = (taxValue, taxPercent, taxLabel) => {
         const discountValue = this.state.invoiceInfo.discountValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
@@ -165,6 +162,7 @@ class Contract extends Component {
                 ...this.state.invoiceInfo,
                 taxValue,
                 taxPercent,
+                taxLabel,
                 total,
                 remove
             }
@@ -294,7 +292,7 @@ class Contract extends Component {
         if(!date) {
             return;
         }
-        Object.keys(date).forEach(key => console.log(key + ': ' + date[key] ))
+        // Object.keys(date).forEach(key => console.log(key + ': ' + date[key] ))
         this.setState({
             ...this.state,
             invoiceInfo: {

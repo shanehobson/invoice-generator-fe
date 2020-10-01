@@ -29,6 +29,13 @@
     justify-content: space-between;
 }
 
+.Tax-Sidebar {
+    display: flex;
+    height: 750px;
+    padding: 24px 40px;
+    justify-content: space-between;
+}
+
 .Color-Picker {
     height: 796px;
     padding: 24px 40px;
