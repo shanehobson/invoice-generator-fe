@@ -6,10 +6,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import '../styles/Sidebars.css';
 import '../styles/WorkingDoc.css';
-import { FormHelperText } from '@material-ui/core';
 
 class TaxesSidebar extends Component {
   constructor(props) {
@@ -23,21 +21,24 @@ class TaxesSidebar extends Component {
     };
   }
 
-// addTaxLabel = () => {
+//   componentWillReceiveProps(nextProps) {
 
-// }
-
-calculateValue = (percent, subtotal) => {
-    return (percent / 100 * subtotal).toFixed(2).toString();
-  }
+// };
 
 calculatePercent = (value = '0', subtotal) => {
+    const discount = this.props.discountValue || 0;
     value = parseFloat(value) || 0;
     if (subtotal === 0) {
       return 0;
     } else {
-      return (value / subtotal * 100).toFixed(2).toString();
+      return (value / (subtotal - discount) * 100).toFixed(2).toString();
     }
+  }
+
+  calculateValue = (percent, subtotal) => {
+    const discount = this.props.discountValue || 0;
+    console.log('discount: ' + discount);
+    return (percent / 100 * (subtotal - discount)).toFixed(2).toString();
   }
 
 handlePercentChange = e => {
@@ -63,19 +64,17 @@ handleValueChange = e => {
     const percent = this.state.percent;
     const value = this.state.value;
     const taxLabel = this.state.taxLabel;
-
     this.props.updateTaxes(value, percent, taxLabel);
-
     this.setState({ 
         ...this.state,
         right: false 
     });
   }
 
-  handleRemoveTaxes = (value, percent) => {
+  handleRemoveTaxes = (value, percent, taxLabel) => {
     this.props.removeTaxes();
     this.props.updateTaxes(value, percent);
-    this.setState({ ...this.state, value, percent })
+    this.setState({ ...this.state, value, percent, taxLabel })
   }
 
   handleCancel = () => {
@@ -83,7 +82,8 @@ handleValueChange = e => {
         ...this.state,
         right: false,
         percent: '',
-        value: ''
+        value: '',
+        taxLabel: ''
     });
   }
 
@@ -150,6 +150,7 @@ handleValueChange = e => {
       </section>
       <div className='Buttons-Container-Discount'>
         <Button
+          style={{fontSize: '16px'}}
           color="secondary"
           className='Cancel'
           onClick={this.handleCancel}
@@ -157,8 +158,8 @@ handleValueChange = e => {
           Cancel
         </Button>
         <Button
+          style={{fontSize: '16px'}}
           color="primary"
-          style={{ alignContent: 'flex-end' }}
           className='#Subtotal'
           onClick={this.handleSubmit}
         >

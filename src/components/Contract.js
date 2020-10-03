@@ -67,7 +67,6 @@ class Contract extends Component {
         const total = this.calculateTotal(subtotal, discountValue, taxValue);
         let date, displayDate;
 
-
         if(!nextProps.date) {
             date = new Date();
             displayDate = this.getCurrentDate();
@@ -83,6 +82,7 @@ class Contract extends Component {
                 ...nextProps.invoiceInfo,
                 subtotal,
                 total,
+                discountValue,
                 date: date ? date : null,
                 displayDate: displayDate ? displayDate : ''
             }
@@ -112,6 +112,7 @@ class Contract extends Component {
         if (typeof taxValue === 'string') {
             taxValue = parseFloat(taxValue);
         }
+        // console.log(discountValue)
             return (subtotal - discountValue + taxValue).toFixed(2);
     };
 
@@ -135,10 +136,21 @@ class Contract extends Component {
     }
 
     updateDiscount = (discountValue, discountPercent) => {
+        console.log('discountValue ' + discountValue); 
+        // console.log('taxValue ' + taxValue); 
+        console.log('discountPercent ' + discountPercent); 
+
+        
         const taxValue = this.state.invoiceInfo.taxValue;
+        // const taxValue = this.updateTaxes(taxValue, taxPercent, taxLabel, discountValue)
+        const taxPercent = this.state.invoiceInfo.taxPercent;
+        const taxLabel = this.state.invoiceInfo.taxLabel;
+
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
         const remove = this.removeDiscount()
+        const updateTaxes = this.updateTaxes(taxValue, taxPercent, taxLabel, discountValue)
+
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -146,10 +158,55 @@ class Contract extends Component {
                 discountValue,
                 discountPercent,
                 total,
+                updateTaxes,
+                // taxValue,
                 remove
             }
         });
+
+        console.log('discountValue ' + discountValue); 
+        console.log('taxValue ' + taxValue); 
+        console.log('discountPercent ' + discountPercent); 
     }
+
+    // updateDiscount = (discountValue, discountPercent) => {
+    //     const taxValue = this.state.invoiceInfo.taxValue;
+    //     const subtotal = this.state.invoiceInfo.subtotal;
+    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
+    //     const remove = this.removeDiscount()
+    //     this.setState({
+    //         ...this.state,
+    //         invoiceInfo: {
+    //             ...this.state.invoiceInfo,
+    //             discountValue,
+    //             discountPercent,
+    //             total,
+    //             remove
+    //         }
+    //     });
+    // }
+
+    // updateTaxes = (taxValue, taxPercent, taxLabel, discountValue) => {
+ 
+    //     // const discountValue = this.state.invoiceInfo.discountValue;
+    //     const subtotal = this.state.invoiceInfo.subtotal;
+    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
+    //     const remove = this.removeTaxes()
+
+    //     this.setState({
+    //         ...this.state,
+    //         invoiceInfo: {
+    //             ...this.state.invoiceInfo,
+    //             taxValue,
+    //             taxPercent,
+    //             // discountValue,
+    //             taxLabel,
+    //             total,
+    //             remove
+    //         }
+    //     });
+    //     console.log(discountValue);
+    // }
 
     updateTaxes = (taxValue, taxPercent, taxLabel) => {
         const discountValue = this.state.invoiceInfo.discountValue;
@@ -179,12 +236,15 @@ class Contract extends Component {
         });
     }
 
-    removeDiscount = () => { 
+    removeDiscount = (subtotal, discountValue, taxValue) => { 
+        const total = this.calculateTotal(subtotal, discountValue, taxValue)
         this.setState({
             ...this.state,
             invoiceInfo: {
                 ...this.state.invoiceInfo,
-                discountValue: 0
+                discountValue: 0,
+                taxValue,
+                total
             }
         });
     }
@@ -314,8 +374,8 @@ class Contract extends Component {
     render() {
 
         const { standard, dark, light } = this.state.colors;
-        const { invoiceInfo, editIcons, notes, discountValue, discountPercent, taxValue, taxPercent } = this.state;
-        const { devInfo, customerInfo, invoiceItems, subtotal, total, displayDate } = invoiceInfo;
+        const { invoiceInfo, editIcons, notes } = this.state;
+        const { devInfo, customerInfo, invoiceItems, subtotal, total, displayDate, discountValue, discountPercent, taxValue, taxPercent } = invoiceInfo;
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -327,7 +387,7 @@ class Contract extends Component {
         const customerState = customerInfo.USstate === '' ? '__________' : customerInfo.USstate;
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
-
+        
         return (
             <Fragment>
                 <div className='Invoice-Page-Container' style={{ borderTop: `3px solid ${standard}` }}>
@@ -427,15 +487,21 @@ class Contract extends Component {
                                     <DiscountSidebar
                                         updateDiscount={this.updateDiscount}
                                         removeDiscount={this.removeDiscount}
+                                        updateTaxes={this.updateTaxes}
                                         subtotal={subtotal}
                                         discountValue={discountValue}
                                         discountPercent={discountPercent}
+                                        taxValue={taxValue}
+                                        taxPercent={taxPercent}
+
                                     />
                                 </div>
                                 <div className='Add-Discount'>
                                     <TaxesSidebar
                                         updateTaxes={this.updateTaxes}
+                                        updateDiscount={this.updateDiscount}
                                         removeTaxes={this.removeTaxes}
+                                        discountValue={discountValue}
                                         subtotal={subtotal}
                                         taxValue={taxValue}
                                         taxPercent={taxPercent}
