@@ -28,13 +28,6 @@ class DiscountSidebar extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     value: '40000' || this.props.discountValue,
-  //     percent: '40' || this.props.discountPercent
-  //   });
-  // }
-
   calculateValue = (percent, subtotal) => {
     return (percent / 100 * subtotal).toFixed(2).toString();
   }
@@ -65,10 +58,12 @@ class DiscountSidebar extends Component {
   handleSubmit = () => {
     const percent = this.state.percent;
     const value = this.state.value;
-    // const taxes = this.state.value;
-    const taxes = this.props.taxValue;
+    // const taxValue = this.props.taxValue;
 
-    this.props.updateDiscount(value, percent, taxes);
+    this.props.updateDiscount(value, percent);
+    // this.props.updateTaxes(value, percent, taxValue);
+    // console.log(this.props.updateTaxes(value, percent))
+
     this.setState({ ...this.state, right: false });
   }
 
@@ -155,7 +150,6 @@ class DiscountSidebar extends Component {
     </div>
   );
 
-
   toggleDrawer = (anchor, open) => (event) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -163,8 +157,6 @@ class DiscountSidebar extends Component {
 
     this.setState({ ...this.state, [anchor]: open });
   };
-
-
 
   render() {
     const { value, percent } = this.state;
@@ -195,12 +187,9 @@ class DiscountSidebar extends Component {
                       />
                     </span>
                     </div>
-
-       
                 }
               </div>
             </div>
-
 
             <SwipeableDrawer
               anchor={anchor}
