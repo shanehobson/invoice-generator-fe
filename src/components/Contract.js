@@ -169,26 +169,61 @@ class Contract extends Component {
         console.log('discountPercent ' + discountPercent); 
     }
 
-    updateTaxes = (taxValue, taxPercent, taxLabel, discountValue) => {
+    // updateDiscount = (discountValue, discountPercent) => {
+    //     const taxValue = this.state.invoiceInfo.taxValue;
+    //     const subtotal = this.state.invoiceInfo.subtotal;
+    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
+    //     const remove = this.removeDiscount()
+    //     this.setState({
+    //         ...this.state,
+    //         invoiceInfo: {
+    //             ...this.state.invoiceInfo,
+    //             discountValue,
+    //             discountPercent,
+    //             total,
+    //             remove
+    //         }
+    //     });
+    // }
+
+    // updateTaxes = (taxValue, taxPercent, taxLabel, discountValue) => {
  
-        // const discountValue = this.state.invoiceInfo.discountValue;
+    //     // const discountValue = this.state.invoiceInfo.discountValue;
+    //     const subtotal = this.state.invoiceInfo.subtotal;
+    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
+    //     const remove = this.removeTaxes()
+
+    //     this.setState({
+    //         ...this.state,
+    //         invoiceInfo: {
+    //             ...this.state.invoiceInfo,
+    //             taxValue,
+    //             taxPercent,
+    //             // discountValue,
+    //             taxLabel,
+    //             total,
+    //             remove
+    //         }
+    //     });
+    //     console.log(discountValue);
+    // }
+
+    updateTaxes = (taxValue, taxPercent, taxLabel) => {
+        const discountValue = this.state.invoiceInfo.discountValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
         const remove = this.removeTaxes()
-
         this.setState({
             ...this.state,
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 taxValue,
                 taxPercent,
-                // discountValue,
                 taxLabel,
                 total,
                 remove
             }
         });
-        console.log(discountValue);
     }
 
     removeTaxes = () => { 
