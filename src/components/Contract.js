@@ -370,8 +370,9 @@ class Contract extends Component {
                                 <div className='Date'>                             
                                     <DatePickerSidebar 
                                         updateDate={this.updateDate}
+                                        displayDate={displayDate}
                                     />
-                                    {displayDate}
+                        
                                 </div>            
                             </div>
 
