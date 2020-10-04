@@ -21,9 +21,17 @@ class TaxesSidebar extends Component {
     };
   }
 
-//   componentWillReceiveProps(nextProps) {
-
-// };
+  static getDerivedStateFromProps (props, state) {
+    if (!props.discountValue || !state.value) {
+      return state;
+    } else {
+    const discount = parseFloat(props.discountValue) || 0;
+    return {
+      ...state,
+      value: (state.percent / 100 * (props.subtotal - discount)).toFixed(2).toString()
+    }
+  }
+}
 
 calculatePercent = (value = '0', subtotal) => {
     const discount = this.props.discountValue || 0;
@@ -121,6 +129,9 @@ handleValueChange = e => {
             style={{
               width: '140px',
               paddingTop: '10px'
+            }}
+            inputProps={{
+              style: { textAlign: "right" }
             }}
             fullWidth
             variant="outlined"

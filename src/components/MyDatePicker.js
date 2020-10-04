@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+
 import DatePicker from "react-datepicker";
-
-
+import '../styles/DateStyles.css';
 import "react-datepicker/dist/react-datepicker.css";
-
 // CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const MyDatePicker = (props) => {
   const [date, setDate] = useState(new Date());

@@ -30,7 +30,7 @@ class DatePickerSidebar extends Component {
   }
 
   child = (anchor) => (
-    <div className='Discount-Container'>
+    <div className='Date-Container'>
       <div className='Header'>
         <h2>Select Date</h2>
         <HighlightOffIcon
@@ -82,14 +82,15 @@ class DatePickerSidebar extends Component {
 
   render() {
     return (
-      <div>
+      <div >
         {['right'].map((anchor) => (
           <Fragment key={anchor}>
             <div
-              style={{ cursor: 'pointer' }}
+              style={{ paddingRight: '4px' }}
               onClick={this.toggleDrawer(anchor, true)}
+
             >
-              Set Due Date
+              Due:
             </div>
 
             <SwipeableDrawer

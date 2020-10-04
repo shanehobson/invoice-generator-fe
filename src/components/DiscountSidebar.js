@@ -43,6 +43,8 @@ class DiscountSidebar extends Component {
 
   handlePercentChange = e => {
     const percent = e.target.value || '';
+    // Object.keys(percent).forEach(key => console.log(key + ': ' + percent[key] ))
+
     const subtotal = this.props.subtotal;
     const value = this.calculateValue(percent, subtotal);
     this.setState({ percent, value });
@@ -58,12 +60,7 @@ class DiscountSidebar extends Component {
   handleSubmit = () => {
     const percent = this.state.percent;
     const value = this.state.value;
-    // const taxValue = this.props.taxValue;
-
     this.props.updateDiscount(value, percent);
-    // this.props.updateTaxes(value, percent, taxValue);
-    // console.log(this.props.updateTaxes(value, percent))
-
     this.setState({ ...this.state, right: false });
   }
 
@@ -98,7 +95,10 @@ class DiscountSidebar extends Component {
           <TextField
             style={{
               width: '140px',
-              paddingTop: '10px'
+              paddingTop: '10px',
+            }}
+            inputProps={{
+              style: { textAlign: "right" }
             }}
             fullWidth
             variant="outlined"
@@ -108,7 +108,7 @@ class DiscountSidebar extends Component {
           >
           </TextField>
         </div>
-
+        
         <div className='Equals'> = </div>
 
         <div>

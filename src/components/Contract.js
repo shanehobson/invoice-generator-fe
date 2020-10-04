@@ -112,7 +112,6 @@ class Contract extends Component {
         if (typeof taxValue === 'string') {
             taxValue = parseFloat(taxValue);
         }
-        // console.log(discountValue)
             return (subtotal - discountValue + taxValue).toFixed(2);
     };
 
@@ -136,21 +135,11 @@ class Contract extends Component {
     }
 
     updateDiscount = (discountValue, discountPercent) => {
-        console.log('discountValue ' + discountValue); 
-        // console.log('taxValue ' + taxValue); 
-        console.log('discountPercent ' + discountPercent); 
-
-        
         const taxValue = this.state.invoiceInfo.taxValue;
-        // const taxValue = this.updateTaxes(taxValue, taxPercent, taxLabel, discountValue)
-        const taxPercent = this.state.invoiceInfo.taxPercent;
-        const taxLabel = this.state.invoiceInfo.taxLabel;
-
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
         const remove = this.removeDiscount()
-        const updateTaxes = this.updateTaxes(taxValue, taxPercent, taxLabel, discountValue)
-
+       
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -158,55 +147,10 @@ class Contract extends Component {
                 discountValue,
                 discountPercent,
                 total,
-                updateTaxes,
-                // taxValue,
                 remove
             }
         });
-
-        console.log('discountValue ' + discountValue); 
-        console.log('taxValue ' + taxValue); 
-        console.log('discountPercent ' + discountPercent); 
     }
-
-    // updateDiscount = (discountValue, discountPercent) => {
-    //     const taxValue = this.state.invoiceInfo.taxValue;
-    //     const subtotal = this.state.invoiceInfo.subtotal;
-    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
-    //     const remove = this.removeDiscount()
-    //     this.setState({
-    //         ...this.state,
-    //         invoiceInfo: {
-    //             ...this.state.invoiceInfo,
-    //             discountValue,
-    //             discountPercent,
-    //             total,
-    //             remove
-    //         }
-    //     });
-    // }
-
-    // updateTaxes = (taxValue, taxPercent, taxLabel, discountValue) => {
- 
-    //     // const discountValue = this.state.invoiceInfo.discountValue;
-    //     const subtotal = this.state.invoiceInfo.subtotal;
-    //     const total = this.calculateTotal(subtotal, discountValue, taxValue)
-    //     const remove = this.removeTaxes()
-
-    //     this.setState({
-    //         ...this.state,
-    //         invoiceInfo: {
-    //             ...this.state.invoiceInfo,
-    //             taxValue,
-    //             taxPercent,
-    //             // discountValue,
-    //             taxLabel,
-    //             total,
-    //             remove
-    //         }
-    //     });
-    //     console.log(discountValue);
-    // }
 
     updateTaxes = (taxValue, taxPercent, taxLabel) => {
         const discountValue = this.state.invoiceInfo.discountValue;
@@ -423,11 +367,11 @@ class Contract extends Component {
                                 <h1 id='Invoice-Total'>
                                     ${total}
                                 </h1>
-                                <div className='Date'>
-                                    {displayDate}
+                                <div className='Date'>                             
                                     <DatePickerSidebar 
                                         updateDate={this.updateDate}
                                     />
+                                    {displayDate}
                                 </div>            
                             </div>
 
