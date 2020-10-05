@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { Grid } from '@material-ui/core';
 import '../styles/Dashboard.css';
 import '../styles/Page1.css';
@@ -8,6 +10,7 @@ import '../styles/LayoutStyles.css';
 import '../styles/WorkingDoc.css';
 import '../styles/Contract.css';
 import '../styles/Dialog.css';
+
 import Page1 from './formPages/Page1';
 import Page2 from './formPages/Page2';
 import Page3A from './formPages/Page3A';
@@ -17,6 +20,7 @@ import Page4A from './formPages/Page4A';
 import Page4B from './formPages/Page4B';
 import Page5 from './formPages/Page5';
 import Page9 from './formPages/Page9';
+
 import WorkingDocument from './WorkingDocument';
 import ProgressBar from './ProgressBar';
 

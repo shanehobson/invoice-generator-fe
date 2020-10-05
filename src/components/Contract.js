@@ -43,7 +43,8 @@ class Contract extends Component {
                 subtotal: 0, // @todo add to redux
                 taxValue: 0,
                 taxPercent: 0,
-                taxLabel: '', // @todo add to redux
+                taxLabel: '', // @todo add to redux,
+                taxItems: [],
                 discountPercent: 0,
                 discountValue: 0,
                 total: 0, // @todo add to redux
@@ -319,7 +320,7 @@ class Contract extends Component {
 
         const { standard, dark, light } = this.state.colors;
         const { invoiceInfo, editIcons, notes } = this.state;
-        const { devInfo, customerInfo, invoiceItems, subtotal, total, displayDate, discountValue, discountPercent, taxValue, taxPercent } = invoiceInfo;
+        const { devInfo, customerInfo, invoiceItems, subtotal, total, displayDate, discountValue, discountPercent, taxValue, taxPercent, taxItems } = invoiceInfo;
         const devName = devInfo.name === '' ? '___________________' : devInfo.name;
         const devStreet = devInfo.street === '' ? '____________________' : devInfo.street;
         const devCity = devInfo.city === '' ? '____________________' : devInfo.city;
@@ -370,8 +371,9 @@ class Contract extends Component {
                                 <div className='Date'>                             
                                     <DatePickerSidebar 
                                         updateDate={this.updateDate}
+                                        displayDate={displayDate}
                                     />
-                                    {displayDate}
+                        
                                 </div>            
                             </div>
 
@@ -449,6 +451,7 @@ class Contract extends Component {
                                         subtotal={subtotal}
                                         taxValue={taxValue}
                                         taxPercent={taxPercent}
+                                        taxItems={taxItems}
                                     />
                                 </div>
                                

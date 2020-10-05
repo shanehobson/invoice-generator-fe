@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import InvoiceItem from './InvoiceItem';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
-
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import '../styles/WorkingDoc.css';
 import '../styles/Sidebars.css';

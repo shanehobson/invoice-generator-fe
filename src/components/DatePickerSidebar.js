@@ -52,6 +52,7 @@ class DatePickerSidebar extends Component {
 
       <div className='Buttons-Container-Discount'>
         <Button
+          style={{ fontSize: '20px' }}
           color="secondary"
           className='Cancel'
           onClick={this.handleClose}
@@ -61,7 +62,7 @@ class DatePickerSidebar extends Component {
 
         <Button
           color="primary"
-          style={{ alignContent: 'flex-end' }}
+          style={{ fontSize: '20px' }}
           className='Submit'
           onClick={this.handleSubmit}
         >
@@ -88,9 +89,8 @@ class DatePickerSidebar extends Component {
             <div
               style={{ paddingRight: '4px' }}
               onClick={this.toggleDrawer(anchor, true)}
-
             >
-              Due:
+              Due: {this.props.displayDate}
             </div>
 
             <SwipeableDrawer
