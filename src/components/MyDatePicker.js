@@ -17,8 +17,6 @@ const MyDatePicker = (props) => {
     }
   }
 
-
-
   return (
       <DatePicker
         minDate={new Date()}

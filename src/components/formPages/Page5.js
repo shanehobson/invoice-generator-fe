@@ -7,7 +7,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
 import InvoiceItem from '../InvoiceItem';
 import { startChangePage } from '../../actions/pages';
 import { startSetInvoiceItems } from '../../actions/invoiceInfo';
@@ -40,7 +39,6 @@ class Page5 extends Component {
             FeeTypes: []
         };
     };
-
 
     componentDidMount = () => { 
         this.setState({ 
