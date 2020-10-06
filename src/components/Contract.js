@@ -49,6 +49,7 @@ class Contract extends Component {
                 discountValue: 0,
                 total: 0, // @todo add to redux
                 date: null,
+                // defaultDate: null,
                 displayDate: ''
             },
 
@@ -66,14 +67,16 @@ class Contract extends Component {
         const discountValue = this.state.invoiceInfo.discountValue;
         const taxValue = this.state.invoiceInfo.taxValue;
         const total = this.calculateTotal(subtotal, discountValue, taxValue);
-        let date, displayDate;
+        let date, displayDate, defaultDate;
 
         if(!nextProps.date) {
+            // defaultDate = new Date();
             date = new Date();
             displayDate = this.getCurrentDate();
         } else if (this.state.date !== nextProps.date) {
             date = nextProps.date;
             displayDate = this.toString(date);
+            // defaultDate = this.toString(date)
         } 
           
         this.setState({
@@ -85,7 +88,8 @@ class Contract extends Component {
                 total,
                 discountValue,
                 date: date ? date : null,
-                displayDate: displayDate ? displayDate : ''
+                displayDate,
+                // defaultDate
             }
         });
     };
@@ -303,6 +307,7 @@ class Contract extends Component {
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 date,
+                // defaultDate,
                 displayDate: this.toString(date)
             }
         });
@@ -336,14 +341,14 @@ class Contract extends Component {
         return (
             <Fragment>
                 <div className='Invoice-Page-Container' style={{ borderTop: `3px solid ${standard}` }}>
-                    <div className='Invoice-Settings'>
+                    {/* <div className='Invoice-Settings'>
                         <button className='Invoice-Button'>
                             <SettingsIcon style={{ paddingRight: '3px', fontSize: '18px' }} />
                             <span>
                                 Invoice settings
                             </span>
                         </button>
-                    </div>
+                    </div> */}
                     <div onMouseLeave={this.onMouseLeaveInvoice}>
                         <div className='Top-Third-Container'
                             onMouseEnter={this.onMouseEnterTopThird}>
@@ -369,7 +374,7 @@ class Contract extends Component {
                                     ${total}
                                 </h1>
                                 <div className='Date'>                             
-                                    <DatePickerSidebar 
+                                    <DatePickerSidebar
                                         updateDate={this.updateDate}
                                         displayDate={displayDate}
                                     />
@@ -512,7 +517,7 @@ class Contract extends Component {
                                 {devState}
                                 {devZip}
                             </p>
-                            <p className='Email'>mikerooze12@gmail.com</p>
+                            {/* <p className='Email'>mikerooze12@gmail.com</p> */}
                         </div>
                     </div>
                 </div>

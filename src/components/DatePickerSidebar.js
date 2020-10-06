@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MyDatePicker from './MyDatePicker';
+import DatePicker from "react-datepicker";
+
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import '../styles/Sidebars.css';
@@ -32,7 +34,7 @@ class DatePickerSidebar extends Component {
   child = (anchor) => (
     <div className='Date-Container'>
       <div className='Header'>
-        <h2>Select Date</h2>
+        <h2>Select Due Date</h2>
         <HighlightOffIcon
           onClick={this.handleClose}
           style={{
@@ -82,6 +84,7 @@ class DatePickerSidebar extends Component {
   };
 
   render() {
+    // const date = this.state;
     return (
       <div >
         {['right'].map((anchor) => (
@@ -91,6 +94,12 @@ class DatePickerSidebar extends Component {
               onClick={this.toggleDrawer(anchor, true)}
             >
               Due: {this.props.displayDate}
+            </div>
+            <div
+              style={{ paddingRight: '4px' }}
+              onClick={this.toggleDrawer(anchor, true)}
+            >
+              Issued: {this.props.defaultDate}
             </div>
 
             <SwipeableDrawer
