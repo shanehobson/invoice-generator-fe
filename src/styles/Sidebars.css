@@ -1,13 +1,14 @@
 .Branding {
-    display: flex;
     font-size: 16px;
+    width: 50%;
     border: 1px solid black;
     justify-content: center;
     cursor: pointer;
 }
 
 .Branding:hover {
-    background-color: black;
+    background-color: rgba(46, 42, 42, 0.63);
+    width: 50%;
     color: white;
 }
 
@@ -19,7 +20,7 @@
     margin-bottom: 15px;
     padding: 0 0 0 40px;
     height: 72px;
-    border-bottom: 3px solid rgb(77, 77, 77);
+    border-bottom: 2px solid rgb(77, 77, 77);
 }
 
 .PercAndVal {
@@ -29,19 +30,60 @@
     justify-content: space-between;
 }
 
+
+.Tax-Container {
+    position: relative;
+    /* height: 100%; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 400px;
+    height: 792px;
+    border-top: 2px solid rgb(77, 77, 77);
+}
+
+.Tax-header {
+    display: flex;
+    letter-spacing: 1px;
+    padding: 0 0 0 40px;
+    height: 52px;
+}
+
 .Tax-Sidebar {
     display: flex;
-    height: 740px;
     padding: 24px 40px;
     justify-content: space-between;
+}
+
+.Tax-Item {
+    border-top: 2px solid rgb(77, 77, 77);
+    padding-top: 10px;
+}
+
+.Tax-Icons {
+    display: flex;
+    align-items: center;
+    padding-left: 35px;
+}
+
+.Buttons-Container-Taxes {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    border-top: 2px solid rgb(77, 77, 77);
+}
+
+.Discount-Container {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 400px;
+    height: 100%;
 }
 
 .Color-Picker {
     height: 781px;
     padding: 24px 40px;
 }
-
-
 
 .Invoice-Sidebar {
     height: 825px;
@@ -60,16 +102,17 @@
 
 .Buttons-Container {
     height: 84px;
-    border-top: 3px solid rgb(77, 77, 77);
+    border-top: 2px solid rgb(77, 77, 77);
 }
 
 .Buttons-Container-Discount {
     display: flex;
-    height: 84px;
-    align-content: flex-end;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 60px;
     justify-content: flex-end;
-    padding: 0 40px;
-    border-top: 3px solid rgb(77, 77, 77);
+    border-top: 2px solid rgb(77, 77, 77);
 }
 
 .Cancel {
@@ -78,13 +121,6 @@
     justify-content: flex-end;
 }
 
-.Discount-Container {
-    position: relative;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    width: 400px;
-    height: 792px;
-}
 
 .Submit {
     align-content: flex-end;

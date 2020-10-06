@@ -34,11 +34,11 @@
 
 .Date {
     display: flex;
-    padding: 4px 4px 4px 0;
     cursor: 'pointer'
 }
 
 .Date:hover {
+    padding: 4px 4px;
     background: rgb(252, 252, 252);
 }
 
