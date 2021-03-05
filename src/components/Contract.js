@@ -573,8 +573,8 @@ class Contract extends Component {
                                 <h4 className='Client-Customer'>{devName}</h4>
                                 <p className='Dev-Address'>
                                     {devStreet + ' '}
-                                    {devCity + ' '},
-                                    {devState + ' '}
+                                    {devCity},
+                                    {' ' + devState + ' '}
                                     {devZip}
                                 </p>
                                 {/* <p className='Email'>mikerooze12@gmail.com</p> */}
