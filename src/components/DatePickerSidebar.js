@@ -99,7 +99,6 @@ class DatePickerSidebar extends Component {
               style={{ paddingRight: '4px' }}
               onClick={this.toggleDrawer(anchor, true)}
             >
-              Issued: {this.props.defaultDate}
             </div>
 
             <SwipeableDrawer

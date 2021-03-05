@@ -40,8 +40,8 @@ class Page2 extends Component {
 
         this.state = {
             error: false,
-            devType: '',
-            nextButtonDisabled: true
+            devType: props.devType,
+            nextButtonDisabled: !props.devType
         }
     };
 

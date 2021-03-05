@@ -32,8 +32,8 @@ a {
 
 .TextFieldContainer {
     margin: 24px auto;
-    padding: 30px 25px;
-    border: 1px solid grey;
+    padding: 30px;
+    border: 1px solid #d0d0d0;
     border-radius: 3px;
     position: relative;
     max-width: 540px;
@@ -65,6 +65,12 @@ a {
     font-weight: bold;
     margin-bottom: 0;
     font-size: 16px;
+    padding-right: 20px;
+}
+
+.add-icon {
+    color: #4CAF50;
+    cursor: pointer;
 }
 
 .MuiSelect-selectMenu-244 {
@@ -72,7 +78,10 @@ a {
 }
 
 .AddInvoiceContainer {
-    margin-left: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto 0 auto;
 }
 
 .MuiFormControl-root-225 {
@@ -103,7 +112,9 @@ a {
 .FormHeaderContainer {
     display: flex;
     justify-content: center;
-    margin-top: 5%;
+    max-width: 82%;
+    margin: 5% auto 0 auto;
+    text-align: center;
 }
 
 .Page5-invoiceTitle-177 {

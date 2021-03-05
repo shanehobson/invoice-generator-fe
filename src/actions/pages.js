@@ -9,3 +9,7 @@ export const startChangePage = (pageNumber) => {
         return dispatch(changePage(pageNumber));
     };
 };
+
+export const generatePdf = () => ({
+    type: 'GENERATE_PDF'
+});

@@ -81,7 +81,8 @@ const initialState = {
         total
     },
     pages: {
-        currentPage
+        currentPage,
+        pdfTrack: 0
     },
     USstates: {
         USstates

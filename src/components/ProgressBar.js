@@ -18,7 +18,7 @@ class ProgressBar extends React.Component {
 
         this.state = {
             completed: 0,
-            total: 7
+            total: 4
           };
     };
 
@@ -39,23 +39,18 @@ class ProgressBar extends React.Component {
     calculateNumberCompleted = (nextProps) => {
         const { devType, customerType, devInfo, customerInfo } = nextProps;
         let totalCompleted = 0;
-
         if (devType !== '') totalCompleted++;
         if (customerType !== '') totalCompleted++;
         if (devInfo.zip !== '') totalCompleted++;
         if (customerInfo.zip !== '') totalCompleted++;
-
-        // console.log(totalCompleted);
         return totalCompleted;
     };
 
     calculateTotal(nextProps) {
         const { devType, customerType } = nextProps;
         let total = 4;
-
-        if (devType === 'business') total++;
-        if (customerType === 'business') total++;
-
+        // if (devType === 'business') total++;
+        // if (customerType === 'business') total++;
         return total;
     };
 

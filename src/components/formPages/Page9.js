@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { startChangePage } from '../../actions/pages';
+import { startChangePage, generatePdf  } from '../../actions/pages';
 
 const style = theme => ({
     root: {
@@ -32,6 +32,11 @@ class Page9 extends Component {
         }
         window.scrollTo(0, 0);
     };
+
+    generatePdf = () => {
+        window.scrollTo(0,0);
+        this.props.generatePdf();
+    }
 
     render() {
         const { classes, formsAreComplete } = this.props;
@@ -63,7 +68,7 @@ class Page9 extends Component {
                         color="primary"
                         size='medium'
                         className={classes.button}
-                        onClick={this.generatePDF}
+                        onClick={this.generatePdf}
                     >
                         <p className='ButtonText'>Generate PDF</p>
                     </Button> 
@@ -77,6 +82,7 @@ class Page9 extends Component {
 Page9.propTypes = {
     classes: PropTypes.object.isRequired,
     startChangePage: PropTypes.func.isRequired,
+    generatePdf: PropTypes.func.isRequired,
     formsAreComplete: PropTypes.bool.isRequired,
     customerType: PropTypes.string.isRequired
 };
@@ -87,7 +93,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    startChangePage: (pageNumber) => dispatch(startChangePage(pageNumber))
+    startChangePage: (pageNumber) => dispatch(startChangePage(pageNumber)),
+    generatePdf: () => dispatch(generatePdf())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(Page9));

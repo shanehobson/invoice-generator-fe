@@ -153,7 +153,7 @@ class Page5 extends Component {
                     )}      
                 
                     <div className='AddInvoiceContainer'>
-                        <AddCircleIcon onClick={this.addInvoiceItem} />
+                        <AddCircleIcon className={"add-icon"} onClick={this.addInvoiceItem} />
                         <p>Add line item</p>
                         {/* <p>Your currency is USD now. <a href="Change currency">Change currency</a></p> */}
                     </div>    

@@ -8,7 +8,7 @@ const Header = () => (
             <Grid item>
                 <div className='Header-headerTextContainer'>
                     <Typography variant='headline' color='primary'>
-                        Create an invoice for your freelance web development project in minutes.
+                        Create an invoice for your freelance project in minutes.
                     </Typography>
                 </div>
             </Grid>

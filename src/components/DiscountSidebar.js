@@ -102,11 +102,11 @@ class DiscountSidebar extends Component {
             }}
             fullWidth
             variant="outlined"
-            placeholder="0.00%"
+            placeholder="0.00"
             onChange={this.handlePercentChange}
             value={this.state.percent || ''}
           >
-          </TextField>
+          </TextField>%
         </div>
         
         <div className='Equals'> = </div>
@@ -114,14 +114,14 @@ class DiscountSidebar extends Component {
         <div>
           <span className='RateDollarSymbol'>Value</span>
 
-          <TextField
+          $<TextField
             style={{
               width: '140px',
               paddingTop: '10px',
             }}
             fullWidth
             variant="outlined"
-            placeholder="$0.00"
+            placeholder="0.00"
             onChange={this.handleValueChange}
             value={this.state.value || ''}
           >

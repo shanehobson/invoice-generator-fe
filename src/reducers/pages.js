@@ -1,10 +1,12 @@
-import initialState from '../store/initialState';
-
-const pagesReducer = (state = {}, action) => {
+const pagesReducer = (state = { pdfTrack: 0 }, action) => {
     switch(action.type) {
         case 'CHANGE_PAGE':
             return {
-                currentPage: action.pageNumber
+                ...state, currentPage: action.pageNumber
+            };
+        case 'GENERATE_PDF':
+            return {
+                ...state, pdfTrack: state.pdfTrack + 1
             };
         default:
             return state;

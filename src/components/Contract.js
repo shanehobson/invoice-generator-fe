@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -18,7 +20,9 @@ import EditInvoice from './EditInvoice';
 class Contract extends Component {
     constructor(props) {
         super(props);
+        this.myRef = React.createRef();
         this.state = {
+            printing: false,
             colors: {
                 standard: '#4cae4f',
                 dark: '#162637',
@@ -69,7 +73,7 @@ class Contract extends Component {
         const total = this.calculateTotal(subtotal, discountValue, taxValue);
         let date, displayDate, defaultDate;
 
-        if(!nextProps.date) {
+        if (!nextProps.date) {
             // defaultDate = new Date();
             date = new Date();
             displayDate = this.getCurrentDate();
@@ -77,8 +81,8 @@ class Contract extends Component {
             date = nextProps.date;
             displayDate = this.toString(date);
             // defaultDate = this.toString(date)
-        } 
-          
+        }
+
         this.setState({
             ...this.state,
             ...nextProps,
@@ -93,6 +97,48 @@ class Contract extends Component {
             }
         });
     };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.generatePdf > prevProps.generatePdf) {
+            this.setState({
+                ...this.state,
+                printing: true
+            });
+            setTimeout(() => {
+                this.generatePdf();
+            }, 1000)
+
+        }
+    }
+
+    generatePdf = () => {
+        const element = this.myRef.current;
+        const HTML_Width = 600;
+        const HTML_Height = 800;
+        const top_left_margin = 15;
+        const PDF_Width = 620;
+        const PDF_Height = 800;
+        const canvas_image_width = HTML_Width;
+        const canvas_image_height = HTML_Height;
+        const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas(element).then(function (canvas) {
+            const imgData = canvas.toDataURL("image/jpeg", 1.0);
+            const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (let i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+            }
+            pdf.save("invoice.pdf");
+            // $(".WorkingDoc").hide();
+        });
+
+        this.setState({
+            ...this.state,
+            printing: false
+        });
+    }
 
     getCurrentDate = () => {
         const today = new Date();
@@ -117,7 +163,7 @@ class Contract extends Component {
         if (typeof taxValue === 'string') {
             taxValue = parseFloat(taxValue);
         }
-            return (subtotal - discountValue + taxValue).toFixed(2);
+        return (subtotal - discountValue + taxValue).toFixed(2);
     };
 
     updateInvoiceItem = ({ item, index }) => {
@@ -144,7 +190,7 @@ class Contract extends Component {
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
         const remove = this.removeDiscount()
-       
+
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -175,7 +221,7 @@ class Contract extends Component {
         });
     }
 
-    removeTaxes = () => { 
+    removeTaxes = () => {
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -185,7 +231,7 @@ class Contract extends Component {
         });
     }
 
-    removeDiscount = (subtotal, discountValue, taxValue) => { 
+    removeDiscount = (subtotal, discountValue, taxValue) => {
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
         this.setState({
             ...this.state,
@@ -298,10 +344,9 @@ class Contract extends Component {
     }
 
     updateDate = (date) => {
-        if(!date) {
+        if (!date) {
             return;
         }
-        // Object.keys(date).forEach(key => console.log(key + ': ' + date[key] ))
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -337,7 +382,7 @@ class Contract extends Component {
         const customerState = customerInfo.USstate === '' ? '__________' : customerInfo.USstate;
         const customerZip = customerInfo.zip === '' ? '_____' : customerInfo.zip;
 
-        
+
         return (
             <Fragment>
                 <div className='Invoice-Page-Container' style={{ borderTop: `3px solid ${standard}` }}>
@@ -350,175 +395,192 @@ class Contract extends Component {
                         </button>
                     </div> */}
                     <div onMouseLeave={this.onMouseLeaveInvoice}>
-                        <div className='Top-Third-Container'
-                            onMouseEnter={this.onMouseEnterTopThird}>
-                            <div className="Edit-Container">
-                                {editIcons.topThird &&
-                                    <div className='Edit-Icon' style={{ left: '100px' }}>
-                                        <div className='Branding'>
-                                            <BrandingSidebar
-                                                updateBranding={this.updateBranding}
-                                                standard={standard}
-                                                light={light}
-                                                dark={dark}
+                        <div ref={this.myRef}>
+                            <div className='Top-Third-Container'
+                                onMouseEnter={this.onMouseEnterTopThird}>
+                                <div className="Edit-Container">
+                                    {editIcons.topThird &&
+                                        <div className='Edit-Icon' style={{ left: '100px' }}>
+                                            <div className='Branding'>
+                                                <BrandingSidebar
+                                                    updateBranding={this.updateBranding}
+                                                    standard={standard}
+                                                    light={light}
+                                                    dark={dark}
+                                                />
+                                            </div>
+                                        </div>
+                                    }
+                                    <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
+                                    <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
+                                </div>
+
+                                <div className='Top-Right-Grid-Area'>
+                                    <h1 id='Invoice-Total'>
+                                        ${total}
+                                    </h1>
+                                    <div className='Date'>
+                                        <DatePickerSidebar
+                                            updateDate={this.updateDate}
+                                            displayDate={displayDate}
+                                        />
+
+                                    </div>
+                                </div>
+
+                                <div id='Client-Address-Area'>
+                                    <h2 className='Client-Customer'>
+                                        {customerName}
+                                    </h2>
+                                    <div id='Client-Address'>
+                                        {customerStreet}
+                                        <br></br>
+                                        {customerCity}, {customerState} {customerZip}
+                                        {!this.state.printing && (
+                                            <br></br>)
+                                        }
+                                        {!this.state.printing && (
+                                            <br></br>)
+                                        }
+
+                                        {!this.state.printing && false &&  <div className='Gray-Text'>+ Tax Id</div>}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div className='Middle-Third-Container'
+                                onMouseEnter={this.onMouseEnterMiddleThird}>
+
+                                <div>
+                                    {invoiceItems.map((item, i) => (
+                                        <div className='Line-Items-Container' key={i}>
+                                            <div className='Line-Items'>
+                                                <div id='Item'>{item.description}</div>
+                                                <div id='Unit'>{item.unit}</div>
+                                                <div id='Rate'>
+                                                    {item.feeType === 'Flat fee' && '$' + item.rate}
+                                                    {item.feeType !== 'Flat fee' && '$' + item.rate + '/' + item.feeType}
+                                                </div>
+                                                <div id='Item-Total'>${item.total}</div>
+                                                <div className='Line-Item-Icons' key={i}>
+                                                    <DeleteIcon
+                                                        onClick={() => this.removeLineItem(i)}
+                                                        style={{ fontSize: '20px', paddingRight: '10px' }}
+                                                    />
+                                                    <EditInvoice
+                                                        item={item}
+                                                        index={i}
+                                                        FeeTypes={this.props.FeeTypes}
+                                                        updateInvoiceItem={this.updateInvoiceItem}
+                                                        invoiceItems={invoiceItems}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className='Total-Info'>
+                                    <div className='Subtotal'>Subtotal</div>
+                                    <div id='Subtotal-Price'>${subtotal}</div>
+
+                                    {!this.state.printing && (
+
+                                        <div className='Add-Discount'>
+                                            <DiscountSidebar
+                                                updateDiscount={this.updateDiscount}
+                                                removeDiscount={this.removeDiscount}
+                                                updateTaxes={this.updateTaxes}
+                                                subtotal={subtotal}
+                                                discountValue={discountValue}
+                                                discountPercent={discountPercent}
+                                                taxValue={taxValue}
+                                                taxPercent={taxPercent}
+
+                                            />
+                                        </div>)
+                                    }
+                                    {!this.state.printing && (
+                                        <div className='Add-Discount'>
+                                            <TaxesSidebar
+                                                updateTaxes={this.updateTaxes}
+                                                updateDiscount={this.updateDiscount}
+                                                removeTaxes={this.removeTaxes}
+                                                discountValue={discountValue}
+                                                subtotal={subtotal}
+                                                taxValue={taxValue}
+                                                taxPercent={taxPercent}
+                                                taxItems={taxItems}
+                                            />
+                                        </div>)
+                                    }
+
+                                    {!this.state.printing && (
+                                        <div id='Add-Line-Item'>
+                                            <InvoiceSidebar
+                                                FeeTypes={this.props.FeeTypes}
+                                                subtotal={subtotal}
+                                                addInvoiceItem={this.addInvoiceItem}
+                                                invoiceItems={invoiceItems}
+                                            />
+                                        </div>)
+                                    }
+                                    <div id='Total'>Total</div>
+                                    <div id='Total-Price'>${total}</div>
+                                    {!this.state.printing && (
+                                        <div className='Add-Notes'>
+                                            <NotesSidebar
+                                                updateNotes={this.updateNotes}
+                                                notes={notes}
+                                                icon={'add'}
+                                            />
+                                        </div>)
+                                    }
+
+                                    <div id='Amount-Due'>Amount Due</div>
+                                    <div id='Amount-Price'>$ {total}</div>
+                                </div>
+
+                                {notes &&
+                                    <div className='Notes'>
+                                        <div>
+                                            <div className='Notes-Header'>
+                                                <h3>Notes</h3>
+                                            </div>
+                                            <div>
+                                                {notes}
+                                            </div>
+                                        </div >
+                                        <div className='Notes-Icons'>
+                                            <DeleteIcon
+                                                onClick={() => this.removeNotes(notes)}
+                                                style={{ fontSize: '20px', paddingRight: '10px' }}
+                                            />
+                                            <NotesSidebar
+                                                updateNotes={this.updateNotes}
+                                                notes={notes}
+                                                icon={'edit'}
                                             />
                                         </div>
                                     </div>
                                 }
-                                    <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
-                                    <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
                             </div>
 
-                            <div className='Top-Right-Grid-Area'>           
-                                <h1 id='Invoice-Total'>
-                                    ${total}
-                                </h1>
-                                <div className='Date'>                             
-                                    <DatePickerSidebar
-                                        updateDate={this.updateDate}
-                                        displayDate={displayDate}
-                                    />
-                        
-                                </div>            
+                            <div className='Bottom-Third-Container'
+                                onMouseEnter={this.onMouseEnterBottomThird}
+                            >
+                                <h4 className='Client-Customer'>{devName}</h4>
+                                <p className='Dev-Address'>
+                                    {devStreet + ' '}
+                                    {devCity + ' '},
+                                    {devState + ' '}
+                                    {devZip}
+                                </p>
+                                {/* <p className='Email'>mikerooze12@gmail.com</p> */}
                             </div>
-
-                            <div id='Client-Address-Area'>
-                                <h2 className='Client-Customer'>
-                                    {customerName}
-                                </h2>
-                                <div id='Client-Address'>
-                                    {customerStreet}
-                                    <br></br>
-                                    {customerCity}, {customerState} {customerZip}
-                                    <br></br>
-                                    <br></br>
-                                    <div className='Gray-Text'>+ Tax Id</div>
-                                </div>
-                            </div>
-
                         </div>
 
-                        <div className='Middle-Third-Container'
-                            onMouseEnter={this.onMouseEnterMiddleThird}>
-
-                            <div>
-                                {invoiceItems.map((item, i) => (
-                                    <div className='Line-Items-Container' key={i}>
-                                        <div className='Line-Items'>
-                                            <div id='Item'>{item.description}</div>
-                                            <div id='Unit'>{item.unit}</div>
-                                            <div id='Rate'>
-                                                {item.feeType === 'Flat fee' && item.rate}
-                                                {item.feeType !== 'Flat fee' && item.rate + '/' + item.feeType}
-                                            </div>
-                                            <div id='Item-Total'>${item.total}</div>
-                                            <div className='Line-Item-Icons' key={i}>
-                                                <DeleteIcon
-                                                    onClick={() => this.removeLineItem(i)}
-                                                    style={{ fontSize: '20px', paddingRight: '10px' }}
-                                                />
-                                                <EditInvoice
-                                                    item={item}
-                                                    index={i}
-                                                    FeeTypes={this.props.FeeTypes}
-                                                    updateInvoiceItem={this.updateInvoiceItem}
-                                                    invoiceItems={invoiceItems}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className='Total-Info'>
-                                <div className='Subtotal'>Subtotal</div>
-                                <div id='Subtotal-Price'>${subtotal}</div>
-
-                                <div className='Add-Discount'>
-                                    <DiscountSidebar
-                                        updateDiscount={this.updateDiscount}
-                                        removeDiscount={this.removeDiscount}
-                                        updateTaxes={this.updateTaxes}
-                                        subtotal={subtotal}
-                                        discountValue={discountValue}
-                                        discountPercent={discountPercent}
-                                        taxValue={taxValue}
-                                        taxPercent={taxPercent}
-
-                                    />
-                                </div>
-                                <div className='Add-Discount'>
-                                    <TaxesSidebar
-                                        updateTaxes={this.updateTaxes}
-                                        updateDiscount={this.updateDiscount}
-                                        removeTaxes={this.removeTaxes}
-                                        discountValue={discountValue}
-                                        subtotal={subtotal}
-                                        taxValue={taxValue}
-                                        taxPercent={taxPercent}
-                                        taxItems={taxItems}
-                                    />
-                                </div>
-                               
-                                <div id='Add-Line-Item'>
-                                    <InvoiceSidebar
-                                        FeeTypes={this.props.FeeTypes}
-                                        subtotal={subtotal}
-                                        addInvoiceItem={this.addInvoiceItem}
-                                        invoiceItems={invoiceItems}
-                                    />
-                                </div>
-                                <div id='Total'>Total</div>
-                                <div id='Total-Price'>${total}</div>
-                                <div className='Add-Notes'>
-                                    <NotesSidebar
-                                        updateNotes={this.updateNotes}
-                                        notes={notes}
-                                        icon={'add'}
-                                    />
-                                </div>
-
-                                <div id='Amount-Due'>Amount Due</div>
-                                <div id='Amount-Price'>{total}</div>
-                            </div>
-
-                            {notes &&
-                                <div className='Notes'>
-                                    <div>
-                                        <div className='Notes-Header'>
-                                            <h3>Notes</h3>
-                                        </div>
-                                        <div>
-                                            {notes}
-                                        </div>
-                                    </div >
-                                    <div className='Notes-Icons'>
-                                        <DeleteIcon
-                                            onClick={() => this.removeNotes(notes)}
-                                            style={{ fontSize: '20px', paddingRight: '10px' }}
-                                        />
-                                        <NotesSidebar
-                                            updateNotes={this.updateNotes}
-                                            notes={notes}
-                                            icon={'edit'}
-                                        />
-                                    </div>
-                                </div>
-                            }
-                        </div>
-
-                        <div className='Bottom-Third-Container'
-                            onMouseEnter={this.onMouseEnterBottomThird}
-                        >
-                            <h4 className='Client-Customer'>{devName}</h4>
-                            <p className='Dev-Address'>
-                                {devStreet}
-                                {devCity},
-                                {devState}
-                                {devZip}
-                            </p>
-                            {/* <p className='Email'>mikerooze12@gmail.com</p> */}
-                        </div>
                     </div>
                 </div>
             </Fragment>

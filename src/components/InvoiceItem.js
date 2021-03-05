@@ -155,7 +155,7 @@ class InvoiceItem extends Component {
         return (
             <div>
                 <div className='TextFieldContainer'>
-                    {invoiceItems.length > 1 && removable &&
+                    {removable &&
                     <div className='RemoveInvoiceButton' onClick={this.handleRemoveInvoiceItem}>
                         <HighlightOffIcon />
                     </div>}

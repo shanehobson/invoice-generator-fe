@@ -40,8 +40,8 @@ class Page4 extends Component {
 
         this.state = {
             error: false,
-            customerType: '',
-            nextButtonDisabled: true
+            customerType: props.customerType,
+            nextButtonDisabled: !props.customerType
         }
     };
 

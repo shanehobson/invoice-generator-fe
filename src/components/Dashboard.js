@@ -33,13 +33,13 @@ class Dashboard extends Component {
   render() {
     return (
       <div className='Dashboard-container'>
-          {
-            this.props.pageNumber !== '1' && (
-              <div className='Dashboard-progressBarContainer'>
-                <ProgressBar />
-              </div>
-            )
-          }
+        {
+          this.props.pageNumber !== '1' && (
+            <div className='Dashboard-progressBarContainer'>
+              <ProgressBar />
+            </div>
+          )
+        }
         <Grid container justify='center'>
           <Grid item sm={12}>
             {this.props.pageNumber === '1' && <Page1 />}
@@ -52,9 +52,12 @@ class Dashboard extends Component {
             {this.props.pageNumber === '5' && <Page5 />}
             {this.props.pageNumber === '9' && <Page9 />}
           </Grid>
-          <Grid item sm={12}>
-            <WorkingDocument />
-          </Grid>
+          {this.props.pageNumber === '9' && (
+            <Grid item sm={12}>
+              <WorkingDocument />
+            </Grid>
+          )
+          }
         </Grid>
       </div>
     );
