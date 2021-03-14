@@ -8,6 +8,7 @@ import jsPDF from 'jspdf';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../styles/WorkingDoc.css';
+import axios from 'axios';
 
 import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
@@ -16,6 +17,7 @@ import NotesSidebar from './NotesSidebar';
 import DatePickerSidebar from './DatePickerSidebar';
 import TaxesSidebar from './TaxesSidebar';
 import EditInvoice from './EditInvoice';
+const buildUrl = 'http://localhost:3002/build'
 
 class Contract extends Component {
     constructor(props) {
@@ -74,13 +76,11 @@ class Contract extends Component {
         let date, displayDate, defaultDate;
 
         if (!nextProps.date) {
-            // defaultDate = new Date();
             date = new Date();
             displayDate = this.getCurrentDate();
         } else if (this.state.date !== nextProps.date) {
             date = nextProps.date;
             displayDate = this.toString(date);
-            // defaultDate = this.toString(date)
         }
 
         this.setState({
@@ -92,14 +92,16 @@ class Contract extends Component {
                 total,
                 discountValue,
                 date: date ? date : null,
-                displayDate,
-                // defaultDate
+                displayDate
             }
         });
+       
     };
 
     componentDidUpdate(prevProps) {
         if (this.props.generatePdf > prevProps.generatePdf) {
+            console.log(this.state)
+         
             this.setState({
                 ...this.state,
                 printing: true
@@ -112,33 +114,16 @@ class Contract extends Component {
     }
 
     generatePdf = () => {
-        const element = this.myRef.current;
-        const HTML_Width = 600;
-        const HTML_Height = 800;
-        const top_left_margin = 15;
-        const PDF_Width = 620;
-        const PDF_Height = 800;
-        const canvas_image_width = HTML_Width;
-        const canvas_image_height = HTML_Height;
-        const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-
-        html2canvas(element).then(function (canvas) {
-            const imgData = canvas.toDataURL("image/jpeg", 1.0);
-            const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
-            for (let i = 1; i <= totalPDFPages; i++) {
-                pdf.addPage(PDF_Width, PDF_Height);
-                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        axios({
+            method: 'post',
+            url: buildUrl,
+            data: {
+              ...this.state
             }
-            pdf.save("invoice.pdf");
-            // $(".WorkingDoc").hide();
-        });
-
-        this.setState({
-            ...this.state,
-            printing: false
-        });
-    }
+          }).then(res => {
+            window.open(res.data.url, '_blank');
+          })
+    } 
 
     getCurrentDate = () => {
         const today = new Date();
