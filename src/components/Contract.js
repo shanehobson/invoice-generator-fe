@@ -332,6 +332,7 @@ class Contract extends Component {
         if (!date) {
             return;
         }
+        let arr = date.split(' ');
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -397,7 +398,7 @@ class Contract extends Component {
                                         </div>
                                     }
                                     <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
-                                    <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p>
+                                    {/* <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p> */}
                                 </div>
 
                                 <div className='Top-Right-Grid-Area'>

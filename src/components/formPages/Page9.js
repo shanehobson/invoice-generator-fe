@@ -34,7 +34,6 @@ class Page9 extends Component {
     };
 
     generatePdf = () => {
-        window.scrollTo(0,0);
         this.props.generatePdf();
     }
 
