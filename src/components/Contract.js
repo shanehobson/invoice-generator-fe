@@ -49,6 +49,7 @@ class Contract extends Component {
                 subtotal: 0, // @todo add to redux
                 taxValue: 0,
                 taxPercent: 0,
+                taxes: 0,
                 taxLabel: '', // @todo add to redux,
                 taxItems: [],
                 discountPercent: 0,
@@ -56,7 +57,8 @@ class Contract extends Component {
                 total: 0, // @todo add to redux
                 date: null,
                 // defaultDate: null,
-                displayDate: ''
+                displayDate: '',
+                stableTaxValue: ''
             },
 
             editIcons: {
@@ -87,6 +89,9 @@ class Contract extends Component {
             ...this.state,
             ...nextProps,
             invoiceInfo: {
+                taxes: taxValue,
+                taxValue,
+                ...this.state.invoiceInfo,
                 ...nextProps.invoiceInfo,
                 subtotal,
                 total,
@@ -106,10 +111,7 @@ class Contract extends Component {
                 ...this.state,
                 printing: true
             });
-            setTimeout(() => {
-                this.generatePdf();
-            }, 1000)
-
+            this.generatePdf();
         }
     }
 
@@ -174,7 +176,7 @@ class Contract extends Component {
         const taxValue = this.state.invoiceInfo.taxValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
-        const remove = this.removeDiscount()
+        // const remove = this.removeDiscount()
 
         this.setState({
             ...this.state,
@@ -182,8 +184,10 @@ class Contract extends Component {
                 ...this.state.invoiceInfo,
                 discountValue,
                 discountPercent,
+                taxValue,
+                taxes: taxValue,
                 total,
-                remove
+                // remove
             }
         });
     }
@@ -192,7 +196,20 @@ class Contract extends Component {
         const discountValue = this.state.invoiceInfo.discountValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
-        const remove = this.removeTaxes()
+        //const remove = this.removeTaxes()
+        console.log({
+            ...this.state,
+            invoiceInfo: {
+                ...this.state.invoiceInfo,
+                taxValue,
+                taxPercent,
+                taxLabel,
+                taxes: taxValue,
+                total,
+                stableTaxValue: taxValue
+                // remove
+            }
+        })
         this.setState({
             ...this.state,
             invoiceInfo: {
@@ -200,8 +217,10 @@ class Contract extends Component {
                 taxValue,
                 taxPercent,
                 taxLabel,
+                taxes: taxValue,
                 total,
-                remove
+                stableTaxValue: taxValue
+                // remove
             }
         });
     }
@@ -251,6 +270,7 @@ class Contract extends Component {
 
     onMouseEnter = debounce((third) => {
         this.setState({
+            ...this.state,
             editIcons: {
                 topThird: third === 'topThird',
                 middleThird: third === 'middleThird',
@@ -261,6 +281,7 @@ class Contract extends Component {
 
     onMouseLeaveInvoice = debounce(() => {
         this.setState({
+            ...this.state,
             editIcons: {
                 topThird: false,
                 middleThird: false,
@@ -306,6 +327,7 @@ class Contract extends Component {
 
     updateNotes = (notes) => {
         this.setState({
+            ...this.state,
             notes: notes
         });
     }
@@ -422,14 +444,14 @@ class Contract extends Component {
                                         {customerStreet}
                                         <br></br>
                                         {customerCity}, {customerState} {customerZip}
-                                        {!this.state.printing && (
-                                            <br></br>)
+                                        {
+                                            <br></br>
                                         }
-                                        {!this.state.printing && (
-                                            <br></br>)
+                                        {
+                                            <br></br>
                                         }
 
-                                        {!this.state.printing && false &&  <div className='Gray-Text'>+ Tax Id</div>}
+                                        {/* {<div className='Gray-Text'>+ Tax Id</div>} */}
                                     </div>
                                 </div>
 
@@ -471,7 +493,7 @@ class Contract extends Component {
                                     <div className='Subtotal'>Subtotal</div>
                                     <div id='Subtotal-Price'>${subtotal}</div>
 
-                                    {!this.state.printing && (
+                                    {
 
                                         <div className='Add-Discount'>
                                             <DiscountSidebar
@@ -485,9 +507,9 @@ class Contract extends Component {
                                                 taxPercent={taxPercent}
 
                                             />
-                                        </div>)
+                                        </div>
                                     }
-                                    {!this.state.printing && (
+                                    {
                                         <div className='Add-Discount'>
                                             <TaxesSidebar
                                                 updateTaxes={this.updateTaxes}
@@ -499,10 +521,10 @@ class Contract extends Component {
                                                 taxPercent={taxPercent}
                                                 taxItems={taxItems}
                                             />
-                                        </div>)
+                                        </div>
                                     }
 
-                                    {!this.state.printing && (
+                                    {
                                         <div id='Add-Line-Item'>
                                             <InvoiceSidebar
                                                 FeeTypes={this.props.FeeTypes}
@@ -510,18 +532,18 @@ class Contract extends Component {
                                                 addInvoiceItem={this.addInvoiceItem}
                                                 invoiceItems={invoiceItems}
                                             />
-                                        </div>)
+                                        </div>
                                     }
                                     <div id='Total'>Total</div>
                                     <div id='Total-Price'>${total}</div>
-                                    {!this.state.printing && (
+                                    {
                                         <div className='Add-Notes'>
                                             <NotesSidebar
                                                 updateNotes={this.updateNotes}
                                                 notes={notes}
                                                 icon={'add'}
                                             />
-                                        </div>)
+                                        </div>
                                     }
 
                                     <div id='Amount-Due'>Amount Due</div>
