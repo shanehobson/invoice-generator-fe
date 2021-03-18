@@ -10,7 +10,7 @@ import { startChangePage, generatePdf  } from '../../actions/pages';
 
 const style = theme => ({
     root: {
-        minHeight: 720
+        minHeight: 500
     },
     button: {
         margin: theme.spacing.unit

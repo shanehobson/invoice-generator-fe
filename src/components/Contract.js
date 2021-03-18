@@ -2,14 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { debounce } from '../utility/debounce';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-
 import DeleteIcon from '@material-ui/icons/Delete';
-import SettingsIcon from '@material-ui/icons/Settings';
 import '../styles/WorkingDoc.css';
 import axios from 'axios';
-
 import DiscountSidebar from './DiscountSidebar';
 import InvoiceSidebar from './InvoiceSidebar';
 import BrandingSidebar from './BrandingSidebar';
@@ -17,7 +12,7 @@ import NotesSidebar from './NotesSidebar';
 import DatePickerSidebar from './DatePickerSidebar';
 import TaxesSidebar from './TaxesSidebar';
 import EditInvoice from './EditInvoice';
-const buildUrl = 'http://localhost:3002/build'
+const buildUrl = 'https://invoice-pdf-builder.herokuapp.com/build'
 
 class Contract extends Component {
     constructor(props) {
@@ -46,17 +41,16 @@ class Contract extends Component {
                     zip: ''
                 },
                 invoiceItems: [],
-                subtotal: 0, // @todo add to redux
+                subtotal: 0,
                 taxValue: 0,
                 taxPercent: 0,
                 taxes: 0,
-                taxLabel: '', // @todo add to redux,
+                taxLabel: '',
                 taxItems: [],
                 discountPercent: 0,
                 discountValue: 0,
-                total: 0, // @todo add to redux
+                total: 0,
                 date: null,
-                // defaultDate: null,
                 displayDate: '',
                 stableTaxValue: ''
             },
@@ -123,7 +117,7 @@ class Contract extends Component {
               ...this.state
             }
           }).then(res => {
-            window.open(res.data.url, '_blank');
+            window.open(res.data.url);
           })
     } 
 
@@ -176,7 +170,6 @@ class Contract extends Component {
         const taxValue = this.state.invoiceInfo.taxValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
-        // const remove = this.removeDiscount()
 
         this.setState({
             ...this.state,
@@ -187,7 +180,6 @@ class Contract extends Component {
                 taxValue,
                 taxes: taxValue,
                 total,
-                // remove
             }
         });
     }
@@ -196,7 +188,6 @@ class Contract extends Component {
         const discountValue = this.state.invoiceInfo.discountValue;
         const subtotal = this.state.invoiceInfo.subtotal;
         const total = this.calculateTotal(subtotal, discountValue, taxValue)
-        //const remove = this.removeTaxes()
         console.log({
             ...this.state,
             invoiceInfo: {
@@ -207,7 +198,6 @@ class Contract extends Component {
                 taxes: taxValue,
                 total,
                 stableTaxValue: taxValue
-                // remove
             }
         })
         this.setState({
@@ -220,7 +210,6 @@ class Contract extends Component {
                 taxes: taxValue,
                 total,
                 stableTaxValue: taxValue
-                // remove
             }
         });
     }
@@ -360,7 +349,6 @@ class Contract extends Component {
             invoiceInfo: {
                 ...this.state.invoiceInfo,
                 date,
-                // defaultDate,
                 displayDate: this.toString(date)
             }
         });
@@ -420,7 +408,6 @@ class Contract extends Component {
                                         </div>
                                     }
                                     <h1 id='Invoice-Title' style={{ color: standard }}>Invoice</h1>
-                                    {/* <p style={{ fontSize: '14px', marginBottom: 0 }}>#1</p> */}
                                 </div>
 
                                 <div className='Top-Right-Grid-Area'>

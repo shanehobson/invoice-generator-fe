@@ -112,19 +112,6 @@ handleValueChange = e => {
           }}
         />
       </div>
-      <TextField
-            style={{
-              marginLeft: '40px',
-              width: '140px',
-              paddingTop: '10px'
-            }}
-            fullWidth
-            variant="outlined"
-            placeholder="Tax Label"
-            onChange={this.handleLabelChange}
-            value={this.state.taxLabel || ''}
-          >
-      </TextField>
       <section className='Tax-Sidebar'>
         <div>
           <span className='RateDollarSymbol'>Percentage</span>
@@ -135,7 +122,7 @@ handleValueChange = e => {
             }}
             fullWidth
             variant="outlined"
-            placeholder="0.00%"
+            placeholder="0.00"
             onChange={this.handlePercentChange}
             value={this.state.percent || ''}
           >
@@ -152,7 +139,7 @@ handleValueChange = e => {
             }}
             fullWidth
             variant="outlined"
-            placeholder="$0.00"
+            placeholder="0.00"
             onChange={this.handleValueChange}
             value={this.state.value || ''}
           >
