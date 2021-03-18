@@ -18,7 +18,7 @@ class ProgressBar extends React.Component {
 
         this.state = {
             completed: 0,
-            total: 4
+            total: 5
           };
     };
 
@@ -37,18 +37,19 @@ class ProgressBar extends React.Component {
     };
 
     calculateNumberCompleted = (nextProps) => {
-        const { devType, customerType, devInfo, customerInfo } = nextProps;
+        const { devType, customerType, devInfo, customerInfo, invoiceItems } = nextProps;
         let totalCompleted = 0;
         if (devType !== '') totalCompleted++;
         if (customerType !== '') totalCompleted++;
         if (devInfo.zip !== '') totalCompleted++;
         if (customerInfo.zip !== '') totalCompleted++;
+        if (invoiceItems && invoiceItems.length > 0) totalCompleted++;
         return totalCompleted;
     };
 
     calculateTotal(nextProps) {
         const { devType, customerType } = nextProps;
-        let total = 4;
+        let total = 5;
         // if (devType === 'business') total++;
         // if (customerType === 'business') total++;
         return total;
@@ -78,7 +79,8 @@ ProgressBar.propTypes = {
     customerType: PropTypes.string.isRequired,
     devInfo: PropTypes.object.isRequired,
     customerInfo: PropTypes.object.isRequired,
-    currentPage: PropTypes.string.isRequired
+    currentPage: PropTypes.string.isRequired,
+    invoiceItems: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -86,7 +88,8 @@ const mapStateToProps = (state) => ({
     customerType: state.invoiceInfo.customerType,
     devInfo: state.invoiceInfo.devInfo,
     customerInfo: state.invoiceInfo.customerInfo,
-    currentPage: state.pages.currentPage
+    currentPage: state.pages.currentPage,
+    invoiceItems: state.invoiceInfo.invoiceItems
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(ProgressBar));
