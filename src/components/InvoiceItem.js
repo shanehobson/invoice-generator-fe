@@ -225,7 +225,7 @@ class InvoiceItem extends Component {
                             </div>       
                         </div>
                           
-                        <p style={{ width: '40px'}} className='InvoiceItemTotal'>
+                        <p style={{ display: 'block', width: '20px', paddingLeft: '10px', marginTop: '7px'}} className='InvoiceItemTotal'>
                             ${total}
                         </p>
                     </div>
